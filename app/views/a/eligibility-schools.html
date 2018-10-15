@@ -1,47 +1,54 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-TSLR - Eligibility - Awarded QTS
+
+  TSLR - Eligibility - Awarded QTS
+
 {% endblock %}
 
 {% block beforeContent %}
-<a class="govuk-back-link" href="eligibility-qts">Back</a>
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="eligibility-qts">Back</a>
+
 {% endblock %}
 
 {% block content %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <form action="/eligibility-schools" method="POST" role="form">
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset" aria-describedby="school-hint">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">
-              During the year you are applying for, were you employed in a state-funded school in England?
-            </h1>
-          </legend>
-          <span id="school-hint" class="govuk-hint">
-      This could be a local-authority-maintained secondary school,
-      a local-authority-maintained special school, a secondary phase academy or free school.
-    </span>
 
-          <div class="govuk-radios govuk-radios--inline">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="school-1" name="school" type="radio" value="yes">
-              <label class="govuk-label govuk-radios__label" for="school-1">
-                Yes
-              </label>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="eligibility-authority" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="school-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                During the year you are applying for, were you employed in a state-funded school in England?
+              </h1>
+            </legend>
+            <span id="school-hint" class="govuk-hint">
+        This could be a local-authority-maintained secondary school,
+        a local-authority-maintained special school, a secondary phase academy or free school.
+      </span>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="school-1" name="school" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="school-1">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="school-2" name="school" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="school-2">
+                  No
+                </label>
+              </div>
             </div>
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="school-2" name="school" type="radio" value="no">
-              <label class="govuk-label govuk-radios__label" for="school-2">
-                No
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-      <button class="govuk-button">Next</button>
-    </form>
+          </fieldset>
+        </div>
+        <button class="govuk-button">Next</button>
+      </form>
+    </div>
   </div>
-</div>
+
 {% endblock %}
