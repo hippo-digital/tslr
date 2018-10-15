@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Eligibility (Authority) :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="eligibility-schools.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="eligibility-proof" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="authority-hint">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Was the school in 1 of the 25 local authority areas included in this scheme?
+              </h1>
+            </legend>
+
+            <span id="authority-hint" class="govuk-hint">
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">See list of authorities</span>
+                </summary>
+                <div class="govuk-details__text">
+                  <ul class="govuk-list govuk-list--bullet">
+                    <li>Barnsley</li>
+                    <li>Blackpool</li>
+                    <li>Bracknell Forest</li>
+                    <li>Bradford</li>
+                    <li>Cambridgeshire</li>
+                    <li>Derby</li>
+                    <li>Derbyshire</li>
+                    <li>Doncaster</li>
+                    <li>Halton</li>
+                    <li>Knowsley</li>
+                    <li>Luton</li>
+                    <li>Middlesbrough</li>
+                    <li>Norfolk</li>
+                    <li>North-east Lincolnshire</li>
+                    <li>North Yorkshire</li>
+                    <li>Northamptonshire</li>
+                    <li>Northumberland</li>
+                    <li>Oldham</li>
+                    <li>Peterborough</li>
+                    <li>Portsmouth</li>
+                    <li>Salford</li>
+                    <li>Sefton</li>
+                    <li>St Helens</li>
+                    <li>Stoke-on-Trent</li>
+                    <li>Suffolk</li>
+                  </ul>
+                </div>
+              </details>
+            </span>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="authority-1" name="authority" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="authority-1">Yes</label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="authority-2" name="authority" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="authority-2">No</label>
+              </div>
+            </div>
+
+          </fieldset>
+        </div>
+        <button class="govuk-button">Next</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

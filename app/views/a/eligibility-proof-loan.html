@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Eligibility (Proof of Loan) :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="eligibility-authority.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="eligibility-teaching" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="proof-hint">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Do you have proof of your student loan payments for the year you’re applying for?
+              </h1>
+            </legend>
+
+            <span id="proof-hint" class="govuk-hint">
+              For example, this is on your payslip
+            </span>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="proof-1" name="proof" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="proof-1">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="proof-2" name="proof" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="proof-2">
+                  No
+                </label>
+              </div>
+            </div>
+
+          </fieldset>
+        </div>
+        <button class="govuk-button">Next</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

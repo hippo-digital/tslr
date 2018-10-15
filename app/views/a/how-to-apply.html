@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  How to Apply :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="eligibility.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">Claim back your teacher student loan payments</h1>
+
+  <aside class="part-navigation-container" role="complementary">
+    <nav role="navigation" class="gem-c-contents-list  " data-module="track-click" aria-label="Pages in this guide">
+      <h2 class="govuk-heading-l">Contents</h2>
+      <ol class="govuk-list govuk-list--number">
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed ">
+        <a class="govuk-link" href="start-page.html">About this scheme</a>
+        </li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed ">
+        <a class="govuk-link" href="eligibility.html">Eligibility</a>
+        </li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed gem-c-contents-list__list-item--active" aria-current="true">Apply
+        </li>
+      </ol>
+    </nav>
+  </aside>
+
+  <h1 class="govuk-heading-xl">Apply</h1>
+
+  <h2 class="govuk-heading-m">Before you start</h2>
+  <p class="govuk-body">You will need:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>your teacher reference number (TRN)</li>
+    <li>the address of the school you taught at during the year you’re applying for</li>
+    <li>the address of the school you've taught at for the academic year</li>
+    <li>your National insurance (NI) number</li>
+    <li>proof of the amount of loan you paid back</li>
+  </ul>
+
+  <p class="govuk-body">We will ask the school you taught at for proof: </p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>that you were employed there </li>
+    <li>that you spent at least 50% of your contracted hours teaching a priority subject</li>
+    <li>of your salary</li>
+  </ul>
+
+  <a href="eligibility-qts.html" role="button" class="govuk-button govuk-button--start">
+  Start
+  </a>
+
+  <h2 class="govuk-heading-m">Other ways to apply</h2>
+  <p class="govuk-body">You can also apply by telephone: 0800 XXX XXX.</p>
+
+{% endblock %}

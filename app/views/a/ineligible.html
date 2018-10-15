@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Ineligible :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+  {% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Education",
+        href: "#"
+      },
+      {
+        text: "Funding",
+        href: "#"
+      },
+      {
+        text: "Student loans",
+        href: "#"
+      },
+      {
+        text: "Teachers' student loan reimbursement",
+        href: "#"
+      },
+      {
+        text: "Ineligible"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">You're not eligible for student loan repayments</h1>
+  <p class="govuk-body">This is because:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>you don't work for a state-funded school</li>
+    <li>you didn't spend at least 50% of your time teaching a priority subject</li>
+  </ul>
+  <p class="govuk-body">If you think this is a mistake, you can
+    <a class="govuk-link" href="start-page.html">apply again</a>.
+    We will ask the school you taught at to confirm what you tell us about your employment there.
+  </p>
+
+{% endblock %}

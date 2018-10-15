@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Eligibility (QTS) :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="how-to-apply.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="eligibility-schools" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="qts-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Did you achieve qualified teacher status (QTS) in the academic years between 2013 and 2020?
+              </h1>
+            </legend>
+            <span id="qts-hint" class="govuk-hint">
+              This includes the academic years 2013 to 2014, 2014 to 2015, 2015 to 2016, 2016 to 2017, 2017 to 2018, 2018 to 2019, 2019 to 2020
+            </span>
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="qts-1" name="qts" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="qts-1">Yes</label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="qts-2" name="qts" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="qts-2">No</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <button class="govuk-button">Next</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Eligibility (Teaching) :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="eligibility-proof-loan.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="about-you-trn" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Did you spend at least 50% of your contracted hours teaching a priority subject?
+              </h1>
+            </legend>
+
+            <span id="teaching-hint" class="govuk-hint">
+              Priority subjects are languages (excluding English), physics, biology, chemistry, computer science.
+            </span>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="teaching-1" name="teaching" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="teaching-1">Yes</label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="teaching-2" name="teaching" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="teaching-2">No</label>
+              </div>
+            </div>
+
+          </fieldset>
+        </div>
+        <button class="govuk-button">Next</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

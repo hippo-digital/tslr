@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Eligibility :: Teacher's Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="start-page.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">Claim back your teacher student loan payments</h1>
+
+  <aside class="part-navigation-container" role="complementary">
+    <nav role="navigation" class="gem-c-contents-list  " data-module="track-click" aria-label="Pages in this guide">
+      <h2 class="govuk-heading-l">Contents</h2>
+      <ol class="govuk-list govuk-list--number">
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed ">
+        <a class="govuk-link" href="start-page.html">About this scheme</a>
+        </li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed gem-c-contents-list__list-item--active" aria-current="true">Eligibility
+        </li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed ">
+        <a class="govuk-link" href="how-to-apply.html">Apply</a>
+        </li>
+      </ol>
+    </nav>
+  </aside>
+
+  <h1 class="govuk-heading-xl">Eligibility</h1>
+  <p class="govuk-body">To apply, you must be in years 1 to 5 of your teaching career and fulfil all
+  of the eligibility criteria below.</p>
+
+  <h3 class="govuk-heading-m">Qualified teacher status</h3>
+  <p class="govuk-body">You should have achieved qualified status between 2013 and 2020.</p>
+
+  <h3 class="govuk-heading-m">Employment</h3>
+  <p class="govuk-body">You should be employed in England, in one of the following state-funded schools:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>secondary school maintained by a local authority (including middle-deemed secondary)</li>
+    <li>special school that is non-maintained or maintained by a local authority</li>
+    <li>secondary phase academy / free school</li>
+  </ul>
+
+  <p class="govuk-body">Teachers in a private school or sixth-form college are not eligible.</p>
+
+  <h3 class="govuk-heading-m">Participating local authorities</h3>
+  <p class="govuk-body">Your school should be in one of these local authority areas:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>Barnsley</li>
+    <li>Blackpool</li>
+    <li>Bracknell Forest</li>
+    <li>Bradford</li>
+    <li>Cambridgeshire</li>
+    <li>Derby</li>
+    <li>Derbyshire</li>
+    <li>Doncaster</li>
+    <li>Halton</li>
+    <li>Knowsley</li>
+    <li>Luton</li>
+    <li>Middlesbrough</li>
+    <li>Norfolk</li>
+    <li>North-east Lincolnshire</li>
+    <li>North Yorkshire</li>
+    <li>Northamptonshire</li>
+    <li>Northumberland</li>
+    <li>Oldham</li>
+    <li>Peterborough</li>
+    <li>Portsmouth</li>
+    <li>Salford</li>
+    <li>Sefton</li>
+    <li>St Helens</li>
+    <li>Stoke-on-Trent</li>
+    <li>Suffolk</li>
+  </ul>
+
+  <h3 class="govuk-heading-m">Subjects</h3>
+  <p class="govuk-body">You must have taught one of the following subjects for at least 50% of your contracted hours for the year you are claiming:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>languages</li>
+    <li>physics</li>
+    <li>chemistry</li>
+    <li>biology</li>
+    <li>computer science</li>
+  </ul>
+
+  <a href="how-to-apply.html" role="button" class="govuk-button govuk-button--start">
+    Continue
+  </a>
+
+{% endblock %}
