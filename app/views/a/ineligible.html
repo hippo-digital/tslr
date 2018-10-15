@@ -9,28 +9,35 @@
 {% block beforeContent %}
 
   {% include "includes/phase-banner.html" %}
-  <div class="govuk-width-container">
-    <div class="govuk-breadcrumbs">
-      <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="#">Home</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="#">Education</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="#">Funding</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="#">Student loans</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="start-page.html">Teachers' student loan reimbursement</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item" aria-current="page">Ineligible</li>
-      </ol>
-    </div>
-  </div>
+
+  {% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Education",
+        href: "#"
+      },
+      {
+        text: "Funding",
+        href: "#"
+      },
+      {
+        text: "Student loans",
+        href: "#"
+      },
+      {
+        text: "Teachers' student loan reimbursement",
+        href: "#"
+      },
+      {
+        text: "Ineligible"
+      }
+    ]
+  }) }}
 
 {% endblock %}
 
