@@ -2,14 +2,14 @@
 
 {% block pageTitle %}
 
-  Eligibility (Proof of Loan) :: Teacher's Student Loan Reimbursement
+  Eligibility (Proof of Loan) :: Teachers' Student Loan Reimbursement
 
 {% endblock %}
 
 {% block beforeContent %}
 
   {% include "includes/phase-banner.html" %}
-  <a class="govuk-back-link" href="eligibility-authority.html">Back</a>
+  <a class="govuk-back-link" href="eligibility-proof.html">Back</a>
 
 {% endblock %}
 
@@ -33,14 +33,14 @@
 
             <div class="govuk-radios govuk-radios--inline">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="proof-1" name="proof" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="proof-1">
+                <input class="govuk-radios__input" id="proof-loan-y" name="proof-loan" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="proof-loan-y">
                   Yes
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="proof-2" name="proof" type="radio" value="no">
-                <label class="govuk-label govuk-radios__label" for="proof-2">
+                <input class="govuk-radios__input" id="proof-loan-n" name="proof-loan" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="proof-loan-n">
                   No
                 </label>
               </div>

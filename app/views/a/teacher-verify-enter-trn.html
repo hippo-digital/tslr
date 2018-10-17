@@ -1,29 +1,28 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-
-  About you (TRN) :: Teacher's Student Loan Reimbursement
-
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
 {% endblock %}
 
 {% block beforeContent %}
 
   {% include "includes/phase-banner.html" %}
-  <a class="govuk-back-link" href="eligibility-teaching.html">Back</a>
 
 {% endblock %}
 
 {% block content %}
 
   <div class="govuk-grid-row">
+
     <div class="govuk-grid-column-two-thirds">
-      <form action="about-you-name" method="POST" role="form">
+
+      <form action="teacher-verify-code-sent" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="trn-hint">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                What is your teacher reference number (TRN)?
+                What is your Teacher Reference Number (TRN)?
               </h1>
             </legend>
 
@@ -39,13 +38,17 @@
             </span>
 
             <div class="govuk-form-group">
-              <label class="govuk-label" for="trn">TRN</label>
+              <label class="govuk-label" for="trn">Teacher Reference Number</label>
               <input class="govuk-input" id="trn" name="trn" type="text">
             </div>
 
           </fieldset>
         </div>
-        <button class="govuk-button">Next</button>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
       </form>
     </div>
   </div>
