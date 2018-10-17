@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+
+  Bank details :: Teachers' Student Loan Reimbursement
+
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <a class="govuk-back-link" href="job-school.html">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="teacher-declaration" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            {% set payByBank %}
+
+            <h2 class="govuk-heading-m">Your bank account details</h4>
+            {{ govukInput({
+              id: "bank-account-name",
+              name: "bank-account-name",
+              type: "text",
+              classes: "govuk-!-width-one-half",
+              label: {
+                text: "Name of Account holder"
+              }
+            }) }}
+            {{ govukInput({
+              id: "bank-account-number",
+              name: "bank-account-number",
+              type: "text",
+              classes: "govuk-input--width-10",
+              label: {
+                text: "Account number"
+              }
+            }) }}
+            {{ govukInput({
+              id: "bank-sortcode-1",
+              name: "bank-sortcode-1",
+              type: "text",
+              classes: "govuk-input--width-2",
+              label: {
+                text: "Sortcode"
+              }
+            }) }}
+            {{ govukInput({
+              id: "bank-sortcode-2",
+              name: "bank-sortcode-2",
+              type: "text",
+              classes: "govuk-input--width-2",
+              label: {}
+            }) }}
+            {{ govukInput({
+              id: "bank-sortcode-3",
+              name: "bank-sortcode-3",
+              type: "text",
+              classes: "govuk-input--width-2",
+              label: {}
+            }) }}
+
+            {% endset -%}
+
+            {% set payByCheque %}
+
+            <h2 class="govuk-heading-m">Your home address</h4>
+            {{ govukInput({
+              id: "cheque-home-street-1",
+              name: "cheque-home-street-1",
+              type: "text",
+              classes: "govuk-!-width-two-thirds",
+              label: {
+                text: "House name/number and Street"
+              }
+            }) }}
+            {{ govukInput({
+              id: "cheque-home-street-2",
+              name: "cheque-home-street-2",
+              type: "text",
+              classes: "govuk-!-width-two-thirds",
+              label: {}
+            }) }}
+            {{ govukInput({
+              id: "cheque-home-city",
+              name: "cheque-home-city",
+              type: "text",
+              classes: "govuk-!-width-one-third",
+              label: {
+                text: "Town or City"
+              }
+            }) }}
+            {{ govukInput({
+              id: "cheque-home-county",
+              name: "cheque-home-county",
+              type: "text",
+              classes: "govuk-!-width-one-third",
+              label: {
+                text: "County"
+              }
+            }) }}
+            {{ govukInput({
+              id: "cheque-home-postcode",
+              name: "cheque-home-postcode",
+              type: "text",
+              classes: "govuk-!-width-one-third",
+              label: {
+                text: "Postcode"
+              }
+            }) }}
+
+            {% endset -%}
+
+            {{ govukRadios({
+              idPrefix: "payment-method-conditional",
+              name: "payment-method",
+              fieldset: {
+                legend: {
+                  text: "How would you prefer to be paid?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--xl"
+                }
+              },
+              hint: {
+                text: "Select one option then complete the relevant details."
+              },
+              items: [
+                {
+                  value: "pay-by-bank",
+                  text: "Bank transfer",
+                  conditional: {
+                    html: payByBank
+                  }
+                },
+                {
+                  value: "pay-by-cheque",
+                  text: "Cheque",
+                  conditional: {
+                    html: payByCheque
+                  }
+                }
+              ]
+            }) }}
+
+          </fieldset>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

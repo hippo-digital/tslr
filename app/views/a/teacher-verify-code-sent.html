@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Thanks</h1>
+      <p class="govuk-body-l">
+        We've sent a code to your school email address. When you have received the email, follow the instructions in the email to return to this service and continue registering.
+      </p>
+      <p class="govuk-body">
+        <a href="teacher-code-email" role="button" class="govuk-link invisible-link">Invisible prototype link</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

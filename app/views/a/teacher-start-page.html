@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-
   Teachers' Student Loan Reimbursement
-
 {% endblock %}
 
 {% block beforeContent %}
@@ -14,19 +12,25 @@
 
 {% block content %}
 
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
 
-  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-full">
 
-    <h1 class="govuk-heading-xl">Teachers' Student Loan Reimbursement</h1>
+      <h1 class="govuk-heading-xl">Teachers' Student Loan Reimbursement</h1>
 
-  </div>
+    </div>
 
-  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-two-thirds">
 
-    <p class="govuk-body-l">Start page. Could possibly skip straight to login/verify?</p>
+      <p class="govuk-body-l">Start page. Details here about the service - or at least to affirm to the user that they've reached the right place from the email.</p>
 
-    <a href="#" role="button" class="govuk-button govuk-button--start">Get started</a>
+      {{ govukButton({
+        text: "Start now",
+        href: "teacher-verify-enter-trn",
+        classes: "govuk-button--start"
+      }) }}
+
+    </div>
 
   </div>
 

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-proportion" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="trn-hint">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                What is your confirmation code?
+              </h1>
+            </legend>
+
+            <span id="trn-hint" class="govuk-hint">
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">Where can I find my confirmation code?</span>
+                </summary>
+                <div class="govuk-details__text">
+                  <p class="govuk-body">You previously used this service to give us your Teacher Reference Number (TRN). To verify this, we emailed you a code to your school email address. If didn't receive the email or no longer have it, please <a href="teacher-verify-enter-trn" role="button" class="govuk-link">enter your TRN again</a>.</p>
+                </div>
+              </details>
+            </span>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="trn">Confirmation code</label>
+              <input class="govuk-input" id="trn" name="conf-code" type="text">
+            </div>
+
+          </fieldset>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

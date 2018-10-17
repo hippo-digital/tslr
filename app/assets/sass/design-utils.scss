@@ -4,3 +4,10 @@
   background-color: #ffff3f;
   h1, h2, h3, h4, h5, p, ul, li { font-family: "Comic Sans MS", cursive, sans-serif; }
 }
+
+.invisible-link {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  opacity: 0;
+}

@@ -1,0 +1,23 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        Email to teacher
+      </h1>
+      <p class="govuk-body-l">Provides teacher with code to verify their TRN.</p>
+      <p class="govuk-body">Purpose:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>If Verify service isn't possible, we can verify a teacher using this 'enter TRN + receive code to school email address' method.</li>
+      </ul>
+      <a href="teacher-verify-enter-code" role="button" class="govuk-link">Enter code</a>
+
+    </div>
+
+  </div>
+
+{% endblock %}
