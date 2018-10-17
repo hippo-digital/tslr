@@ -1,16 +1,11 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-
   Bank details :: Teachers' Student Loan Reimbursement
-
 {% endblock %}
 
 {% block beforeContent %}
-
   {% include "includes/phase-banner.html" %}
-  <a class="govuk-back-link" href="job-school.html">Back</a>
-
 {% endblock %}
 
 {% block content %}
@@ -24,96 +19,63 @@
             {% set payByBank %}
 
             <h2 class="govuk-heading-m">Your bank account details</h4>
-            {{ govukInput({
-              id: "bank-account-name",
-              name: "bank-account-name",
-              type: "text",
-              classes: "govuk-!-width-one-half",
-              label: {
-                text: "Name of Account holder"
-              }
-            }) }}
-            {{ govukInput({
-              id: "bank-account-number",
-              name: "bank-account-number",
-              type: "text",
-              classes: "govuk-input--width-10",
-              label: {
-                text: "Account number"
-              }
-            }) }}
-            {{ govukInput({
-              id: "bank-sortcode-1",
-              name: "bank-sortcode-1",
-              type: "text",
-              classes: "govuk-input--width-2",
-              label: {
-                text: "Sortcode"
-              }
-            }) }}
-            {{ govukInput({
-              id: "bank-sortcode-2",
-              name: "bank-sortcode-2",
-              type: "text",
-              classes: "govuk-input--width-2",
-              label: {}
-            }) }}
-            {{ govukInput({
-              id: "bank-sortcode-3",
-              name: "bank-sortcode-3",
-              type: "text",
-              classes: "govuk-input--width-2",
-              label: {}
-            }) }}
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="bank-account-name">Name of the account holder</label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="bank-account-name" name="bank-account-name" type="text">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="bank-account-number">Account number (numbers only)</label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="bank-account-number" name="bank-account-number" type="number">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="#">Sort code (numbers only)</label>
+              <input class="govuk-input govuk-input--width-2" id="#" name="bank-sortcode-1" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="bank-sortcode-2" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="bank-sortcode-3" type="number" pattern="[0-9]*">
+            </div>
 
             {% endset -%}
 
             {% set payByCheque %}
 
-            <h2 class="govuk-heading-m">Your home address</h4>
-            {{ govukInput({
-              id: "cheque-home-street-1",
-              name: "cheque-home-street-1",
-              type: "text",
-              classes: "govuk-!-width-two-thirds",
-              label: {
-                text: "House name/number and Street"
-              }
-            }) }}
-            {{ govukInput({
-              id: "cheque-home-street-2",
-              name: "cheque-home-street-2",
-              type: "text",
-              classes: "govuk-!-width-two-thirds",
-              label: {}
-            }) }}
-            {{ govukInput({
-              id: "cheque-home-city",
-              name: "cheque-home-city",
-              type: "text",
-              classes: "govuk-!-width-one-third",
-              label: {
-                text: "Town or City"
-              }
-            }) }}
-            {{ govukInput({
-              id: "cheque-home-county",
-              name: "cheque-home-county",
-              type: "text",
-              classes: "govuk-!-width-one-third",
-              label: {
-                text: "County"
-              }
-            }) }}
-            {{ govukInput({
-              id: "cheque-home-postcode",
-              name: "cheque-home-postcode",
-              type: "text",
-              classes: "govuk-!-width-one-third",
-              label: {
-                text: "Postcode"
-              }
-            }) }}
+            <h2 class="govuk-heading-m">What is your address?</h4>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="address-line-1">
+                Building and street
+                <span class="govuk-visually-hidden">line 1 of 2</span>
+              </label>
+              <input class="govuk-input" id="address-line-1" name="address-line-1" type="text">
+            </div>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="address-line-2">
+                <span class="govuk-visually-hidden">Building and street line 2 of 2</span>
+              </label>
+              <input class="govuk-input" id="address-line-2" name="address-line-2" type="text">
+            </div>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="address-town">
+                Town or city
+              </label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" type="text">
+            </div>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="address-county">
+                County
+              </label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" type="text">
+            </div>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="address-postcode">
+                Postcode
+              </label>
+              <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text">
+            </div>
 
             {% endset -%}
 
