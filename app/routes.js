@@ -32,18 +32,6 @@ router.post(/eligibility-authority/, function (req, res) {
 
 })
 
-router.post(/eligibility-proof/, function (req, res) {
-
-  // From eligibility-authority
-  let eligible = req.session.data['authority']
-  if (eligible === 'no') {
-    res.redirect('ineligible')
-  } else {
-    res.redirect('eligibility-proof')
-  }
-
-})
-
 router.post(/eligibility-proof-loan/, function (req, res) {
 
   // From eligibility-proof
@@ -52,6 +40,18 @@ router.post(/eligibility-proof-loan/, function (req, res) {
     res.redirect('ineligible')
   } else {
     res.redirect('eligibility-proof-loan')
+  }
+
+})
+
+router.post(/eligibility-proof/, function (req, res) {
+
+  // From eligibility-authority
+  let eligible = req.session.data['authority']
+  if (eligible === 'no') {
+    res.redirect('ineligible')
+  } else {
+    res.redirect('eligibility-proof')
   }
 
 })
