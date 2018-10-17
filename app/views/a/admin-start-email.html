@@ -1,1 +1,33 @@
 {% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        Email to school
+      </h1>
+      <p class="govuk-body-l">Initiates Service Model A by communicating the service to schools.</p>
+      <p class="govuk-body">Purpose:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Tell admin to forward the email to eligible teachers.</li>
+        <li>Tell teachers to update DQT with their email address because thats how we will invite them to the service.</li>
+      </ul>
+      <a href="teacher-start-email.html" role="button" class="govuk-link">School admin sends emails</a>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third design-notes">
+
+      <p class="govuk-body">Issues/Notes:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>How is the information supplied to schools? 'Email forwarding', whilst easy, might result in misformatted info.</li>
+      </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}
