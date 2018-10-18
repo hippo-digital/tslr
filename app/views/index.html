@@ -1,4 +1,3 @@
-
 {% extends "layout.html" %}
 
 {% block pageTitle %}
@@ -11,36 +10,64 @@
 {{releaseVersion | log }}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column">
+    <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl">TSLR Prototypes</h1>
     </div>
     <div class="govuk-grid-column-one-third">
-      <p>Short overview here about usage of the prototypes?</p>
-    </div>
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-m">Teacher prototypes</h2>
-      <h3 class="govuk-heading-s">Latest versions</h3>
+      <h2 class="govuk-heading-l">About</h2>
+      <p class="govuk-body">These prototypes should are in constant iteration during the Alpha phase of the project. The <strong>Latest</strong> version should always be stable and should be used in most scenarios, though date versioned snapshots are archived for retrospective change comparison.</p>
+      <h2 class="govuk-heading-l">Feedback</h2>
+      <p class="govuk-body">Any or all feedback is welcome. Raising questions or suggesting changes is the point of the prototypes!</p>
       <ul class="govuk-list">
-        <li>
-          <a href="/a/admin-start-email.html" class="govuk-link">Service Model A</a>
-        </li>
-        <li>
-          Service Model B (TBC)
-        </li>
-      </ul>
-      <h3 class="govuk-heading-s">Previous versions</h3>
-      <ul class="govuk-list">
-        <li>
-          <a href="/a/181016/start-page" class="govuk-link">Service Model A</a> (181016)
-        </li>
-        <li>
-          <a href="/a/181014/start-page" class="govuk-link">Service Model A</a> (181012-pre-bc)
-        </li>
+        <li><a class="govuk-link" href="https://trello.com/c/5QOC8IOd/91-design-prototyping">General bugs/feedback (on Trello)</a></li>
+        <li><a class="govuk-link" href="https://trello.com/c/a7bLyrqg/98-gds-design-system-review">GDS Design feedback (on Trello)</a></li>
+        <li><a class="govuk-link" href="mailto:ben@hippodigital.co.uk?subject=Feedback about prototype">Email feedback (to Ben)</a></li>
       </ul>
     </div>
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-m">Admin prototypes</h2>
+    <div class="govuk-grid-column-two-thirds">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption">Latest and archived prototype versions</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col">Service Model A</th>
+            <th class="govuk-table__header" scope="col">Service Model B</th>
+            <th class="govuk-table__header" scope="col">Service Model C</th>
+            <th class="govuk-table__header" scope="col">Service Model D</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell" valign="top">
+              <a href="/a/admin-start-email.html" class="govuk-link">A Latest</a>
+            </td>
+            <td class="govuk-table__cell" valign="top">
+              &nbsp;
+            </td>
+            <td class="govuk-table__cell" valign="top">
+              &nbsp;
+            </td>
+            <td class="govuk-table__cell" valign="top">
+              In progress
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell" valign="top">
+              <a href="/a/181016/start-page" class="govuk-link">A 181016</a><br/>
+              <a href="/a/181014/start-page" class="govuk-link">A 181012-pre-bc</a>
+            </td>
+            <td class="govuk-table__cell" valign="top">
+              None available
+            </td>
+            <td class="govuk-table__cell" valign="top">
+              None available
+            </td>
+            <td class="govuk-table__cell" valign="top">
+              None available
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</div>
+  </div>
 
 {% endblock %}
