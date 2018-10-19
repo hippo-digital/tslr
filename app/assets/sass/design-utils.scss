@@ -11,3 +11,22 @@
   padding: 10px;
   opacity: 0;
 }
+
+.govuk-button {
+
+  &.user-journey-button {
+    background-color: #253cb8;
+    &:hover {
+      background-color: #182670;
+    }
+  }
+
+  &.hidden-button {
+    background-color: #ececec;
+    box-shadow: none;
+    &:hover {
+      background-color: #cccccc;
+    }
+  }
+
+}
