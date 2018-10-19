@@ -1,0 +1,32 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Title</h1>
+      <p class="govuk-body-l">Overview of this email</p>
+      <p class="govuk-body">Purpose:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Purpose 1</li>
+      </ul>
+      <p class="govuk-body">
+        <a href="#" role="button" class="govuk-link">Link text</a>
+      </p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third design-notes">
+
+      <p class="govuk-body">Issues/Notes:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Note</li>
+      </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-thanks" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
+
+            {{ govukCheckboxes({
+            idPrefix: "consent",
+            name: "consent",
+            fieldset: {
+              legend: {
+                text: "Declaration",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            hint: {
+              text: "Tick the box to confirm your declaration."
+            },
+            items: [
+              {
+                value: "accept",
+                text: "By ticking this box and continuing you are confirming that, to the best of your knowledge, the details you are providing are correct."
+              }
+            ]
+            }) }}
+
+          </fieldset>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
