@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Confirm teacher eligibility</h1>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col">Name</th>
+            <th width="20%" class="govuk-table__header" scope="col">Status</th>
+            <th width="20%" class="govuk-table__header" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">John Smith</th>
+            <th class="govuk-table__cell" scope="row">Pending</th>
+            <td class="govuk-table__cell"><a href="#" role="button" draggable="false" class="govuk-button">View</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Jane Smythe</th>
+            <th class="govuk-table__cell" scope="row">Validated</th>
+            <td class="govuk-table__cell"><a href="#" role="button" draggable="false" class="govuk-button">View</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="row">Juan Sebastian</th>
+            <th class="govuk-table__cell" scope="row">Validated</th>
+            <td class="govuk-table__cell"><a href="#" role="button" draggable="false" class="govuk-button">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Email to school</h1>
+      <p class="govuk-body-l">Initiates Service Model A by communicating the service to schools.</p>
+      <p class="govuk-body">Purpose:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Tell admin to forward the email to eligible teachers.</li>
+        <li>Tell teachers to update DQT with their email address because thats how we will invite them to the service.</li>
+      </ul>
+      <p class="govuk-body">
+        <a href="teacher-start-email" role="button" class="govuk-link">School admin sends emails</a>
+      </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-payment-method" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
+
+            {{ govukCheckboxes({
+            idPrefix: "consent",
+            name: "consent",
+            fieldset: {
+              legend: {
+                text: "Consent declaration",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            hint: {
+              text: "Tick the box to confirm your consent."
+            },
+            items: [
+              {
+                value: "accept",
+                text: "Confirm your consent for DfE to ask your school to provide details of the amount of student loan repayments you made between {start-date} and {end-date}."
+              }
+            ]
+            }) }}
+
+          </fieldset>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

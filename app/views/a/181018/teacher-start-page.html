@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Teachers' Student Loan Reimbursement</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body-l">Start page. Details here about the service - or at least to affirm to the user that they've reached the right place from the email.</p>
+
+      {{ govukButton({
+        text: "Start now",
+        href: "teacher-verify-enter-trn",
+        classes: "govuk-button--start"
+      }) }}
+
+    </div>
+
+  </div>
+
+{% endblock %}

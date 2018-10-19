@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Education",
+        href: "#"
+      },
+      {
+        text: "Funding",
+        href: "#"
+      },
+      {
+        text: "Student loans",
+        href: "#"
+      },
+      {
+        text: "Teachers' student loan reimbursement",
+        href: "#"
+      },
+      {
+        text: "Application complete"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Thanks</h1>
+      <p class="govuk-body-l">
+        You are now registered for the TSLR service. DfE will contact your school to validate your eligibility and to check the amounts you should be repaid.
+      </p>
+      <p class="govuk-body-l">
+        You will receive an email with the outcome once the process is complete.
+      </p>
+      <p class="govuk-body">
+        <a href="admin-notification-email" role="button" class="govuk-link invisible-link">Invisible prototype link</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
