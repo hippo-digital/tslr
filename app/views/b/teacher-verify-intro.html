@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Verify your identity</h1>
+      <p class="govuk-body-l">Using the Gov.uk Verify service, you can quickly verify your identity online using a verified partner.</p>
+      <a href="http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-b&userLOA=0" role="button" draggable="false" class="govuk-button govuk-button">Continue</a>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="teacher-verify-thanks" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

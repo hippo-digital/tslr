@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Claim a teacher student loan reimbursement</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body-l">Intro par... what is TSLR?</p>
+      <h2 class="govuk-heading-l">Eligibility</h2>
+      <p class="govuk-body">You should be in years 1 to 5 of your teaching career and have achieved qualified status in or after 2013.</p>
+      <p class="govuk-body">You must have taught one of the following priority subjects for at least 50% of your contracted hours for the year you are claiming:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>languages (excluding English)</li>
+        <li>physics</li>
+        <li>chemistry</li>
+        <li>biology</li>
+        <li>computer science</li>
+      </ul>
+      <p class="govuk-body">You must have taught in one of the qualifying regions or authorities.</p>
+      <p class="govuk-body">
+        <a href="teacher-verify-intro" role="button" draggable="false" class="govuk-button govuk-button--start">Start now</a>
+      </p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body attention">Needs better info regarding qualifying regions.</p>
+      <p class="govuk-body attention">GDS: Might be better to use task list pattern.</p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
