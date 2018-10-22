@@ -1,0 +1,33 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Email to teacher</h1>
+      <hr/>
+      <h2 class="govuk-heading-m">Subject</h2>
+      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Payment unsuccessful</p>
+      <h2 class="govuk-heading-m">Body</h2>
+      <p class="govuk-body">Dear {name}</p>
+      <p class="govuk-body">Your payment regarding your Teacher's Student Loan Reimbursement was not successful.</p>
+      <p class="govuk-body">Confirm what will happen next.</p>
+      <p class="govuk-body">Kind regards</p>
+      <p class="govuk-body">{Signatory}</p>
+      <hr/>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="/" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Start again</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
