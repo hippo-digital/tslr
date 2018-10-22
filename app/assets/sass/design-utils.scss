@@ -12,6 +12,17 @@
   opacity: 0;
 }
 
+p.govuk-body {
+
+  &.attention {
+    display: initial;
+    color: red;
+    &:before { content: "!!! "; }
+    &:after { content: " !!!"; }
+  }
+
+}
+
 .govuk-button {
 
   &.user-journey-button {
