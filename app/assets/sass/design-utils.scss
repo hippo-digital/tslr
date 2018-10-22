@@ -15,7 +15,7 @@
 p.govuk-body {
 
   &.attention {
-    display: initial;
+    display: block;
     color: red;
     &:before { content: "!!! "; }
     &:after { content: " !!!"; }
