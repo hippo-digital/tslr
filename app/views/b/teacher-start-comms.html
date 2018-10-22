@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Targetted comms</h1>
+      <hr/>
+      <p class="govuk-body-l">Comms might include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Facebook and other social material?</li>
+        <li>Printed collateral in existing teacher comms channels?</li>
+        <li>Non-personalised email comms? e.g. are there relevant mailing lists? NQT mailing lists?</li>
+      </ul>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="teacher-start-page" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Continue</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Your verification code is correct</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">To complete your application, we need to ask a few more questions.</p>
+      <a href="teacher-proportion" role="button" draggable="false" class="govuk-button govuk-button">Continue</a>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body attention">Need to update the logic to present different messaging whether coming from Verify or TRN route.</p>
+      <p class="govuk-body attention">Need to update the logic to present error message for incorrect code.</p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
