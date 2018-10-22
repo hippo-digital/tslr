@@ -25,18 +25,16 @@
             name: "consent",
             fieldset: {
               legend: {
-                text: "Consent declaration",
+                text: "Give your consent for us to contact your school",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--xl"
               }
             },
-            hint: {
-              text: "Tick the box to confirm your consent."
-            },
+            hint: {},
             items: [
               {
                 value: "accept",
-                text: "Confirm your consent for DfE to ask your school to provide details of the amount of student loan repayments you made between {start-date} and {end-date}."
+                text: "Tick the box to give consent for the Department for Education to contact your school to find out how much you paid in loan repayments last year."
               }
             ]
             }) }}
@@ -47,6 +45,12 @@
         <button type="submit" class="govuk-button">Continue</button>
 
       </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body attention">Is 'last year' correct here?</p>
 
     </div>
 
