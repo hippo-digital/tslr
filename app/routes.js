@@ -2,11 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 // Add your routes here - above the module.exports line
-// Branching
+// Using regex matching, routes should ideally work even for snapshots
 
-// Option A routes
-// ---------------
-// Using regex matching, these should work even for snapshots
+// All Service Models
+// ------------------
 
 router.post(/eligibility-schools/, function (req, res) {
 
@@ -79,5 +78,21 @@ router.post(/about-you-trn/, function (req, res) {
   }
 
 })
+
+// Service Model B only
+// --------------------
+
+// Hmmm... that's gonna need a tricksy regex to catch both b/some-url/ and b/181031/some-url/
+/*router.post(b/about-you-trn/, function (req, res) {
+
+  // From eligibility-teaching
+  let eligible = req.session.data['teaching']
+  if (eligible === 'no') {
+    res.redirect('ineligible')
+  } else {
+    res.redirect('about-you-trn')
+  }
+
+})*/
 
 module.exports = router
