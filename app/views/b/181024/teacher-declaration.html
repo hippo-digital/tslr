@@ -16,7 +16,7 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <form action="teacher-payment-method" method="POST" role="form">
+      <form action="teacher-confirmation" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
 
@@ -25,16 +25,18 @@
             name: "consent",
             fieldset: {
               legend: {
-                text: "Do you give your consent for us to contact HMRC?",
+                text: "Declaration",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--xl"
               }
             },
-            hint: {},
+            hint: {
+              text: "Tick the box to confirm that what you’ve told us is correct."
+            },
             items: [
               {
                 value: "accept",
-                text: "Tick the box to give consent for the Department for Education to contact your school to find out how much you paid in loan repayments last year."
+                text: "I confirm that to the best of my knowledge the details I have given are correct."
               }
             ]
             }) }}
@@ -50,8 +52,7 @@
 
     <div class="govuk-grid-column-one-third">
 
-      <p class="govuk-body attention">Is 'last year' correct here?</p>
-      <p class="govuk-body attention">Is it 'us' and/or HMRC who needs consent?</p>
+      <p class="govuk-body attention">The 'Tick the box...' is part of the hint here but previously part of the tickbox text.</p>
 
     </div>
 

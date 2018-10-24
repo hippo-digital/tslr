@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Get student loan payments reimbursed</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <nav class="tslr-contents-list" role="navigation">
+        <h2 class="govuk-heading-m">Contents</h2>
+        <ul class="govuk-list">
+          <li>&mdash; About this scheme</li>
+          <li>&mdash; <a class="govuk-link" href="teacher-tslr-eligibility">Eligibility</a></li>
+          <li>&mdash; <a class="govuk-link" href="teacher-tslr-apply">Apply</a></li>
+        </ul>
+      </nav>
+
+      <h2 class="govuk-heading-l">About this scheme</h2>
+
+      <p class="govuk-body">The teacher’s student loan reimbursement scheme rewards teachers for teaching priority subjects in eligible parts of England.</p>
+      <p class="govuk-body">If you are eligible, you can claim back student loan payments for 2018/2019 tax year.</p>
+      <p class="govuk-body">Your loan can be repaid if it is was taken out with the Student Loan Company in England or Wales.</p>
+      <p class="govuk-body">Repayments are not classed as part of your pay. You will not have to pay tax or National Insurance on them.</p>
+      <p class="govuk-body">We will ask the school you taught at to confirm what you tell us about your employment there.</p>
+
+      <nav class="tslr-pagination" role="navigation">
+        <ul>
+          <li class="next">
+            <a href="teacher-tslr-eligibility">
+              <span class="text"><span class="arrow">⇢</span>Next</span>
+              <span class="label">Eligibility</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body attention">Contents component is not in Prototype Kit</p>
+      <p class="govuk-body attention">Pagination component is not in Prototype Kit</p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
