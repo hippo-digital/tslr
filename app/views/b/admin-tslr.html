@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Get student loan payments reimbursed</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-l">About this scheme</h2>
+
+      <p class="govuk-body">Details for school admin TBC</p>
+      <p class="govuk-body">
+        <a href="admin-dfe-signin" role="button" draggable="false" class="govuk-button govuk-button--start">Start now</a>
+      </p>
+
+      <nav class="tslr-pagination" role="navigation">
+        <ul>
+          <li class="next">
+            <a href="teacher-tslr-eligibility">
+              <span class="text"><span class="arrow">⇢</span>Next</span>
+              <span class="label">Eligibility</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+  </div>
+
+{% endblock %}
