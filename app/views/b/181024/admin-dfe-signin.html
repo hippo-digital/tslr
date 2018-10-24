@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Admin DfE sign-in</h1>
+      <div class="govuk-inset-text">
+        Use this page to continue validating the eligibility of a teacher for the TSLR service.
+      </div>
+      <p class="govuk-body-l">School admin user sign-in</p>
+
+      <a href="admin-confirm-eligibility" role="button" draggable="false" class="govuk-button">Continue</a>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body attention">Needs to be completed.</p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

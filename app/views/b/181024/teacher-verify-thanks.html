@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">You have confirmed your identity</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">To continue your application, we need to ask a few more questions.</p>
+      <a href="teacher-enter-ni-number" role="button" draggable="false" class="govuk-button govuk-button">Continue</a>
+
+    </div>
+
+  </div>
+
+{% endblock %}

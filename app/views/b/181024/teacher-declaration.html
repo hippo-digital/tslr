@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-confirmation" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
+
+            {{ govukCheckboxes({
+            idPrefix: "consent",
+            name: "consent",
+            fieldset: {
+              legend: {
+                text: "Declaration",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            hint: {
+              text: "Tick the box to confirm that what you’ve told us is correct."
+            },
+            items: [
+              {
+                value: "accept",
+                text: "I confirm that to the best of my knowledge the details I have given are correct."
+              }
+            ]
+            }) }}
+
+          </fieldset>
+        </div>
+
+        <button type="submit" class="govuk-button">Continue</button>
+
+      </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body attention">The 'Tick the box...' is part of the hint here but previously part of the tickbox text.</p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
