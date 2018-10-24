@@ -4,27 +4,34 @@
 
   <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
 
-      <h1 class="govuk-heading-xl">Email to teacher</h1>
-      <hr/>
+      <h1 class="govuk-heading-s">Notification email</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds email-bg">
+
       <h2 class="govuk-heading-m">Subject</h2>
       <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application complete</p>
       <h2 class="govuk-heading-m">Body</h2>
       <p class="govuk-body">Dear {name}</p>
-      <p class="govuk-body">Your application is now complete.</p>
-      <p class="govuk-body">Confirm what will happen next.</p>
+      <p class="govuk-body">Your application has been received.</p>
+      <p class="govuk-body"><strong>What happens next</strong></p>
+      <p class="govuk-body">We will contact HMRC to confirm how much you should be reimbursed and what schools you have taught at in the last tax year.</p>
+      <p class="govuk-body">We will contact your school to confirm that you are eligible.</p>
+      <p class="govuk-body">Once we have completed that process, we will email you with the outcome.</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Signatory}</p>
-      <hr/>
 
     </div>
 
     <div class="govuk-grid-column-one-third">
 
       <p class="govuk-body">
-        <a href="admin-application-received-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Continue (Eligible)</a>
-        <a href="teacher-application-ineligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Continue (Not eligible)</a>
+        <a href="admin-application-received-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Notification email (Admin)</a>
+        <a href="teacher-application-eligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Outcome email (Eligible)</a>
+        <a href="teacher-application-ineligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Outcome email (Ineligible)</a>
       </p>
 
     </div>
