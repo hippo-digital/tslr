@@ -4,27 +4,30 @@
 
   <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
 
-      <h1 class="govuk-heading-xl">Email to school admin</h1>
-      <hr/>
+      <h1 class="govuk-heading-s">Notification email</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds email-bg">
+
       <h2 class="govuk-heading-m">Subject</h2>
-      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Process complete</p>
+      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application processed</p>
       <h2 class="govuk-heading-m">Body</h2>
-      <p class="govuk-body">Dear school admin</p>
-      <p class="govuk-body">The application for {name} is now complete.</p>
+      <p class="govuk-body">Dear {School admin name}</p>
+      <p class="govuk-body">You have completed processing {Teachers name}'s application to get their student loan payments reimbursed.</p>
       <p class="govuk-body">Confirm what will happen next.</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Signatory}</p>
-      <hr/>
 
     </div>
 
     <div class="govuk-grid-column-one-third">
 
       <p class="govuk-body">
-        <a href="teacher-payment-successful-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Continue (Payment successful)</a>
-        <a href="teacher-payment-unsuccessful-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Continue (Payment unsuccessful)</a>
+        <a href="teacher-application-eligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Outcome email (Eligible)</a>
+        <a href="teacher-application-ineligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Outcome email (Ineligible)</a>
       </p>
 
     </div>
