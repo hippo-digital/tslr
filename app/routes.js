@@ -94,24 +94,19 @@ router.post(/about-you-trn/, function (req, res) {
   }
 
 })*/
-/*
-router.get(/(username|id)\/(.+)/, function (req, res, next) {
-//router.get(/^\/(discussion|page)\/(.+)/, function (req, res, next) {
-  res.write(req.params[0]); //This has "discussion" or "page"
-  res.write(req.params[1]); //This has the slug
-  res.end();
-});
-*/
 
-// The below needs extending to be more dynamic and to use session storage + redirect method
-// as it will be less brittle and work for archived versions
-
-router.get(/admin-confirm-eligibility\/(name)\/([a-z-]+)/, function (req, res) {
+router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
   // From admin-applications
-  var my_var = req.params[1];
-  my_global_var = 'Thing';
-  res.render('b/admin-confirm-eligibility', {'teacher_name': req.params[1]});
+  var full_name = req.params[1];
+  var name = full_name.split("-");
+  var applicant = {
+    'full_name': name[0] + ' ' + name[1],
+    'first_name': name[0],
+    'last_name': name[1]
+  };
+  req.session.data['applicant'] = applicant;
+  res.redirect('admin-confirm-eligibility');
 
 })
 

@@ -16,37 +16,15 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <form action="admin-confirmation" method="POST" role="form">
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
-
-            {{ govukCheckboxes({
-            idPrefix: "consent",
-            name: "consent",
-            fieldset: {
-              legend: {
-                text: "Declaration",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--xl"
-              }
-            },
-            hint: {
-              text: "Tick the box to confirm your declaration."
-            },
-            items: [
-              {
-                value: "accept",
-                text: "By ticking this box and continuing you are confirming that, to the best of your knowledge, the details you are providing are correct."
-              }
-            ]
-            }) }}
-
-          </fieldset>
-        </div>
-
-        <button type="submit" class="govuk-button">Continue</button>
-
-      </form>
+      <h1 class="govuk-heading-xl">Declaration</h1>
+      <p class="govuk-body">By processing this application you agree that:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the information you've given is complete and correct as far as you know</li>
+        <li>HMRC will use this information to process the teacher's application</li>
+      </ul>
+      <p class="govuk-body">
+        <a href="admin-confirmation" role="button" draggable="false" class="govuk-button">I agree &mdash; Process the application</a>
+      </p>
 
     </div>
 
