@@ -16,19 +16,37 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Admin DfE sign-in</h1>
-      <div class="govuk-inset-text">
-        Use this page to continue validating the eligibility of a teacher for the TSLR service.
-      </div>
-      <p class="govuk-body-l">School admin user sign-in</p>
+      <h1 class="govuk-heading-xl">Sign in to DfE</h1>
 
-      <a href="admin-confirm-eligibility" role="button" draggable="false" class="govuk-button">Continue</a>
+      <form action="admin-applications" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-    </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="dfe-username">Email address</label>
+              <input class="govuk-input govuk-!-width-one-half" id="dfe-username" name="dfe-username" type="email">
+            </div>
 
-    <div class="govuk-grid-column-one-third">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="dfe-password">Password</label>
+              <input class="govuk-input govuk-!-width-one-half" id="dfe-password" name="dfe-password" type="password">
+            </div>
 
-      <p class="govuk-body attention">Needs to be completed.</p>
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+            <div class="govuk-form-group">
+              <ul class="govuk-list govuk-list--bullet">
+                <li><a href="#" class="govuk-link">Forgotten your password?</a></li>
+                <li><a href="#" class="govuk-link">Register for DfE</a></li>
+              </ul>
+            </div>
+
+          </fieldset>
+        </div>
+
+      </form>
 
     </div>
 
