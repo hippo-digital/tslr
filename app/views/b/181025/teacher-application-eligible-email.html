@@ -1,0 +1,37 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-s">Application complete email: Eligible</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds email-bg">
+
+      <h2 class="govuk-heading-s">Subject</h2>
+      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application complete</p>
+      <h2 class="govuk-heading-s">Body</h2>
+      <p class="govuk-body">Dear {name}</p>
+      <p class="govuk-body">We have checked your details with your school and HMRC.</p>
+      <p class="govuk-body">Your reimbursement has been made and may take 3 - 5 working days to show in your account.</p>
+      <p class="govuk-body">If you have any problems receiving the payment please call us on 0800 123123</p>
+      <p class="govuk-body">Kind regards</p>
+      <p class="govuk-body">{Signatory}</p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="/" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Start again</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

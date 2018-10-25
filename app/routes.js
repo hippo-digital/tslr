@@ -95,4 +95,19 @@ router.post(/about-you-trn/, function (req, res) {
 
 })*/
 
+router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
+
+  // From admin-applications
+  var full_name = req.params[1];
+  var name = full_name.split("-");
+  var applicant = {
+    'full_name': name[0] + ' ' + name[1],
+    'first_name': name[0],
+    'last_name': name[1]
+  };
+  req.session.data['applicant'] = applicant;
+  res.redirect('admin-confirm-eligibility');
+
+})
+
 module.exports = router

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Get student loan payments reimbursed</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <nav class="tslr-contents-list" role="navigation">
+        <h2 class="govuk-heading-m">Contents</h2>
+        <ul class="govuk-list">
+          <li>&mdash; <a class="govuk-link" href="teacher-tslr">About this scheme</a></li>
+          <li>&mdash; <a class="govuk-link" href="teacher-tslr-eligibility">Eligibility</a></li>
+          <li>&mdash; Apply</li>
+        </ul>
+      </nav>
+
+      <h2 class="govuk-heading-l">Apply</h2>
+
+      <h3 class="govuk-heading-m">Before you start</h3>
+      <p class="govuk-body">You will need:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your National insurance (NI) number</li>
+      </ul>
+      <p class="govuk-body">We will ask the school you taught at for proof that you spent at least 50% of your contracted hours teaching at least one of the following; biology, chemistry, computer science, languages (excluding English) or physics.</p>
+      <p class="govuk-body">
+        <a href="teacher-verify-intro" role="button" draggable="false" class="govuk-button govuk-button--start">Start now</a>
+      </p>
+
+      <h3 class="govuk-heading-m">Other ways to apply</h3>
+      <p class="govuk-body">You can also apply by telephone: 0800 XXX XXX.</p>
+
+      <nav class="tslr-pagination" role="navigation">
+        <ul>
+          <li class="prev">
+            <a href="teacher-tslr-eligibility">
+              <span class="text"><span class="arrow">⇠</span>Previous</span>
+              <span class="label">Eligibility</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+  </div>
+
+{% endblock %}

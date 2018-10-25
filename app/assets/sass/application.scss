@@ -79,3 +79,26 @@ nav.tslr-pagination {
   }
 
 }
+
+.govuk-tag {
+
+  &.incomplete { background-color: #fdbe53; }
+
+}
+
+.app-task-list {
+
+  ul.app-task-list__items { padding-left: 0; }
+
+  .app-task-list__item {
+    span.date-applied {
+      display: inline-block;
+      margin-left: 10px;
+      color: grey;
+      font-size: 16px;
+      font-style: italic;
+      text-decoration: none;
+    }
+  }
+
+}
