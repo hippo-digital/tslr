@@ -17,14 +17,46 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">Confirm teacher eligibility</h1>
-      <p class="govuk-body-l">Details here about teacher</p>
-      <a href="admin-declaration" role="button" draggable="false" class="govuk-button">Continue</a>
+      <p class="govuk-body">Can you confirm that <strong>{{teacher_name}}</strong> taught at least one of the following subjects for a minimum of 50% of their contracted hours for the 2018/2019 tax year?</p>
 
-    </div>
+      <form action="admin-confirm-eligibility" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-    <div class="govuk-grid-column-one-third">
+            <div class="govuk-form-group">
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>computer science</li>
+                <li>languages (excluding English)</li>
+                <li>physics</li>
+              </ul>
+            </div>
 
-      <p class="govuk-body attention">Needs to be completed.</p>
+            <div class="govuk-form-group">
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="consent-y" name="consent" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="consent-y">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="consent-n" name="consent" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="consent-n">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
 
     </div>
 
