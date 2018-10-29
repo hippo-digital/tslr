@@ -29,8 +29,6 @@
 // Custom macros
 // -------------
 
-{% from "includes/macros/ucFirst.njk" import ucFirst %}
-
 // Page blocks
 // -----------
 
@@ -78,4 +76,5 @@
     {% block pageScripts %}{% endblock %}
   {% endblock %}
   <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
+  {{data | log}}
 {% endblock %}

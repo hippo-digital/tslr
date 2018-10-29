@@ -38,6 +38,10 @@ module.exports = function (env) {
 
   ------------------------------------------------------------------ */
 
+  filters.ucFirst = function(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   /* ------------------------------------------------------------------
     keep the following line to return your filters to the app
   ------------------------------------------------------------------ */
