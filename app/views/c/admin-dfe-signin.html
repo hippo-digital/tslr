@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Sign in to DfE</h1>
+
+      <form action="admin-confirm-location-eligibility" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="dfe-username">Email address</label>
+              <input class="govuk-input govuk-!-width-one-half" id="dfe-username" name="dfe-username" type="email">
+            </div>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="dfe-password">Password</label>
+              <input class="govuk-input govuk-!-width-one-half" id="dfe-password" name="dfe-password" type="password">
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+            <div class="govuk-form-group">
+              <ul class="govuk-list govuk-list--bullet">
+                <li><a href="#" class="govuk-link">Forgotten your password?</a></li>
+                <li><a href="#" class="govuk-link">Register for DfE</a></li>
+              </ul>
+            </div>
+
+          </fieldset>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

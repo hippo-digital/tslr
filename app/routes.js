@@ -110,4 +110,37 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
 })
 
+// Service Model C only
+// --------------------
+
+router.get(/admin-tslr_(name)_([a-z-]+)/, function (req, res) {
+
+  // From admin-applications
+  var full_name = req.params[1];
+  var name = full_name.split("-");
+  var applicant = {
+    'full_name': name[0] + ' ' + name[1],
+    'first_name': name[0],
+    'last_name': name[1]
+  };
+  req.session.data['applicant'] = applicant;
+  res.redirect('admin-tslr');
+
+})
+
+router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req, res) {
+
+  // From admin-applications
+  var full_name = req.params[1];
+  var name = full_name.split("-");
+  var applicant = {
+    'full_name': name[0] + ' ' + name[1],
+    'first_name': name[0],
+    'last_name': name[1]
+  };
+  req.session.data['applicant'] = applicant;
+  res.redirect('admin-confirm-location-eligibility');
+
+})
+
 module.exports = router

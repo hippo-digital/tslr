@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Education",
+        href: "#"
+      },
+      {
+        text: "Funding",
+        href: "#"
+      },
+      {
+        text: "Student loans",
+        href: "#"
+      },
+      {
+        text: "Teachers' student loan reimbursement",
+        href: "#"
+      },
+      {
+        text: "Application complete"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Process complete</h1>
+      <p class="govuk-body">Thanks for confirming <strong>{{ucFirst(data['applicant']['first_name'])}} {{ucFirst(data['applicant']['last_name'])}}'s</strong> eligibility.</p>
+      <p class="govuk-body">We'll process the teacher's repayment calculation and will send them an email once their payment has been made.</p>
+      <p class="govuk-body">
+        <a href="admin-applications" role="button" draggable="false" class="govuk-button">Continue</a>
+      </p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-process-complete-email" role="button" draggable="false" class="govuk-button hidden-button">Continue</a>
+      </p>
+
+    </div>
+
+  </div>
+
+  </div>
+
+{% endblock %}

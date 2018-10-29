@@ -1,0 +1,39 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-s">Application complete email: Ineligible</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds email-bg">
+
+      <h2 class="govuk-heading-s">Subject</h2>
+      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application complete</p>
+      <h2 class="govuk-heading-s">Body</h2>
+      <p class="govuk-body">Dear {name}</p>
+      <p class="govuk-body">Your application to get your student loan payments reimbursed was not successful. This is because you did not meet the following eligibility criteria:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>You have not taught in a school in one of the 25 qualifying areas involved.</li>
+      </ul>
+      <p class="govuk-body">To find out more go to GOV.UK and search for get your student loan payments reimbursed.</p>
+      <p class="govuk-body">Kind regards</p>
+      <p class="govuk-body">{Signatory}</p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="/" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Start again</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
