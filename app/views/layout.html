@@ -78,4 +78,7 @@
     {% block pageScripts %}{% endblock %}
   {% endblock %}
   <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
+  {{data['applicant']['first_name'] | log}}
+  {{req.session.data['applicant']['first_name'] | log}}
+  {{data['full-name'] | log}}
 {% endblock %}
