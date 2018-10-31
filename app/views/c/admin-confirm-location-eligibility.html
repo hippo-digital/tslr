@@ -17,7 +17,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">Confirm location eligibility</h1>
-      <p class="govuk-body">Can you confirm that <strong>{{data['applicant']['first_name'] | ucFirst}} {{data['applicant']['last_name'] | ucFirst}}</strong> taught at {{globals.sm3.teacher.school_name}} during the {{globals.tax_year.full}} tax year?</p>
+      <p class="govuk-body">Can you confirm that <strong>{{ data['applicant']['first_name'] if data['applicant']['first_name'] else globals.sm3.teacher.first_name | title }} {{ data['applicant']['last_name'] if data['applicant']['last_name'] else globals.sm3.teacher.last_name | title -}}</strong> taught at {{ globals.sm3.teacher.school_name }} during the {{ globals.tax_year.full }} tax year?</p>
 
       <form action="admin-confirm-teaching-eligibility" method="POST" role="form">
         <div class="govuk-form-group">
