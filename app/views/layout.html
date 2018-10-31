@@ -26,8 +26,9 @@
 {% from "textarea/macro.njk"      import govukTextarea %}
 {% from "warning-text/macro.njk"  import govukWarningText %}
 
-// Custom macros
-// -------------
+// Variables, functions & macros
+// -----------------------------
+{%import '_globals.html' as globals %}
 
 // Page blocks
 // -----------
@@ -76,5 +77,5 @@
     {% block pageScripts %}{% endblock %}
   {% endblock %}
   <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
-  {{data | log}}
+  {{globals | log}}
 {% endblock %}
