@@ -39,7 +39,12 @@ module.exports = function (env) {
   ------------------------------------------------------------------ */
 
   filters.ucFirst = function(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+    // text = default(text, "TBC", true);
+    if (text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    } else {
+      return "Unknown";
+    }
   }
 
   /* ------------------------------------------------------------------
