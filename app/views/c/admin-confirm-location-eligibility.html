@@ -23,22 +23,80 @@
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
+            {% set enterTimePeriod %}
             <div class="govuk-form-group">
-              <div class="govuk-radios govuk-radios--inline">
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="consent-y" name="consent" type="radio" value="yes">
-                  <label class="govuk-label govuk-radios__label" for="consent-y">
-                    Yes
-                  </label>
+              <span id="start-date-hint" class="govuk-hint">{{ data['applicant']['full_name'] | title }} taught here from...</span>
+              <div class="govuk-date-input" id="start-date">
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="start-date-day">Day</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="start-date-day" name="start-date-day" type="number" pattern="[0-9]*">
+                  </div>
                 </div>
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="consent-n" name="consent" type="radio" value="no">
-                  <label class="govuk-label govuk-radios__label" for="consent-n">
-                    No
-                  </label>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="start-date-month">Month</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="start-date-month" name="start-date-month" type="number" pattern="[0-9]*">
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="start-date-year">Year</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="start-date-year" name="start-date-year" type="number" pattern="[0-9]*">
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="govuk-form-group">
+              <span id="end-date-hint" class="govuk-hint">...until...</span>
+              <div class="govuk-date-input" id="end-date">
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="end-date-day">Day</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="end-date-day" name="end-date-day" type="number" pattern="[0-9]*">
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="end-date-month">Month</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="end-date-month" name="end-date-month" type="number" pattern="[0-9]*">
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="end-date-year">Year</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="end-date-year" name="end-date-year" type="number" pattern="[0-9]*">
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endset -%}
+
+            {{ govukRadios({
+              idPrefix: "eligibility-period-conditional",
+              name: "eligibility-period",
+              fieldset: {},
+              hint: {},
+              items: [
+                {
+                  value: "eligible-full",
+                  text: "Yes, for the whole year",
+                  conditional: {}
+                },
+                {
+                  value: "eligible-part",
+                  text: "Yes, but only for part of the year",
+                  conditional: {
+                    html: enterTimePeriod
+                  }
+                },
+                {
+                  value: "ineligible",
+                  text: "No",
+                  conditional: {}
+                }
+              ]
+            }) }}
 
             <div class="govuk-form-group">
               <button type="submit" class="govuk-button">Continue</button>
