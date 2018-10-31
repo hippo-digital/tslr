@@ -17,7 +17,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">Confirm teacher eligibility</h1>
-      <p class="govuk-body">Can you confirm that <strong>{{ucFirst(data['applicant']['first_name'])}} {{ucFirst(data['applicant']['last_name'])}}</strong> taught at least one of the following subjects for a minimum of 50% of their contracted hours for the 2018/2019 tax year?</p>
+      <p class="govuk-body">Can you confirm that <strong>{{ucFirst(data['applicant']['first_name'])}} {{ucFirst(data['applicant']['last_name'])}}</strong> taught at least one of the following subjects for a minimum of 50% of their contracted hours for the {{globals.tax_year.full}} tax year?</p>
 
       <form action="admin-declaration" method="POST" role="form">
         <div class="govuk-form-group">
