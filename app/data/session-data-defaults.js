@@ -20,11 +20,5 @@ Example usage:
 module.exports = {
 
   // Insert values here
-  'applicant': {
-    'full_name': 'Joe Bloggs',
-    'first_name': 'Joe',
-    'last_name': 'Bloggs'
-  },
-  "full-name": "Sarah Philips";
 
 }
