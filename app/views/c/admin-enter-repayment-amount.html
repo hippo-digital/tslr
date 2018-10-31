@@ -17,7 +17,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">Confirm teacher loan repayments</h1>
-      <p class="govuk-body">Enter the total amount of student loans repaid by <strong>{{data['applicant']['first_name'] | ucFirst}} {{data['applicant']['last_name'] | ucFirst}}</strong> during the 2018/2019 tax year?</p>
+      <p class="govuk-body">Enter the total amount of student loans repaid by <strong>{{data['applicant']['first_name'] | ucFirst}} {{data['applicant']['last_name'] | ucFirst}}</strong> during the {{globals.tax_year.full}} tax year?</p>
 
       <form action="admin-declaration" method="POST" role="form">
         <div class="govuk-form-group">
