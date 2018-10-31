@@ -15,7 +15,7 @@
       <h2 class="govuk-heading-s">Subject</h2>
       <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application complete</p>
       <h2 class="govuk-heading-s">Body</h2>
-      <p class="govuk-body">Dear {name}</p>
+      <p class="govuk-body">Dear {{ data['applicant']['first_name'] | title }}</p>
       <p class="govuk-body">Your application to get your student loan payments reimbursed was not successful. This is because you did not meet the following eligibility criteria:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>You have not taught in a school in one of the 25 qualifying areas involved.</li>
