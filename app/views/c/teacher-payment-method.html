@@ -24,24 +24,24 @@
 
             <div class="govuk-form-group">
               <label class="govuk-label" for="bank-account-name">Name of the account holder</label>
-              <input class="govuk-input govuk-!-width-two-thirds" id="bank-account-name" name="bank-account-name" type="text">
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text">
             </div>
             <div class="govuk-form-group">
               <label class="govuk-label" for="bank-account-number">Account number</label>
-              <input class="govuk-input govuk-!-width-two-thirds" id="bank-account-number" name="bank-account-number" type="number">
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number">
             </div>
             <div class="govuk-form-group">
               <label class="govuk-label" for="#">Sort code</label>
-              <input class="govuk-input govuk-input--width-2" id="#" name="bank-sortcode-1" type="number" pattern="[0-9]*">
-              <input class="govuk-input govuk-input--width-2" id="#" name="bank-sortcode-2" type="number" pattern="[0-9]*">
-              <input class="govuk-input govuk-input--width-2" id="#" name="bank-sortcode-3" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-1" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-2" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-3" type="number" pattern="[0-9]*">
             </div>
 
             {% endset -%}
 
             {{ govukRadios({
               idPrefix: "payment-method-conditional",
-              name: "payment-method",
+              name: "teacher-payment-method",
               fieldset: {
                 legend: {
                   text: "How would you like to be paid?",

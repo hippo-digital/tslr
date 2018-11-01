@@ -20,29 +20,29 @@
 
             {% set contactByEmail %}
 
-            <h2 class="govuk-heading-m">Your email address</h4>
+            <h2 class="govuk-heading-m">Your email address</h2>
 
             <div class="govuk-form-group">
               <label class="govuk-label" for="contact-email-address">Enter a valid email address</label>
-              <input class="govuk-input govuk-!-width-two-thirds" id="contact-email-address" name="contact-email-address" type="email">
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email">
             </div>
 
             {% endset -%}
 
             {% set contactByMobile %}
 
-            <h2 class="govuk-heading-m">Your mobile number</h4>
+            <h2 class="govuk-heading-m">Your mobile number</h2>
 
             <div class="govuk-form-group">
               <label class="govuk-label" for="contact-mobile-number">Enter a valid mobile number</label>
-              <input class="govuk-input govuk-!-width-two-thirds" id="contact-mobile-number" name="contact-mobile-number" type="number">
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number">
             </div>
 
             {% endset -%}
 
             {{ govukRadios({
               idPrefix: "contact-method-conditional",
-              name: "contact-method",
+              name: "teacher-contact-method",
               fieldset: {
                 legend: {
                   text: "How would you like us to contact you?",

@@ -9,6 +9,15 @@
     background-color: #edede2;
   }
 
+  &.col-top-border {
+    border-top: 1px solid #cccccc;
+    padding-top: 20px;
+  }
+
+  &.col-top-padding {
+    padding-top: 20px;
+  }
+
 }
 
 .design-notes {
