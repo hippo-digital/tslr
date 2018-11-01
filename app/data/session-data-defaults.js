@@ -20,11 +20,5 @@ Example usage:
 module.exports = {
 
   // Insert values here
-  data: { trn: "1234567890" };
-  res.session.data['trn'] = "something";
-  req.session.data['trn'] = "something";
-  session.data['trn'] = "something";
-  data['trn'] = "something";
-  trn = "something";
 
 }

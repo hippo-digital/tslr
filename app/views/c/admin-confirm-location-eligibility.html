@@ -36,20 +36,20 @@
               <div class="govuk-date-input" id="start-date">
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="start-date-day">Day</label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="start-date-day" name="start-date-day" type="number" pattern="[0-9]*">
+                    <label class="govuk-label govuk-date-input__label" for="admin-start-day">Day</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-start-day" name="admin-start-day" type="number" pattern="[0-9]*">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="start-date-month">Month</label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="start-date-month" name="start-date-month" type="number" pattern="[0-9]*">
+                    <label class="govuk-label govuk-date-input__label" for="admin-start-month">Month</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-start-month" name="admin-start-month" type="number" pattern="[0-9]*">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="start-date-year">Year</label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="start-date-year" name="start-date-year" type="number" pattern="[0-9]*">
+                    <label class="govuk-label govuk-date-input__label" for="admin-start-year">Year</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="admin-start-year" name="admin-start-year" type="number" pattern="[0-9]*">
                   </div>
                 </div>
               </div>
@@ -59,20 +59,20 @@
               <div class="govuk-date-input" id="end-date">
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="end-date-day">Day</label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="end-date-day" name="end-date-day" type="number" pattern="[0-9]*">
+                    <label class="govuk-label govuk-date-input__label" for="admin-end-day">Day</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-end-day" name="admin-end-day" type="number" pattern="[0-9]*">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="end-date-month">Month</label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="end-date-month" name="end-date-month" type="number" pattern="[0-9]*">
+                    <label class="govuk-label govuk-date-input__label" for="admin-end-month">Month</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-end-month" name="admin-end-month" type="number" pattern="[0-9]*">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="end-date-year">Year</label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="end-date-year" name="end-date-year" type="number" pattern="[0-9]*">
+                    <label class="govuk-label govuk-date-input__label" for="admin-end-year">Year</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="admin-end-year" name="admin-end-year" type="number" pattern="[0-9]*">
                   </div>
                 </div>
               </div>
@@ -81,7 +81,7 @@
 
             {{ govukRadios({
               idPrefix: "eligibility-period-conditional",
-              name: "eligibility-period",
+              name: "admin-eligibility-period",
               fieldset: {},
               hint: {},
               items: [
