@@ -1,0 +1,29 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-s">Notification email</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds email-bg">
+
+      <h2 class="govuk-heading-s">Subject</h2>
+      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application received</p>
+      <h2 class="govuk-heading-s">Body</h2>
+      <p class="govuk-body">Dear {School admin name}</p>
+      <p class="govuk-body">{Teacher name} has applied to get their student loan payments reimbursed.</p>
+      <p class="govuk-body">We need you to confirm they are eligible.</p>
+      <p class="govuk-body"><a href="admin-tslr_name_jane-jones">Sign-in to confirm the teacher's eligibility</a></p>
+      <p class="govuk-body">Kind regards</p>
+      <p class="govuk-body">{Signatory}</p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-payment-method" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">Do you give your consent for us to contact HMRC?</h1>
+            </legend>
+            <span id="changed-name-hint" class="govuk-hint">
+              The Department for Education need to contact HMRC to confirm how much student loan you have repaid and what schools you have taught at in the last tax year.
+            </span>
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="consent-y" name="consent" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="consent-y">
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="consent-n" name="consent" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="consent-n">
+                  No
+                </label>
+              </div>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <button type="submit" class="govuk-button">Continue</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

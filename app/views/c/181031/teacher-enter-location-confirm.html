@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Is this the school you taught at during the {{ globals.tax_year.full }} tax year?</h1>
+
+      <form action="teacher-consent" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
+            <div class="govuk-form-group">
+              <h3 class="govuk-heading-m">Colne Valley High School</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                <li><strong>Local authority</strong>: Kirklees</li>
+                <li><strong>Education phase</strong>: Secondary</li>
+                <li><strong>School type</strong>: Academy sponsor led</li>
+                <li><strong>Website</strong>: <a href="http://www.thecvhs.org.uk/">http://www.thecvhs.org.uk/</a></li>
+              </ul>
+            </div>
+
+            <div class="govuk-form-group">
+              <div class="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="school-confirm-y" name="school-confirm" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="school-confirm-y">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="school-confirm-ya" name="school-confirm" type="radio" value="yes-another">
+                  <label class="govuk-label govuk-radios__label" for="school-confirm-ya">
+                    Yes, and I also taught at another school
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="school-confirm-n" name="school-confirm" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="school-confirm-n">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
