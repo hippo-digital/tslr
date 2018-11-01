@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Confirm teacher eligibility</h1>
+      <p class="govuk-body">Can you confirm that <strong>{{data['applicant']['full_name'] | title}}</strong> taught at least one of the following subjects for a minimum of 50% of their contracted hours for the {{globals.tax_year.full}} tax year?</p>
+
+      <form action="admin-enter-repayment-amount" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <div class="govuk-form-group">
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>computer science</li>
+                <li>languages (excluding english)</li>
+                <li>physics</li>
+              </ul>
+            </div>
+
+            <div class="govuk-form-group">
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">What if the teacher's timetable included leave?</span>
+                </summary>
+                <div class="govuk-details__text">
+                  Teacher's eligibility is not affected by any kind of leave e.g. paternity, maternity, sickness, etc. Their eligibility should be assessed based only on their expected timetable.
+                </div>
+              </details>
+            </div>
+
+            <div class="govuk-form-group">
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="consent-y" name="consent" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="consent-y">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="consent-n" name="consent" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="consent-n">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

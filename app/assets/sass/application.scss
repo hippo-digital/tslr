@@ -102,3 +102,26 @@ nav.tslr-pagination {
   }
 
 }
+
+th.govuk-table__header {
+
+  .sub-heading {
+    color: #666666;
+    font-size: 16px;
+  }
+
+}
+
+dl.release-desc {
+
+  margin: 0;
+  margin-bottom: 10px;
+
+  dt {}
+  dd {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #333333;
+  }
+
+}
