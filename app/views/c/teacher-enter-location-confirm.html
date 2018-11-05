@@ -16,15 +16,19 @@
 
     <div class="govuk-grid-column-two-thirds">
 
+      {% if data['teacher-num-schools'] | int == 1 %}
       <h1 class="govuk-heading-xl">Is this the school you taught at during the {{ globals.tax_year.full }} tax year?</h1>
+      {% else %}
+      <h1 class="govuk-heading-xl">Are these the schools you taught at during the {{ globals.tax_year.full }} tax year?</h1>
+      {% endif %}
 
-      <form action="teacher-consent" method="POST" role="form">
+      <form action="teacher-enter-location-confirm" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
             {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
             <div class="govuk-form-group">
-              <h3 class="govuk-heading-m">Colne Valley High School</h3>
+              <h3 class="govuk-heading-m">{{ data['teacher-school-1'] or "{School name}" }}</h3>
               <ul class="govuk-list govuk-list--bullet">
                 <li><strong>Local authority</strong>: Kirklees</li>
                 <li><strong>Education phase</strong>: Secondary</li>
@@ -32,15 +36,35 @@
               </ul>
             </div>
 
-            {% set enterAnotherSchool %}
-
-            <h2 class="govuk-heading-m">Which other school did you teach at during the {{ globals.tax_year.full }} tax year?</h2>
-
+            {% if data['teacher-num-schools'] | int == 2 %}
             <div class="govuk-form-group">
-              <label class="govuk-label" for="teacher-school">Enter the school name or reference number</label>
-              <input class="govuk-input" id="teacher-school" name="teacher-school" type="text">
+              <h3 class="govuk-heading-m">{{ data['teacher-school-2'] or "{School name}" }}</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                <li><strong>Local authority</strong>: Kirklees</li>
+                <li><strong>Education phase</strong>: Secondary</li>
+                <li><strong>School type</strong>: Academy sponsor led</li>
+              </ul>
             </div>
+            {% endif %}
 
+            {% if data['teacher-num-schools'] | int == 3 %}
+            <div class="govuk-form-group">
+              <h3 class="govuk-heading-m">{{ data['teacher-school-3'] or "{School name}" }}</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                <li><strong>Local authority</strong>: Kirklees</li>
+                <li><strong>Education phase</strong>: Secondary</li>
+                <li><strong>School type</strong>: Academy sponsor led</li>
+              </ul>
+            </div>
+            {% endif %}
+
+            {% set enterAnotherSchool %}
+            <h2 class="govuk-heading-m">Which other school did you teach at during the {{ globals.tax_year.full }} tax year?</h2>
+            <div class="govuk-form-group">
+              <input class="govuk-input" id="teacher-num-schools" name="teacher-num-schools" type="hidden" value="3">
+              <label class="govuk-label" for="teacher-school-2">Enter the school name or reference number</label>
+              <input class="govuk-input" id="teacher-school-2" name="teacher-school-2" type="text">
+            </div>
             {% endset -%}
 
             {{ govukRadios({
