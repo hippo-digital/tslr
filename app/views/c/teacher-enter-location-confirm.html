@@ -29,32 +29,45 @@
                 <li><strong>Local authority</strong>: Kirklees</li>
                 <li><strong>Education phase</strong>: Secondary</li>
                 <li><strong>School type</strong>: Academy sponsor led</li>
-                <li><strong>Website</strong>: <a href="http://www.thecvhs.org.uk/">http://www.thecvhs.org.uk/</a></li>
               </ul>
             </div>
 
+            {% set enterAnotherSchool %}
+
+            <h2 class="govuk-heading-m">Which other school did you teach at during the {{ globals.tax_year.full }} tax year?</h2>
+
             <div class="govuk-form-group">
-              <div class="govuk-radios">
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="school-confirm-y" name="teacher-school-confirm" type="radio" value="yes">
-                  <label class="govuk-label govuk-radios__label" for="school-confirm-y">
-                    Yes
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="school-confirm-ya" name="teacher-school-confirm" type="radio" value="yes-another">
-                  <label class="govuk-label govuk-radios__label" for="school-confirm-ya">
-                    Yes, and I also taught at another school
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="school-confirm-n" name="teacher-school-confirm" type="radio" value="no">
-                  <label class="govuk-label govuk-radios__label" for="school-confirm-n">
-                    No
-                  </label>
-                </div>
-              </div>
+              <label class="govuk-label" for="teacher-school">Enter the school name or reference number</label>
+              <input class="govuk-input" id="teacher-school" name="teacher-school" type="text">
             </div>
+
+            {% endset -%}
+
+            {{ govukRadios({
+              idPrefix: "school-confirm-conditional",
+              name: "teacher-school-confirm",
+              fieldset: {},
+              hint: {},
+              items: [
+                {
+                  value: "school-confirm-y",
+                  text: "Yes",
+                  conditional: {}
+                },
+                {
+                  value: "school-confirm-ya",
+                  text: "Yes, and I also taught at another school",
+                  conditional: {
+                    html: enterAnotherSchool
+                  }
+                },
+                {
+                  value: "school-confirm-n",
+                  text: "No",
+                  conditional: {}
+                }
+              ]
+            }) }}
 
             <div class="govuk-form-group">
               <button type="submit" class="govuk-button">Continue</button>
