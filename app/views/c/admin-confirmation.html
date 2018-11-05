@@ -4,38 +4,17 @@
   Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
 {% endblock %}
 
-{% block beforeContent %}
-
-  {% include "includes/phase-banner.html" %}
-
-  {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: "#"
-      },
-      {
-        text: "Education",
-        href: "#"
-      },
-      {
-        text: "Funding",
-        href: "#"
-      },
-      {
-        text: "Student loans",
-        href: "#"
-      },
-      {
-        text: "Teachers' student loan reimbursement",
-        href: "#"
-      },
-      {
-        text: "Application complete"
-      }
-    ]
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement applications",
+    containerClasses: "govuk-width-container govuk-tslr-header"
   }) }}
+{% endblock %}
 
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
 {% endblock %}
 
 {% block content %}
