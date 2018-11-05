@@ -14,6 +14,31 @@ $govuk-global-styles: true;
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
 
+// GDS colours: https://govuk-elements.herokuapp.com/colour/
+
+.govuk-header__container {
+
+  &.govuk-tslr-header {
+
+    background-color: #003a69;
+    border-color: #347ca9;
+
+    .govuk-header__logo { display: none; }
+
+    .govuk-header__content {
+      width: 100%;
+      a {
+        padding-left: 15px; padding-right: 15px;
+        pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+      }
+    }
+
+  }
+
+}
+
 nav.tslr-contents-list {
 
   border-bottom: 1px solid #cccccc;
