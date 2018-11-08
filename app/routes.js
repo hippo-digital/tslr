@@ -104,6 +104,7 @@ router.post(/teacher-enter-location-confirm/, function (req, res) {
     var schools = [];
     num_schools = 0;
   } else {
+    var option = req.session.data['teacher-school-confirm'];
     var schools = req.session.data['teacher-schools'];
     num_schools = schools.length;
   }
@@ -117,7 +118,6 @@ router.post(/teacher-enter-location-confirm/, function (req, res) {
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  var option = req.session.data['teacher-school-confirm'];
   if (option == 'school-confirm-y' || option == 'school-confirm-n') {
     res.redirect('teacher-consent');
   } else {
