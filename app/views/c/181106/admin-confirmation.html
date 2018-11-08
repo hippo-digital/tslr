@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement applications",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Process complete</h1>
+      <p class="govuk-body">Thanks for confirming <strong>{{data['applicant']['first_name'] | ucFirst}} {{data['applicant']['last_name'] | ucFirst}}'s</strong> eligibility.</p>
+      <p class="govuk-body">We'll process the teacher's repayment calculation and will send them an email once their payment has been made.</p>
+      <p class="govuk-body">
+        <a href="admin-applications" role="button" draggable="false" class="govuk-button">Continue</a>
+      </p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-process-complete-email" role="button" draggable="false" class="govuk-button hidden-button">Continue</a>
+      </p>
+
+    </div>
+
+  </div>
+
+  </div>
+
+{% endblock %}

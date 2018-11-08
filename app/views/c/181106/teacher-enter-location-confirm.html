@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if data['teacher-num-schools'] | int == 1 %}
+      <h1 class="govuk-heading-xl">Is this the school you taught at during the {{ globals.tax_year.full }} tax year?</h1>
+      {% else %}
+      <h1 class="govuk-heading-xl">Are these the schools you taught at during the {{ globals.tax_year.full }} tax year?</h1>
+      {% endif %}
+
+      <form action="teacher-enter-location-confirm" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
+            {% for school in data['teacher-schools'] %}
+              <div class="govuk-form-group">
+                <h3 class="govuk-heading-m">{{ school or "{School name}" }}</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li><strong>Local authority</strong>: Kirklees</li>
+                  <li><strong>Education phase</strong>: Secondary</li>
+                  <li><strong>School type</strong>: Academy sponsor led</li>
+                </ul>
+              </div>
+            {% endfor %}
+
+            {% set enterAnotherSchool %}
+            <h2 class="govuk-heading-m">Which other school did you teach at during the {{ globals.tax_year.full }} tax year?</h2>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="teacher-school-name">Enter the school name or reference number</label>
+              <input class="govuk-input" id="teacher-school-name" name="teacher-school-name" type="text">
+            </div>
+            {% endset -%}
+
+            {{ govukRadios({
+              idPrefix: "school-confirm-conditional",
+              name: "teacher-school-confirm",
+              fieldset: {},
+              hint: {},
+              items: [
+                {
+                  value: "school-confirm-y",
+                  text: "Yes",
+                  conditional: {}
+                },
+                {
+                  value: "school-confirm-ya",
+                  text: "Yes, and I also taught at another school",
+                  conditional: {
+                    html: enterAnotherSchool
+                  }
+                },
+                {
+                  value: "school-confirm-n",
+                  text: "No",
+                  conditional: {}
+                }
+              ]
+            }) }}
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
