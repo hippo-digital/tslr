@@ -31,7 +31,7 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Check details for {{ full_name | title }}</h1>
+      <h1 class="govuk-heading-xl">Check subject information</h1>
       <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
 
       <form action="admin-enter-repayment-amount" method="POST" role="form">
@@ -47,7 +47,7 @@
                 <li>physics</li>
               </ul>
               <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school.</p>
-              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did {{ full_name | title }} meet this criteria?</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
             </div>
 
             <div class="govuk-form-group">
