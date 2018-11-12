@@ -22,19 +22,11 @@
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-            <span id="nin-hint" class="govuk-hint">
-              <details class="govuk-details">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">Where can I find my NI number?</span>
-                </summary>
-                <div class="govuk-details__text">
-                  <p class="govuk-body">You can find your NI number on your National Insurance card, benefit letter, payslip or P60.</p>
-                </div>
-              </details>
-            </span>
-
             <div class="govuk-form-group">
-              <label class="govuk-label" for="teacher-ni">For example, ‘QQ 12 34 56 C’.</label>
+              <label class="govuk-label" for="teacher-ni">National Insurance number</label>
+              <span id="national-insurance-number-hint" class="govuk-hint">
+                It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
+              </span>
               <input class="govuk-input" id="teacher-ni" name="teacher-ni" type="text">
             </div>
 
