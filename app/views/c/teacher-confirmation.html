@@ -51,10 +51,24 @@
         </div>
       </div>
 
-      <h2 class="govuk-heading-l">What happens next</h2>
-      <p class="govuk-body">We will contact HMRC to confirm how much you should be reimbursed and what schools you have taught at in the last tax year.</p>
-      <p class="govuk-body">We will contact your school to confirm that you are eligible.</p>
-      <p class="govuk-body">Once we have completed that process, we will email you with the outcome.</p>
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>We’ll contact your school(s) to confirm the details you gave us and to confirm how much student loan you paid between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</li>
+        <li>We’ll update you about your claim within {time period}.</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">Save your application</h2>
+      <p class="govuk-body"><a href="#">Save this application as a PDF</a></p>
+
+      <h2 class="govuk-heading-m">Contact us</h2>
+      <p class="govuk-body"><a href="#">If you need to get in touch:</a></p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>email?</li>
+        <li>call?</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">Feedback</h2>
+      <p class="govuk-body"><a href="#">What did you think of this service? (Takes 30 seconds)</a></p>
 
     </div>
 
