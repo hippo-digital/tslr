@@ -21,30 +21,25 @@
 
 {% block content %}
 
+  {% if data.applicant.full_name %}
+  {% set full_name = data.applicant.full_name %}
+  {% else %}
+  {% set full_name = globals.sm3.teacher.full_name %}
+  {% endif %}
+
   <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Confirm teacher loan repayments</h1>
-      <p class="govuk-body">Enter the total amount of student loans repaid by <strong>{{data['applicant']['first_name'] | ucFirst}} {{data['applicant']['last_name'] | ucFirst}}</strong> during the {{globals.tax_year.full}} tax year?</p>
+      <h1 class="govuk-heading-xl">Enter repayment amount</h1>
 
       <form action="admin-declaration" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            <span id="trn-hint" class="govuk-hint">
-              <details class="govuk-details">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">How should I calculate the loan repayment information?</span>
-                </summary>
-                <div class="govuk-details__text">
-                  <p class="govuk-body">You should be able to get information about the teacher's student loan repayments from their payslips or their end-of-year P60.</p>
-                </div>
-              </details>
-            </span>
-
             <div class="govuk-form-group">
-              <label class="govuk-label" for="admin-loan-amount">For example, '1000' or ‘1000.00’.</label>
+              <label class="govuk-label" for="admin-loan-amount">How much student loan did <strong>{{ full_name | title }}</strong> pay back between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</label>
+              <span id="national-insurance-number-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
               <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number">
             </div>
 
