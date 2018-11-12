@@ -16,37 +16,17 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <form action="teacher-payment-method" method="POST" role="form">
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" aria-describedby="teaching-hint">
-
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h1 class="govuk-fieldset__heading">Do you give your consent for us to contact your school?</h1>
-            </legend>
-            <span id="changed-name-hint" class="govuk-hint">
-              The Department for Education need to contact your school to confirm your eligibility and how much student loan you have repaid.
-            </span>
-            <div class="govuk-radios govuk-radios--inline">
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="consent-y" name="teacher-consent" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="consent-y">
-                  Yes
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="consent-n" name="teacher-consent" type="radio" value="no">
-                <label class="govuk-label govuk-radios__label" for="consent-n">
-                  No
-                </label>
-              </div>
-            </div>
-
-          </fieldset>
-        </div>
-
-        <button type="submit" class="govuk-button">Continue</button>
-
-      </form>
+      <h1 class="govuk-heading-xl">Do you give your consent for us to contact your school?</h1>
+      <p class="govuk-body">To claim your student loan payments back we will contact the school or schools you taught at between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} to confirm:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the subject you taught</li>
+        <li>that you spent more than 50% of your time there teaching that subject</li>
+      </ul>
+      <p class="govuk-body">We cannot process your claim without doing this.</p>
+      <p class="govuk-body">By completing this form you are confirming that you consent to us contacting the schools you include.</p>
+      <p class="govuk-body">
+        <a href="teacher-confirmation" role="button" draggable="false" class="govuk-button">Agree and continue</a>
+      </p>
 
     </div>
 
