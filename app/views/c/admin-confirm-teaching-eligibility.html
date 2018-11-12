@@ -21,12 +21,18 @@
 
 {% block content %}
 
+  {% if data.applicant.full_name %}
+  {% set full_name = data.applicant.full_name %}
+  {% else %}
+  {% set full_name = globals.sm3.teacher.full_name %}
+  {% endif %}
+
   <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Confirm teacher eligibility</h1>
-      <p class="govuk-body">Can you confirm that <strong>{{data['applicant']['full_name'] | title}}</strong> taught at least one of the following subjects for a minimum of 50% of their contracted hours for the {{globals.tax_year.full}} tax year?</p>
+      <h1 class="govuk-heading-xl">Check details for {{ full_name | title }}</h1>
+      <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
 
       <form action="admin-enter-repayment-amount" method="POST" role="form">
         <div class="govuk-form-group">
@@ -40,32 +46,19 @@
                 <li>languages (excluding english)</li>
                 <li>physics</li>
               </ul>
-            </div>
-
-            <div class="govuk-form-group">
-              <details class="govuk-details">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">What if the teacher's timetable included leave?</span>
-                </summary>
-                <div class="govuk-details__text">
-                  Teacher's eligibility is not affected by any kind of leave e.g. paternity, maternity, sickness, etc. Their eligibility should be assessed based only on their expected timetable.
-                </div>
-              </details>
+              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school.</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did {{ full_name | title }} meet this criteria?</p>
             </div>
 
             <div class="govuk-form-group">
               <div class="govuk-radios govuk-radios--inline">
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="consent-y" name="admin-consent" type="radio" value="yes">
-                  <label class="govuk-label govuk-radios__label" for="consent-y">
-                    Yes
-                  </label>
+                  <label class="govuk-label govuk-radios__label" for="consent-y">Yes</label>
                 </div>
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="consent-n" name="admin-consent" type="radio" value="no">
-                  <label class="govuk-label govuk-radios__label" for="consent-n">
-                    No
-                  </label>
+                  <label class="govuk-label govuk-radios__label" for="consent-n">No</label>
                 </div>
               </div>
             </div>
