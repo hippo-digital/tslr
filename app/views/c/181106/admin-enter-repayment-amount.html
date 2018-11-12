@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement applications",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Confirm teacher loan repayments</h1>
+      <p class="govuk-body">Enter the total amount of student loans repaid by <strong>{{data['applicant']['first_name'] | ucFirst}} {{data['applicant']['last_name'] | ucFirst}}</strong> during the {{globals.tax_year.full}} tax year?</p>
+
+      <form action="admin-declaration" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <span id="trn-hint" class="govuk-hint">
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">How should I calculate the loan repayment information?</span>
+                </summary>
+                <div class="govuk-details__text">
+                  <p class="govuk-body">You should be able to get information about the teacher's student loan repayments from their payslips or their end-of-year P60.</p>
+                </div>
+              </details>
+            </span>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="admin-loan-amount">For example, '1000' or ‘1000.00’.</label>
+              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number">
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Get student loan payments reimbursed</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-l">About this scheme</h2>
+
+      <p class="govuk-body">The teacher’s student loan reimbursement scheme rewards teachers for teaching priority subjects in eligible parts of England. Eligible teachers can claim back student loan payments for the {{globals.tax_year.full}} tax year.</p>
+
+      <h2 class="govuk-heading-l">What you need to do</h2>
+
+      <p class="govuk-body">After signing-in using your DfE details, you will be asked some questions to confirm the eligibility of a teacher at your school who has applied to get their student loan payments reimbursed.</p>
+
+      <p class="govuk-body">
+        <a href="admin-dfe-signin" role="button" draggable="false" class="govuk-button govuk-button--start">Start now</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -16,29 +16,26 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Which school did you teach at during the {{ globals.tax_year.full }} tax year?</h1>
+      <h1 class="govuk-heading-xl">What is your National Insurance (NI) number?</h1>
 
-      <form action="teacher-enter-location-confirm" method="POST" role="form">
+      <form action="teacher-enter-location-eligibility" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-            <input class="govuk-input" id="teacher-num-schools" name="teacher-num-schools" type="hidden" value="1">
-
-            <span id="trn-hint" class="govuk-hint">
+            <span id="nin-hint" class="govuk-hint">
               <details class="govuk-details">
                 <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">What if I taught at more than one school?</span>
+                  <span class="govuk-details__summary-text">Where can I find my NI number?</span>
                 </summary>
                 <div class="govuk-details__text">
-                  <p class="govuk-body">Get started by searching for your first school. You can add more schools later.</p>
+                  <p class="govuk-body">You can find your NI number on your National Insurance card, benefit letter, payslip or P60.</p>
                 </div>
               </details>
             </span>
 
             <div class="govuk-form-group">
-              <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="true">
-              <label class="govuk-label" for="teacher-school-name">Enter the school name or reference number</label>
-              <input class="govuk-input" id="teacher-school-name" name="teacher-school-name" type="text">
+              <label class="govuk-label" for="teacher-ni">For example, ‘QQ 12 34 56 C’.</label>
+              <input class="govuk-input" id="teacher-ni" name="teacher-ni" type="text">
             </div>
 
             <div class="govuk-form-group">

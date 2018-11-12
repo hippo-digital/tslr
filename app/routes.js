@@ -95,6 +95,37 @@ router.post(/about-you-trn/, function (req, res) {
 
 })*/
 
+router.post(/teacher-enter-location-confirm/, function (req, res) {
+
+  // From teacher-enter-location-eligibility
+  var setup = req.session.data['teacher-schools-setup'];
+
+  if (setup) {
+    var schools = [];
+    num_schools = 0;
+  } else {
+    var option = req.session.data['teacher-school-confirm'];
+    var schools = req.session.data['teacher-schools'];
+    num_schools = schools.length;
+  }
+
+  var school_name = req.session.data['teacher-school-name'];
+  schools.push(school_name);
+  num_schools++;
+
+  req.session.data['teacher-schools'] = schools;
+  req.session.data['teacher-num-schools'] = num_schools;
+  req.session.data['teacher-schools-setup'] = false;
+
+  // Need to branch differently depending whether answer was yes, yes more or no
+  if (option == 'school-confirm-y' || option == 'school-confirm-n') {
+    res.redirect('teacher-consent');
+  } else {
+    res.redirect('teacher-enter-location-confirm');
+  }
+
+})
+
 router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
   // From admin-applications
