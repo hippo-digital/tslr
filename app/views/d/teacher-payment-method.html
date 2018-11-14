@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Bank details :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-contact-method" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            {% set payByBank %}
+
+            <h2 class="govuk-heading-m">Enter bank account details</h2>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="bank-account-name">Name of the account holder</label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="bank-account-number">Account number</label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="#">Sort code</label>
+              <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-1" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-2" type="number" pattern="[0-9]*">
+              <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-3" type="number" pattern="[0-9]*">
+            </div>
+
+            {% endset -%}
+
+            {{ govukRadios({
+              idPrefix: "payment-method-conditional",
+              name: "teacher-payment-method",
+              fieldset: {
+                legend: {
+                  text: "How would you like to be paid?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--xl"
+                }
+              },
+              hint: {},
+              items: [
+                {
+                  value: "pay-by-paye",
+                  text: "The bank account you receive your school pay into",
+                  conditional: {}
+                },
+                {
+                  value: "pay-by-bank",
+                  text: "A different bank account",
+                  conditional: {
+                    html: payByBank
+                  }
+                }
+              ]
+            }) }}
+
+          </fieldset>
+        </div>
+
+        <button type="submit" class="govuk-button">Continue</button>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
