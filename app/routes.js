@@ -180,6 +180,23 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 
 // Service Model D only
 // --------------------
+router.post(/admin-applications/, function (req, res) {
+
+  req.session.data['admin-check-send'] = false;
+  req.session.data['admin-eligibility-period'] = "";
+  req.session.data['admin-eligibility-teaching'] = "";
+  req.session.data['admin-end-day'] = "";
+  req.session.data['admin-end-month'] = "";
+  req.session.data['admin-end-year'] = "";
+  req.session.data['admin-loan-amount'] = "";
+  req.session.data['admin-start-day'] = "";
+  req.session.data['admin-start-month'] = "";
+  req.session.data['admin-start-year'] = "";
+
+  res.redirect('admin-applications');
+
+})
+
 router.post(/admin-confirm-location-eligibility/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {

@@ -39,23 +39,26 @@
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
-  {{ "data.admin-eligibility-period start dates are incomplete" | log }}
-  {% set admin_start_date = false %}
-  {% set details_complete = false %}
+  {% if data['admin-eligibility-teaching'] == "yes-part" %}
+    {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
+    {{ "data.admin-eligibility-period start dates are incomplete" | log }}
+    {% set admin_start_date = false %}
+    {% set details_complete = false %}
+    {% endif %}
   {% endif %}
 
-  {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
-  {{ "data.admin-eligibility-period end dates are incomplete" | log }}
-  {% set admin_end_date = false %}
-  {% set details_complete = false %}
+  {% if data['admin-eligibility-teaching'] == "yes-part" %}
+    {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
+    {{ "data.admin-eligibility-period end dates are incomplete" | log }}
+    {% set admin_end_date = false %}
+    {% set details_complete = false %}
+    {% endif %}
   {% endif %}
 
   {% if not data['admin-loan-amount'] %}
+  {{ "data.admin-loan-amount is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
-
-  {{ details_complete | log }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
