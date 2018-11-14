@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  {% if data.applicant.full_name %}
+  {% set full_name = data.applicant.full_name %}
+  {% else %}
+  {% set full_name = globals.smd.teacher.full_name %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Check your answers before confirming the claim</h1>
+
+      <form action="admin-check-send" method="POST" role="form">
+        <div class="govuk-form-group">
+
+          <input id="admin-check-send" name="admin-check-send" type="hidden" value="true">
+
+          <!-- only add a heading for a list if there is more than one list -->
+          <h2 class="govuk-heading-m">Teacher details</h2>
+
+          <!-- use additional modifier class to change column widths for multiple groups of questions and answers: -->
+          <!--   * `app-check-your-answers--short` for short questions -->
+          <!--   * `app-check-your-answers__questions-long` for long questions -->
+          <!--   * none for single group of q&a -->
+          <dl class="app-check-your-answers app-check-your-answers--short">
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Name</dt>
+              <dd class="app-check-your-answers__answer">{{ full_name | title }}</dd>
+              <dd class="app-check-your-answers__change">&nbsp;</dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">TRN</dt>
+              <dd class="app-check-your-answers__answer">123456789</dd>
+              <dd class="app-check-your-answers__change">&nbsp;</dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">School name</dt>
+              <dd class="app-check-your-answers__answer">{{ globals.sm3.teacher.school_name }}</dd>
+              <dd class="app-check-your-answers__change">&nbsp;</dd>
+            </div>
+
+          </dl>
+
+        </div>
+
+        <div class="govuk-form-group">
+
+          <h2 class="govuk-heading-m">Claim details</h2>
+
+          <dl class="app-check-your-answers app-check-your-answers--short">
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">School eligibility</dt>
+              {% if data['admin-eligibility-period'] == 'yes' %}
+              <dd class="app-check-your-answers__answer">Yes</dd>
+              {% elseif data['admin-eligibility-period'] == 'yes-part' %}
+              <dd class="app-check-your-answers__answer">Yes, part of the year</dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer">No</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-location-eligibility">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Teaching eligibility</dt>
+              {% if data['admin-eligibility-teaching'] == 'yes' %}
+              <dd class="app-check-your-answers__answer">Yes</dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer">No</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-teaching-eligibility">Change<span class="govuk-visually-hidden"> teaching eligibility</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Student loan amount</dt>
+              <dd class="app-check-your-answers__answer">£{{ data['admin-loan-amount'] }}</dd>
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-enter-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
+              </dd>
+            </div>
+
+          </dl>
+
+        </div>
+
+      </form>
+
+      <h2 class="govuk-heading-m">Confirm the claim</h2>
+      <p>By clicking the button below you are confirming that, to the best of your knowledge, the details provided are correct.</p>
+      <p class="govuk-body">
+        <a href="admin-confirmation" role="button" draggable="false" class="govuk-button">Confirm and send</a>
+      </p>
+
+    </div>
+  </div>
+{% endblock %}

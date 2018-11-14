@@ -81,19 +81,7 @@ router.post(/about-you-trn/, function (req, res) {
 
 // Service Model B only
 // --------------------
-
-// Hmmm... that's gonna need a tricksy regex to catch both b/some-url/ and b/181031/some-url/
-/*router.post(b/about-you-trn/, function (req, res) {
-
-  // From eligibility-teaching
-  let eligible = req.session.data['teaching']
-  if (eligible === 'no') {
-    res.redirect('ineligible')
-  } else {
-    res.redirect('about-you-trn')
-  }
-
-})*/
+// Careful! Actually, there's nothing in this rule which is '/b/' specific!!
 
 router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
@@ -112,6 +100,7 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
 // Service Model C only
 // --------------------
+// Careful! Actually, there's nothing in this rule which is '/c/' specific!!
 
 router.post(/teacher-enter-location-confirm/, function (req, res) {
 
@@ -186,6 +175,41 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
   };
   req.session.data['applicant'] = applicant;
   res.redirect('admin-confirm-location-eligibility');
+
+})
+
+// Service Model D only
+// --------------------
+router.post(/admin-confirm-location-eligibility/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-confirm-location-eligibility');
+
+})
+
+router.post(/admin-confirm-teaching-eligibility/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-confirm-teaching-eligibility');
+
+})
+
+router.post(/admin-enter-repayment-amount/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-enter-repayment-amount');
 
 })
 

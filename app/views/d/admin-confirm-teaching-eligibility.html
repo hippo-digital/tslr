@@ -8,7 +8,7 @@
   {% include "includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
-    serviceName: "Confirm teachers' student loan reimbursement applications",
+    serviceName: "Confirm teachers' student loan reimbursement claims",
     containerClasses: "govuk-width-container govuk-tslr-header"
   }) }}
 {% endblock %}
@@ -24,7 +24,7 @@
   {% if data.applicant.full_name %}
   {% set full_name = data.applicant.full_name %}
   {% else %}
-  {% set full_name = globals.sm3.teacher.full_name %}
+  {% set full_name = globals.smd.teacher.full_name %}
   {% endif %}
 
   <div class="govuk-grid-row">
@@ -53,18 +53,22 @@
             <div class="govuk-form-group">
               <div class="govuk-radios govuk-radios--inline">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="consent-y" name="admin-consent" type="radio" value="yes">
-                  <label class="govuk-label govuk-radios__label" for="consent-y">Yes</label>
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes</label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="consent-n" name="admin-consent" type="radio" value="no">
-                  <label class="govuk-label govuk-radios__label" for="consent-n">No</label>
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No</label>
                 </div>
               </div>
             </div>
 
             <div class="govuk-form-group">
+              {% if data['admin-check-send'] == true %}
+              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
+              {% else %}
               <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
             </div>
 
           </fieldset>
