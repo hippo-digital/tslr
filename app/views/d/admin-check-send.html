@@ -26,12 +26,28 @@
   {% endif %}
 
   {% set details_complete = true %}
+  {% set admin_start_date = true %}
+  {% set admin_end_date = true %}
 
   {% if not data['admin-eligibility-period'] %}
+  {{ "data.admin-eligibility-period is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
   {% if not data['admin-eligibility-teaching'] %}
+  {{ "data.admin-eligibility-teaching is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
+  {{ "data.admin-eligibility-period start dates are incomplete" | log }}
+  {% set admin_start_date = false %}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
+  {{ "data.admin-eligibility-period end dates are incomplete" | log }}
+  {% set admin_end_date = false %}
   {% set details_complete = false %}
   {% endif %}
 
@@ -93,7 +109,23 @@
               {% if data['admin-eligibility-period'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
               {% elseif data['admin-eligibility-period'] == 'yes-part' %}
-              <dd class="app-check-your-answers__answer">Yes, part of the year</dd>
+              <dd class="app-check-your-answers__answer">Yes, part of the year<br/>
+                {% if not admin_start_date %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['admin-start-day'] if data['admin-start-day'] else "dd" }}/{{ data['admin-start-month'] if data['admin-start-month'] else "mm"}}/{{ data['admin-start-year'] if data['admin-start-year'] else "yyyy" }}
+                {% if not admin_start_date %}
+                </span>
+                {% endif %}
+                -
+                {% if not admin_end_date %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['admin-end-day'] if data['admin-end-day'] else "dd" }}/{{ data['admin-end-month'] if data['admin-end-month'] else "mm" }}/{{ data['admin-end-year'] if data['admin-end-year'] else "yyyy" }}
+                {% if not admin_end_date %}
+                </span>
+                {% endif %}
+              </dd>
               {% elseif data['admin-eligibility-period'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
