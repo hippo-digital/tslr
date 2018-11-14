@@ -8,7 +8,7 @@
   {% include "includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
-    serviceName: "Confirm teachers' student loan reimbursement applications",
+    serviceName: "Confirm teachers' student loan reimbursement claims",
     containerClasses: "govuk-width-container govuk-tslr-header"
   }) }}
 {% endblock %}
@@ -22,7 +22,7 @@
   {% if data.applicant.full_name %}
   {% set full_name = data.applicant.full_name %}
   {% else %}
-  {% set full_name = globals.sm3.teacher.full_name %}
+  {% set full_name = globals.smd.teacher.full_name %}
   {% endif %}
 
   <div class="govuk-grid-row">
@@ -31,7 +31,7 @@
 
       <h1 class="govuk-heading-xl">Check school information</h1>
 
-      <p class="govuk-body">Did <strong>{{ full_name | title }}</strong> teach at {{ globals.sm3.teacher.school_name }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
+      <p class="govuk-body">Did <strong>{{ full_name | title }}</strong> teach at {{ globals.smd.teacher.school_name }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
 
       <form action="admin-confirm-teaching-eligibility" method="POST" role="form">
         <div class="govuk-form-group">
@@ -93,19 +93,19 @@
               hint: {},
               items: [
                 {
-                  value: "eligible-full",
+                  value: "yes",
                   text: "Yes, for the whole year",
                   conditional: {}
                 },
                 {
-                  value: "eligible-part",
+                  value: "yes-part",
                   text: "Yes, but only for part of the year",
                   conditional: {
                     html: enterTimePeriod
                   }
                 },
                 {
-                  value: "ineligible",
+                  value: "no",
                   text: "No",
                   conditional: {}
                 }
@@ -113,7 +113,11 @@
             }) }}
 
             <div class="govuk-form-group">
+              {% if data['admin-check-send'] == true %}
+              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
+              {% else %}
               <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
             </div>
 
           </fieldset>
