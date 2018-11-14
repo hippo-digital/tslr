@@ -40,7 +40,11 @@
             <div class="govuk-form-group">
               <label class="govuk-label" for="admin-loan-amount">How much student loan did <strong>{{ full_name | title }}</strong> pay back between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</label>
               <span id="national-insurance-number-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
-              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number">
+              {% if data['admin-loan-amount'] %}
+              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-loan-amount']}}">
+              {% else %}
+              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01">
+              {% endif %}
             </div>
 
             <div class="govuk-form-group">

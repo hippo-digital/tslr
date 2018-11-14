@@ -97,7 +97,7 @@
               {% elseif data['admin-eligibility-period'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
-              <dd class="app-check-your-answers__answer">Incomplete</dd>
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-location-eligibility">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
@@ -111,7 +111,7 @@
               {% elseif data['admin-eligibility-teaching'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
-              <dd class="app-check-your-answers__answer">Incomplete</dd>
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-teaching-eligibility">Change<span class="govuk-visually-hidden"> teaching eligibility</span></button>
@@ -123,7 +123,7 @@
               {% if data['admin-loan-amount'] %}
               <dd class="app-check-your-answers__answer">£{{ data['admin-loan-amount'] }}</dd>
               {% else %}
-              <dd class="app-check-your-answers__answer">Incomplete</dd>
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-enter-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
