@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Verify your identity</h1>
+      <p class="govuk-body">You need to confirm your identity with GOV.UK Verify.</p>
+      <p class="govuk-body">Registering usually takes about 5 minutes. It works best if you have:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a UK address</li>
+        <li>a valid passport or photocard driving licence</li>
+      </ul>
+      <p class="govuk-body">A certified identity provider will check your identity when you register with GOV.UK Verify. They’ve all met security standards set by government.</p>
+      <a href="http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-c&userLOA=0" role="button" draggable="false" class="govuk-button govuk-button">Continue</a>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="teacher-verify-thanks" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

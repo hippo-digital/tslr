@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement applications",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Declaration</h1>
+      <p class="govuk-body">By submitting this form you are confirming that, to the best of your knowledge, you have accurately checked these details.</p>
+      <p class="govuk-body">
+        <a href="admin-confirmation" role="button" draggable="false" class="govuk-button">Agree and submit</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

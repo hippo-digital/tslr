@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement applications",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% if data.applicant.full_name %}
+  {% set full_name = data.applicant.full_name %}
+  {% else %}
+  {% set full_name = globals.sm3.teacher.full_name %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Check subject information</h1>
+      <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
+
+      <form action="admin-enter-repayment-amount" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <div class="govuk-form-group">
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>computer science</li>
+                <li>languages (excluding english)</li>
+                <li>physics</li>
+              </ul>
+              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school.</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
+            </div>
+
+            <div class="govuk-form-group">
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="consent-y" name="admin-consent" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="consent-y">Yes</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="consent-n" name="admin-consent" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="consent-n">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

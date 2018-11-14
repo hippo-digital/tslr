@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Do you give your consent for us to contact your school?</h1>
+      <p class="govuk-body">To claim your student loan payments back we will contact the school or schools you taught at between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} to confirm:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the subject you taught</li>
+        <li>that you spent more than 50% of your time there teaching that subject</li>
+      </ul>
+      <p class="govuk-body">We cannot process your claim without doing this.</p>
+      <p class="govuk-body">By completing this form you are confirming that you consent to us contacting the schools you include.</p>
+      <p class="govuk-body">
+        <a href="teacher-confirmation" role="button" draggable="false" class="govuk-button">Agree and continue</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}

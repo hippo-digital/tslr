@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement applications",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% if data.applicant.full_name %}
+  {% set full_name = data.applicant.full_name %}
+  {% else %}
+  {% set full_name = globals.sm3.teacher.full_name %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Enter repayment amount</h1>
+
+      <form action="admin-declaration" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="admin-loan-amount">How much student loan did <strong>{{ full_name | title }}</strong> pay back between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</label>
+              <span id="national-insurance-number-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
+              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number">
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

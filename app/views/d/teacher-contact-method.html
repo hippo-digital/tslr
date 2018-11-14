@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Bank details :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="teacher-declaration" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            {% set contactByEmail %}
+
+            <h2 class="govuk-heading-m">Your email address</h2>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="contact-email-address">Enter a valid email address</label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email">
+            </div>
+
+            {% endset -%}
+
+            {% set contactByMobile %}
+
+            <h2 class="govuk-heading-m">Your mobile number</h2>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="contact-mobile-number">Enter a valid mobile number</label>
+              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number">
+            </div>
+
+            {% endset -%}
+
+            {{ govukRadios({
+              idPrefix: "contact-method-conditional",
+              name: "teacher-contact-method",
+              fieldset: {
+                legend: {
+                  text: "How would you like us to contact you?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--xl"
+                }
+              },
+              hint: {},
+              items: [
+                {
+                  value: "contact-by-email",
+                  text: "Contact by email",
+                  conditional: {
+                    html: contactByEmail
+                  }
+                },
+                {
+                  value: "contact-by-mobile",
+                  text: "Contact by text message",
+                  conditional: {
+                    html: contactByMobile
+                  }
+                }
+              ]
+            }) }}
+
+          </fieldset>
+        </div>
+
+        <button type="submit" class="govuk-button">Continue</button>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

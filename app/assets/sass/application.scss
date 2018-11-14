@@ -127,28 +127,38 @@ nav.tslr-pagination {
 
 }
 
-th.govuk-table__header {
+table {
 
-  &.col-1, &.col-2, &.col-3 { width: 33%; }
-  &.col-3 { width: 34%; }
+  th.govuk-table__header {
 
-  .sub-heading {
-    color: #666666;
-    font-size: 16px;
+    &.col-1, &.col-2, &.col-3 { width: 33%; }
+    &.col-3 { width: 34%; }
+
+    .sub-heading {
+      color: #666666;
+      font-size: 16px;
+    }
+
   }
 
-}
+  &.cols-4 {
+    th.govuk-table__header {
+      &.col-1, &.col-2, &.col-3, &.col-4 { width: 25%; }
+    }
+  }
 
-dl.release-desc {
+  dl.release-desc {
 
-  margin: 0;
-  margin-bottom: 10px;
+    margin: 0;
+    margin-bottom: 10px;
 
-  dt {}
-  dd {
-    margin: 0 0 5px 0;
-    font-size: 14px;
-    color: #333333;
+    dt {}
+    dd {
+      margin: 0 0 5px 0;
+      font-size: 14px;
+      color: #333333;
+    }
+
   }
 
 }
