@@ -62,4 +62,14 @@ p.govuk-body {
     }
   }
 
+  &.disabled-button {
+    background-color: #cccccc;
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    &:hover {
+      background-color: #cccccc;
+    }
+  }
+
 }
