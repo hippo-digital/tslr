@@ -37,11 +37,43 @@
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="admin-loan-amount">How much student loan did <strong>{{ full_name | title }}</strong> pay back between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</label>
-              <span id="national-insurance-number-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
-              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-loan-amount']}}">
+            <span id="admin-loan-amount-conditional-hint" class="govuk-hint">Select one option.</span>
+
+            <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+
+              <div class="govuk-radios__item">
+                {% if data['admin-loan-details'] == "yes" %}
+                <input class="govuk-radios__input" id="loan-details-conditional-yes" name="admin-loan-details" type="radio" value="yes" data-aria-controls="conditional-loan-details-conditional-yes" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="loan-details-conditional-yes" name="admin-loan-details" type="radio" value="yes" data-aria-controls="conditional-loan-details-conditional-yes">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="loan-details-conditional-yes">I know how much student loan <strong>{{ full_name | title }}</strong> paid between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</label>
+                <span id="loan-details-conditional-yes-hint" class="govuk-hint govuk-radios__hint">You can find this information on their payslips or P60.</span>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-loan-details-conditional-yes">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="admin-loan-amount">Enter the amount</label>
+                  <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-loan-amount']}}">
+                </div>
+              </div>
+
+              <div class="govuk-radios__divider">or</div>
+
+              <div class="govuk-radios__item">
+                {% if data['admin-loan-details'] == "tbc" %}
+                <input class="govuk-radios__input" id="loan-details-conditional-tbc" name="admin-loan-details" type="radio" value="tbc" data-aria-controls="conditional-loan-details-conditional-tbc" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="loan-details-conditional-tbc" name="admin-loan-details" type="radio" value="tbc" data-aria-controls="conditional-loan-details-conditional-tbc">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="loan-details-conditional-tbc">I don't know</label>
+                <span id="loan-details-tbc-hint" class="govuk-hint govuk-radios__hint">
+                  Someone else needs to check or provide this information.
+                </span>
+              </div>
+
             </div>
+
+            <hr class="govuk-section-break govuk-section-break--m">
 
             <div class="govuk-form-group">
               {% if data['admin-check-send'] == true %}
