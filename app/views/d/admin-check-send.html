@@ -29,13 +29,13 @@
   {% set admin_start_date = true %}
   {% set admin_end_date = true %}
 
-  {% if not data['admin-eligibility-period'] %}
-  {{ "data.admin-eligibility-period is incomplete" | log }}
+  {% if not data['admin-eligibility-period'] or data['admin-eligibility-period'] == "tbc" %}
+  {{ "data.admin-eligibility-period is incomplete or tbc" | log }}
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-eligibility-teaching'] %}
-  {{ "data.admin-eligibility-teaching is incomplete" | log }}
+  {% if not data['admin-eligibility-teaching']  or data['admin-eligibility-teaching'] == "tbc" %}
+  {{ "data.admin-eligibility-teaching is incomplete or tbc" | log }}
   {% set details_complete = false %}
   {% endif %}
 
