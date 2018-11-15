@@ -51,7 +51,9 @@
             </div>
 
             <div class="govuk-form-group">
-              <div class="govuk-radios govuk-radios--inline">
+
+              <div class="govuk-radios">
+
                 <div class="govuk-radios__item">
                   {% if data['admin-eligibility-teaching'] == "yes" %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" checked>
@@ -60,6 +62,7 @@
                   {% endif %}
                   <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes</label>
                 </div>
+
                 <div class="govuk-radios__item">
                   {% if data['admin-eligibility-teaching'] == "no" %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
@@ -68,7 +71,24 @@
                   {% endif %}
                   <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No</label>
                 </div>
+
+                <div class="govuk-radios__divider">or</div>
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-eligibility-period'] == "tbc" %}
+                  <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="eligibility-teaching-tbc">I don't know</label>
+                  <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">
+                    Someone else needs to check or provide this information.
+                  </span>
+
+                </div>
+
               </div>
+
             </div>
 
             <div class="govuk-form-group">
