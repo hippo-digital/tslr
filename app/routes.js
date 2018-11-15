@@ -169,7 +169,6 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
   // Delete previous applicant data
   req.session.data['admin-check-send'] = false;
   req.session.data['admin-eligibility-period'] = false;
-  req.session.data['admin-eligibility-teaching'] = false;
   req.session.data['admin-end-day'] = false;
   req.session.data['admin-end-month'] = false;
   req.session.data['admin-end-year'] = false;
@@ -177,6 +176,9 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
   req.session.data['admin-start-day'] = false;
   req.session.data['admin-start-month'] = false;
   req.session.data['admin-start-year'] = false;
+  req.session.data['admin-eligibility-teaching'] = false;
+  req.session.data['admin-loan-details'] = false;
+  req.session.data['admin-loan-amount'] = false;
 
   // Set-up applicant
   var full_name = req.params[1];

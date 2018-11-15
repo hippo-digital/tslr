@@ -55,8 +55,8 @@
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-loan-amount'] %}
-  {{ "data.admin-loan-amount is incomplete" | log }}
+  {% if not data['admin-loan-amount'] or data['admin-loan-details'] == 'tbc' %}
+  {{ "data.admin-loan-amount is incomplete or data.admin-loan-details is tbc" | log }}
   {% set details_complete = false %}
   {% endif %}
 
@@ -155,7 +155,7 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Student loan amount</dt>
-              {% if data['admin-loan-amount'] %}
+              {% if data['admin-loan-details'] == "yes" and data['admin-loan-amount'] %}
               <dd class="app-check-your-answers__answer">£{{ data['admin-loan-amount'] }}</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
