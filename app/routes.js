@@ -101,8 +101,13 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 // Service Model C only
 // --------------------
 // Careful! Actually, there's nothing in this rule which is '/c/' specific!!
+// req.params[0] = a, b, c or d
+// req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
+// req.params[2] = page-name
 
-router.post(/teacher-enter-location-confirm/, function (req, res) {
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
+
+  req.session.data['temp-params'] = req.params;
 
   // From teacher-enter-location-eligibility
   var setup = req.session.data['teacher-schools-setup'];
@@ -126,7 +131,12 @@ router.post(/teacher-enter-location-confirm/, function (req, res) {
 
   // Need to branch differently depending whether answer was yes, yes more or no
   if (option == 'school-confirm-y' || option == 'school-confirm-n') {
-    res.redirect('teacher-consent');
+    if (req.params[0] == "d") {
+      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
+      next
+    } else {
+      res.redirect('teacher-consent');
+    }
   } else {
     res.redirect('teacher-enter-location-confirm');
   }

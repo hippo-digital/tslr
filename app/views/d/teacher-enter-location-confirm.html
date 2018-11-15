@@ -32,8 +32,7 @@
                 <h3 class="govuk-heading-m">{{ school or "{School name}" }}</h3>
                 <ul class="govuk-list govuk-list--bullet">
                   <li><strong>Local authority</strong>: Kirklees</li>
-                  <li><strong>Education phase</strong>: Secondary</li>
-                  <li><strong>School type</strong>: Academy sponsor led</li>
+                  <li><strong>Eligible?</strong>: Yes</li>
                 </ul>
               </div>
             {% endfor %}
@@ -80,6 +79,14 @@
         </div>
 
       </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="teacher-enter-ni-number" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
+      </p>
 
     </div>
 
