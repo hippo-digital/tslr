@@ -150,6 +150,20 @@ router.get(/admin-tslr_(name)_([a-z-]+)/, function (req, res) {
 
 router.get(/admin-dfe-signin_(name)_([a-z-]+)/, function (req, res) {
 
+  // Delete previous applicant data
+  req.session.data['admin-check-send'] = false;
+  req.session.data['admin-eligibility-period'] = false;
+  req.session.data['admin-end-day'] = false;
+  req.session.data['admin-end-month'] = false;
+  req.session.data['admin-end-year'] = false;
+  req.session.data['admin-loan-amount'] = false;
+  req.session.data['admin-start-day'] = false;
+  req.session.data['admin-start-month'] = false;
+  req.session.data['admin-start-year'] = false;
+  req.session.data['admin-eligibility-teaching'] = false;
+  req.session.data['admin-loan-details'] = false;
+  req.session.data['admin-loan-amount'] = false;
+
   // Set-up applicant
   var full_name = req.params[1];
   var name = full_name.split("-");
