@@ -34,25 +34,25 @@
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-eligibility-teaching']  or data['admin-eligibility-teaching'] == "tbc" %}
-  {{ "data.admin-eligibility-teaching is incomplete or tbc" | log }}
+  {% if data['admin-eligibility-period'] == "yes-part" %}
+  {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
+  {{ "data.admin-eligibility-period start dates are incomplete" | log }}
+  {% set admin_start_date = false %}
   {% set details_complete = false %}
   {% endif %}
-
-  {% if data['admin-eligibility-teaching'] == "yes-part" %}
-    {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
-    {{ "data.admin-eligibility-period start dates are incomplete" | log }}
-    {% set admin_start_date = false %}
-    {% set details_complete = false %}
-    {% endif %}
   {% endif %}
 
-  {% if data['admin-eligibility-teaching'] == "yes-part" %}
-    {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
-    {{ "data.admin-eligibility-period end dates are incomplete" | log }}
-    {% set admin_end_date = false %}
-    {% set details_complete = false %}
-    {% endif %}
+  {% if data['admin-eligibility-period'] == "yes-part" %}
+  {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
+  {{ "data.admin-eligibility-period end dates are incomplete" | log }}
+  {% set admin_end_date = false %}
+  {% set details_complete = false %}
+  {% endif %}
+  {% endif %}
+
+  {% if not data['admin-eligibility-teaching'] or data['admin-eligibility-teaching'] == "tbc" %}
+  {{ "data.admin-eligibility-teaching is incomplete or tbc" | log }}
+  {% set details_complete = false %}
   {% endif %}
 
   {% if not data['admin-loan-amount'] %}
@@ -110,9 +110,9 @@
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">School eligibility</dt>
               {% if data['admin-eligibility-period'] == 'yes' %}
-              <dd class="app-check-your-answers__answer">Yes</dd>
+              <dd class="app-check-your-answers__answer">Yes, confirmed</dd>
               {% elseif data['admin-eligibility-period'] == 'yes-part' %}
-              <dd class="app-check-your-answers__answer">Yes, part of the year<br/>
+              <dd class="app-check-your-answers__answer">Yes, confirmed for part of the year<br/>
                 {% if not admin_start_date %}
                 <span class="answer-incomplete">
                 {% endif %}
@@ -142,7 +142,7 @@
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Teaching eligibility</dt>
               {% if data['admin-eligibility-teaching'] == 'yes' %}
-              <dd class="app-check-your-answers__answer">Yes</dd>
+              <dd class="app-check-your-answers__answer">Yes, confirmed</dd>
               {% elseif data['admin-eligibility-teaching'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
