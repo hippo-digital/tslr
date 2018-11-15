@@ -150,7 +150,7 @@ router.get(/admin-tslr_(name)_([a-z-]+)/, function (req, res) {
 
 router.get(/admin-dfe-signin_(name)_([a-z-]+)/, function (req, res) {
 
-  // From admin-applications
+  // Set-up applicant
   var full_name = req.params[1];
   var name = full_name.split("-");
   var applicant = {
@@ -159,13 +159,26 @@ router.get(/admin-dfe-signin_(name)_([a-z-]+)/, function (req, res) {
     'last_name': name[1]
   };
   req.session.data['applicant'] = applicant;
+
   res.redirect('admin-dfe-signin');
 
 })
 
 router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
-  // From admin-applications
+  // Delete previous applicant data
+  req.session.data['admin-check-send'] = false;
+  req.session.data['admin-eligibility-period'] = false;
+  req.session.data['admin-eligibility-teaching'] = false;
+  req.session.data['admin-end-day'] = false;
+  req.session.data['admin-end-month'] = false;
+  req.session.data['admin-end-year'] = false;
+  req.session.data['admin-loan-amount'] = false;
+  req.session.data['admin-start-day'] = false;
+  req.session.data['admin-start-month'] = false;
+  req.session.data['admin-start-year'] = false;
+
+  // Set-up applicant
   var full_name = req.params[1];
   var name = full_name.split("-");
   var applicant = {
@@ -174,28 +187,41 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
     'last_name': name[1]
   };
   req.session.data['applicant'] = applicant;
+
   res.redirect('admin-confirm-location-eligibility');
 
 })
 
 // Service Model D only
 // --------------------
-router.post(/admin-applications/, function (req, res) {
 
-  req.session.data['admin-check-send'] = false;
-  req.session.data['admin-eligibility-period'] = "";
-  req.session.data['admin-eligibility-teaching'] = "";
-  req.session.data['admin-end-day'] = "";
-  req.session.data['admin-end-month'] = "";
-  req.session.data['admin-end-year'] = "";
-  req.session.data['admin-loan-amount'] = "";
-  req.session.data['admin-start-day'] = "";
-  req.session.data['admin-start-month'] = "";
-  req.session.data['admin-start-year'] = "";
+// router.get(/admin-claim-received-email/, function (req, res) {
+//
+//   if (not req.session.data['admin-reset-applicant']) {
+//     req.session.data['admin-reset-applicant'] = true;
+//     res.redirect('admin-claim-received-email');
+//   }
+//
+// })
 
-  res.redirect('admin-applications');
-
-})
+// router.get(/admin-applications/, function (req, res) {
+//
+//   if (req.session.data['admin-check-send']) {
+//     req.session.data['admin-check-send'] = false;
+//     delete req.session.data['admin-eligibility-period'] = "";
+//     delete req.session.data['admin-eligibility-teaching'] = "";
+//     delete req.session.data['admin-end-day'] = "";
+//     delete req.session.data['admin-end-month'] = "";
+//     delete req.session.data['admin-end-year'] = "";
+//     delete req.session.data['admin-loan-amount'] = "";
+//     delete req.session.data['admin-start-day'] = "";
+//     delete req.session.data['admin-start-month'] = "";
+//     delete req.session.data['admin-start-year'] = "";
+//     delete req.session['user'];
+//     res.redirect('admin-applications');
+//   }
+//
+// })
 
 router.post(/admin-confirm-location-eligibility/, function (req, res) {
 
