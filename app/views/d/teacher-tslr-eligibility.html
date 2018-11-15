@@ -36,16 +36,19 @@
     <div class="govuk-grid-column-two-thirds col-top-padding">
 
       <h2 class="govuk-heading-l">Eligibility</h2>
-      <p class="govuk-body">To claim your student loan payments back you must:</p>
+
+      <p class="govuk-body">To claim back any student loan payments you made in the last tax year (between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}), you must:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>be a qualified teacher</li>
-        <li>have qualified after 13 August 2013</li>
-        <li>have taught biology, chemistry, computer science, physics, languages (not English)</li>
-        <li>have taught one of these subjects for more than 50% of your hours in the last tax year</li>
-        <li>work in a state funded school (also known as a ‘public school’)</li>
-        <li>work in one of the participating local authority areas</li>
+        <li>have qualified as a teacher after {{ globals.eligibility_criteria.qualified_date }}</li>
+        <li>still be teaching in a school in the UK</li>
+        <li>worked at a state-funded school (also known as a ‘public school’) in the last tax year</li>
+        <li>worked at a school that’s in a participating local authority area in England (areas where there are fewer teachers in these subjects at the moment) in the last tax year</li>
       </ul>
-      <p class="govuk-body">You can apply if you are a supply teacher and meet these criteria.</p>
+      <p class="govuk-body">In the last tax year you must also have taught either:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>biology, chemistry, computer science, physics, languages (not English) for more than 50% of your hours</li>
+        <li>in a special school (a school that teaches children who have special educational needs)</li>
+      </ul>
 
       <h3 class="govuk-heading-m">Participating local authority areas</h3>
       <ul class="govuk-list govuk-list--bullet">
