@@ -35,10 +35,13 @@
               </details>
             </span>
 
-            <div class="govuk-form-group">
+            <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
               <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="true">
               <label class="govuk-label" for="teacher-school-name">Enter the school name or reference number</label>
-              <input class="govuk-input" id="teacher-school-name" name="teacher-school-name" type="text">
+              {% if (data['teacher-error-no-school']) %}
+              <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+              {% endif %}
+              <input class="govuk-input {% if (data['teacher-error-no-school']) %}govuk-input--error{% endif %}" id="teacher-school-name" name="teacher-school-name" type="text">
             </div>
 
             <div class="govuk-form-group">

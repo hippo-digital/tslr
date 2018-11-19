@@ -107,6 +107,16 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
 router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
 
+  // Error: No school name passed
+  if (req.session.data['teacher-school-name'] == "") {
+    req.session.data['teacher-error-no-school'] = true;
+    req.session.data['error-message'] = "Enter the name or reference number of your school";
+    res.redirect('teacher-enter-location-eligibility');
+    next
+  } else {
+    req.session.data['teacher-error-no-school'] = false;
+  }
+
   req.session.data['temp-params'] = req.params;
 
   // From teacher-enter-location-eligibility
