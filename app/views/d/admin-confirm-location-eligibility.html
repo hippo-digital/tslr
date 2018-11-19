@@ -19,11 +19,7 @@
 
 {% block content %}
 
-  {% if data.applicant.full_name %}
-  {% set full_name = data.applicant.full_name %}
-  {% else %}
-  {% set full_name = globals.smd.teacher.full_name %}
-  {% endif %}
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
 
   <div class="govuk-grid-row">
 
@@ -36,8 +32,6 @@
       <form action="admin-confirm-teaching-eligibility" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
-
-            <span id="eligibility-period-conditional-hint" class="govuk-hint">Select one option.</span>
 
             <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
