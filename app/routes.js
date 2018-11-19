@@ -107,7 +107,7 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
 router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
 
-  // Error: No school name passed
+  // Error: No school name provided
   if (req.session.data['teacher-school-name'] == "") {
     req.session.data['teacher-error-no-school'] = true;
     req.session.data['error-message'] = "Enter the name or reference number of your school";
@@ -236,33 +236,62 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 // Service Model D only
 // --------------------
 
-// router.get(/admin-claim-received-email/, function (req, res) {
-//
-//   if (not req.session.data['admin-reset-applicant']) {
-//     req.session.data['admin-reset-applicant'] = true;
-//     res.redirect('admin-claim-received-email');
-//   }
-//
-// })
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
 
-// router.get(/admin-applications/, function (req, res) {
-//
-//   if (req.session.data['admin-check-send']) {
-//     req.session.data['admin-check-send'] = false;
-//     delete req.session.data['admin-eligibility-period'] = "";
-//     delete req.session.data['admin-eligibility-teaching'] = "";
-//     delete req.session.data['admin-end-day'] = "";
-//     delete req.session.data['admin-end-month'] = "";
-//     delete req.session.data['admin-end-year'] = "";
-//     delete req.session.data['admin-loan-amount'] = "";
-//     delete req.session.data['admin-start-day'] = "";
-//     delete req.session.data['admin-start-month'] = "";
-//     delete req.session.data['admin-start-year'] = "";
-//     delete req.session['user'];
-//     res.redirect('admin-applications');
-//   }
-//
-// })
+  if (req.params[0] == "d") {
+
+    // Error: No NI Number provided
+    if (req.session.data['teacher-ni'] == "") {
+      req.session.data['teacher-error-no-ni'] = true;
+      req.session.data['error-message'] = "Enter your NI Number";
+      res.redirect('teacher-enter-ni-number');
+      next
+    } else {
+      req.session.data['teacher-error-no-ni'] = false;
+      res.redirect('teacher-enter-trn');
+    }
+
+  }
+
+})
+
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
+
+  if (req.params[0] == "d") {
+
+    // Error: No NI Number provided
+    if (req.session.data['teacher-ni'] == "") {
+      req.session.data['teacher-error-no-ni'] = true;
+      req.session.data['error-message'] = "Enter your NI Number";
+      res.redirect('teacher-enter-ni-number');
+      next
+    } else {
+      req.session.data['teacher-error-no-ni'] = false;
+      res.redirect('teacher-enter-trn');
+    }
+
+  }
+
+})
+
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-consent)/, function (req, res) {
+
+  if (req.params[0] == "d") {
+
+    // Error: No NI Number provided
+    if (req.session.data['teacher-trn'] == "") {
+      req.session.data['teacher-error-no-trn'] = true;
+      req.session.data['error-message'] = "Enter your Teacher Reference Number (TRN)";
+      res.redirect('teacher-enter-trn');
+      next
+    } else {
+      req.session.data['teacher-error-no-trn'] = false;
+      res.redirect('teacher-consent');
+    }
+
+  }
+
+})
 
 router.post(/admin-confirm-location-eligibility/, function (req, res) {
 
