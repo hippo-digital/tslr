@@ -75,75 +75,70 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">School(s)</dt>
-              {% if data['admin-eligibility-period'] == 'yes' %}
-              <dd class="app-check-your-answers__answer">Yes, confirmed</dd>
-              {% elseif data['admin-eligibility-period'] == 'yes-part' %}
-              <dd class="app-check-your-answers__answer">Yes, confirmed for part of the year<br/>
-                {% if not admin_start_date %}
-                <span class="answer-incomplete">
-                {% endif %}
-                {{ data['admin-start-day'] if data['admin-start-day'] else "dd" }}/{{ data['admin-start-month'] if data['admin-start-month'] else "mm"}}/{{ data['admin-start-year'] if data['admin-start-year'] else "yyyy" }}
-                {% if not admin_start_date %}
-                </span>
-                {% endif %}
-                -
-                {% if not admin_end_date %}
-                <span class="answer-incomplete">
-                {% endif %}
-                {{ data['admin-end-day'] if data['admin-end-day'] else "dd" }}/{{ data['admin-end-month'] if data['admin-end-month'] else "mm" }}/{{ data['admin-end-year'] if data['admin-end-year'] else "yyyy" }}
-                {% if not admin_end_date %}
-                </span>
-                {% endif %}
+              <dd class="app-check-your-answers__answer">
+                <ul class="govuk-list">
+                {% for school in data['teacher-schools'] %}
+                  <li>{{ school or "{School name}" }}</li>
+                {% endfor %}
+                </ul>
               </dd>
-              {% elseif data['admin-eligibility-period'] == 'no' %}
-              <dd class="app-check-your-answers__answer">No</dd>
-              {% else %}
-              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
-              {% endif %}
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" formaction="admin-confirm-location-eligibility">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
-              </dd>
-            </div>
-
-            <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">TRN</dt>
-              <dd class="app-check-your-answers__answer">{{ data['teacher-trn'] }}</dd>
-              <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" formaction="teacher-enter-trn">Change<span class="govuk-visually-hidden"> TRN</span></button>
+                <button type="submit" class="button-as-link" formaction="teacher-enter-location-confirm">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
               </dd>
             </div>
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">NI Number</dt>
-              <dd class="app-check-your-answers__answer">{{ data['teacher-ni-number'] }}</dd>
+              {% if data['teacher-ni'] %}
+              <dd class="app-check-your-answers__answer">{{ data['teacher-ni'] }}</dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="teacher-enter-ni-number">Change<span class="govuk-visually-hidden"> NI Number</span></button>
               </dd>
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Payment details</dt>
-              {% if data['admin-eligibility-teaching'] == 'yes' %}
-              <dd class="app-check-your-answers__answer">Yes, confirmed</dd>
-              {% elseif data['admin-eligibility-teaching'] == 'no' %}
-              <dd class="app-check-your-answers__answer">No</dd>
+              <dt class="app-check-your-answers__question">TRN</dt>
+              {% if data['teacher-trn'] %}
+              <dd class="app-check-your-answers__answer">{{ data['teacher-trn'] }}</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" formaction="admin-confirm-teaching-eligibility">Change<span class="govuk-visually-hidden"> teaching eligibility</span></button>
+                <button type="submit" class="button-as-link" formaction="teacher-enter-trn">Change<span class="govuk-visually-hidden"> TRN</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Payment details</dt>
+              {% if data['teacher-payment-method'] == "existing" %}
+              <dd class="app-check-your-answers__answer">Existing bank account</dd>
+              {% elseif data['teacher-payment-method'] == "other" %}
+              <dd class="app-check-your-answers__answer">Other bank account:<br/>
+                </dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="teacher-payment-method">Change<span class="govuk-visually-hidden"> payment method</span></button>
               </dd>
             </div>
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Contact details</dt>
-              {% if data['admin-loan-details'] == "yes" and data['admin-loan-amount'] %}
-              <dd class="app-check-your-answers__answer">£{{ data['admin-loan-amount'] }}</dd>
+              {% if data['teacher-contact-method'] == "email" %}
+              <dd class="app-check-your-answers__answer">By email:<br/>
+                Email</dd>
+              {% elseif data['teacher-contact-method'] == "mobile" %}
+              <dd class="app-check-your-answers__answer">By text message:<br/>
+                Number</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" formaction="admin-enter-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
+                <button type="submit" class="button-as-link" formaction="teacher-contact-method">Change<span class="govuk-visually-hidden"> contact method</span></button>
               </dd>
             </div>
 
