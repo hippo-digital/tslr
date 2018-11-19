@@ -131,7 +131,12 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
     num_schools = schools.length;
   }
 
-  var school_name = req.session.data['teacher-school-name'];
+  if (option == 'school-confirm-ya') {
+    var school_name = req.session.data['teacher-another-school-name'];
+  } else {
+    var school_name = req.session.data['teacher-school-name'];
+  }
+
   schools.push(school_name);
   num_schools++;
 
