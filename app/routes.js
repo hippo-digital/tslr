@@ -107,14 +107,16 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
 router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
 
-  // Error: No school name provided
-  if (req.session.data['teacher-school-name'] == "") {
-    req.session.data['teacher-error-no-school'] = true;
-    req.session.data['error-message'] = "Enter the name or reference number of your school";
-    res.redirect('teacher-enter-location-eligibility');
-    next
-  } else {
-    req.session.data['teacher-error-no-school'] = false;
+  if (req.params[0] == "d") {
+    // Error: No school name provided
+    if (req.session.data['teacher-school-name'] == "") {
+      req.session.data['teacher-error-no-school'] = true;
+      req.session.data['error-message'] = "Enter the name or reference number of your school";
+      res.redirect('teacher-enter-location-eligibility');
+      next
+    } else {
+      req.session.data['teacher-error-no-school'] = false;
+    }
   }
 
   req.session.data['temp-params'] = req.params;
@@ -235,25 +237,6 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 
 // Service Model D only
 // --------------------
-
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
-
-  if (req.params[0] == "d") {
-
-    // Error: No NI Number provided
-    if (req.session.data['teacher-ni'] == "") {
-      req.session.data['teacher-error-no-ni'] = true;
-      req.session.data['error-message'] = "Enter your NI Number";
-      res.redirect('teacher-enter-ni-number');
-      next
-    } else {
-      req.session.data['teacher-error-no-ni'] = false;
-      res.redirect('teacher-enter-trn');
-    }
-
-  }
-
-})
 
 router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
 
