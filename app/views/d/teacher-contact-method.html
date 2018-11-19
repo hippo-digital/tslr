@@ -42,7 +42,7 @@
                   <h2 class="govuk-heading-m">Your email address</h2>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="teacher-email-address">Enter a valid email address</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email" value="{{data['teacher-email-address']}}">
                   </div>
                 </div>
               </div>
@@ -61,7 +61,7 @@
                   <h2 class="govuk-heading-m">Your mobile number</h2>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="teacher-mobile-number">Enter a valid mobile number</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number" value="{{data['teacher-mobile-number']}}">
                   </div>
                 </div>
               </div>
@@ -71,7 +71,11 @@
           </fieldset>
         </div>
 
+        {% if data['teacher-check-send'] %}
+        <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+        {% else %}
         <button type="submit" class="govuk-button">Continue</button>
+        {% endif %}
 
       </form>
     </div>

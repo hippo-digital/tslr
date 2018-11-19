@@ -52,17 +52,17 @@
                   <h2 class="govuk-heading-m">Enter bank account details</h2>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="bank-account-name">Name of the account holder</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text" value="{{data['teacher-bank-account-name']}}">
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="bank-account-number">Account number</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number" value="{{data['teacher-bank-account-number']}}">
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="#">Sort code</label>
-                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-1" type="number" pattern="[0-9]*">
-                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-2" type="number" pattern="[0-9]*">
-                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-3" type="number" pattern="[0-9]*">
+                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-1" type="number" pattern="[0-9]*" value="{{data['teacher-bank-account-sortcode-1']}}">
+                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-2" type="number" pattern="[0-9]*" value="{{data['teacher-bank-account-sortcode-2']}}">
+                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-3" type="number" pattern="[0-9]*" value="{{data['teacher-bank-account-sortcode-3']}}">
                   </div>
                 </div>
               </div>
@@ -72,7 +72,11 @@
           </fieldset>
         </div>
 
+        {% if data['teacher-check-send'] %}
+        <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+        {% else %}
         <button type="submit" class="govuk-button">Continue</button>
+        {% endif %}
 
       </form>
     </div>

@@ -16,7 +16,7 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if not (data['teacher-error-no-ni']) %}
+      {% if not (data['teacher-error-no-ni']) and not (data['teacher-check-send']) %}
       <div class="govuk-inset-text">Thanks. You have confirmed your identity.</div>
       {% endif %}
 
@@ -34,11 +34,15 @@
               {% if (data['teacher-error-no-ni']) %}
               <span id="enter-ni-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text">
+              <input class="govuk-input {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" value="{{data['teacher-ni']}}">
             </div>
 
             <div class="govuk-form-group">
+              {% if data['teacher-check-send'] %}
+              <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+              {% else %}
               <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
             </div>
 
           </fieldset>

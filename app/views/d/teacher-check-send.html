@@ -17,38 +17,60 @@
   {% endif %}
 
   {% set details_complete = true %}
-  {% set admin_start_date = true %}
-  {% set admin_end_date = true %}
+  {% set teacher_bank_name = true %}
+  {% set teacher_bank_number = true %}
+  {% set teacher_bank_sortcode = true %}
+  {% set teacher_email = true %}
+  {% set teacher_mobile = true %}
 
-  {% if not data['admin-eligibility-period'] or data['admin-eligibility-period'] == "tbc" %}
-  {{ "data.admin-eligibility-period is incomplete or tbc" | log }}
+  {% if not data['teacher-ni'] %}
+  {{ "data.teacher-ni is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
-  {% if data['admin-eligibility-period'] == "yes-part" %}
-  {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
-  {{ "data.admin-eligibility-period start dates are incomplete" | log }}
-  {% set admin_start_date = false %}
-  {% set details_complete = false %}
-  {% endif %}
-  {% endif %}
-
-  {% if data['admin-eligibility-period'] == "yes-part" %}
-  {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
-  {{ "data.admin-eligibility-period end dates are incomplete" | log }}
-  {% set admin_end_date = false %}
-  {% set details_complete = false %}
-  {% endif %}
-  {% endif %}
-
-  {% if not data['admin-eligibility-teaching'] or data['admin-eligibility-teaching'] == "tbc" %}
-  {{ "data.admin-eligibility-teaching is incomplete or tbc" | log }}
+  {% if not data['teacher-trn'] %}
+  {{ "data.teacher-trn is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-loan-amount'] or data['admin-loan-details'] == 'tbc' %}
-  {{ "data.admin-loan-amount is incomplete or data.admin-loan-details is tbc" | log }}
+  {% if not data['teacher-payment-method'] %}
+  {{ "data.teacher-payment-method is incomplete" | log }}
   {% set details_complete = false %}
+  {% endif %}
+
+  {% if data['teacher-payment-method'] == "other" %}
+    {% if not data['teacher-bank-account-name'] %}
+      {{ "data.teacher-bank-account-name is incomplete" | log }}
+      {% set details_complete = false %}
+      {% set teacher_bank_name = false %}
+    {% endif %}
+    {% if not data['teacher-bank-account-number'] %}
+      {{ "data.teacher-bank-account-number is incomplete" | log }}
+      {% set details_complete = false %}
+      {% set teacher_bank_number = false %}
+    {% endif %}
+    {% if not data['teacher-bank-sortcode-1'] or not data['teacher-bank-sortcode-2'] or not data['teacher-bank-sortcode-3'] %}
+      {{ "data.teacher-bank-sortcode-x is incomplete" | log }}
+      {% set details_complete = false %}
+      {% set teacher_bank_sortcode = false %}
+    {% endif %}
+  {% endif %}
+
+  {% if not data['teacher-contact-method'] %}
+  {{ "data.teacher-contact-method is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if data['teacher-contact-method'] == "email" and not data['teacher-email-address'] %}
+  {{ "data.teacher-email-address is incomplete" | log }}
+  {% set details_complete = false %}
+  {% set teacher_email = false %}
+  {% endif %}
+
+  {% if data['teacher-contact-method'] == "mobile" and not data['teacher-mobile-number'] %}
+  {{ "data.teacher-mobile-number is incomplete" | log }}
+  {% set details_complete = false %}
+  {% set teacher_mobile = false %}
   {% endif %}
 
   <div class="govuk-grid-row">
@@ -117,7 +139,33 @@
               <dd class="app-check-your-answers__answer">Existing bank account</dd>
               {% elseif data['teacher-payment-method'] == "other" %}
               <dd class="app-check-your-answers__answer">Other bank account:<br/>
-                </dd>
+                Account name:
+                {% if not teacher_bank_name %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-bank-account-name'] or "Incomplete" }}
+                {% if not teacher_bank_name %}
+                </span>
+                {% endif %}
+                <br/>
+                Account number:
+                {% if not teacher_bank_number %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-bank-account-number'] or "Incomplete" }}
+                {% if not teacher_bank_number %}
+                </span>
+                {% endif %}
+                <br/>
+                Sort code:
+                {% if not teacher_bank_sortcode %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-bank-sortcode-1'] or "XX" }}-{{ data['teacher-bank-sortcode-2'] or "XX" }}-{{ data['teacher-bank-sortcode-3'] or "XX" }}
+                {% if not teacher_bank_sortcode %}
+                </span>
+                {% endif %}
+              </dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
@@ -130,10 +178,24 @@
               <dt class="app-check-your-answers__question">Contact details</dt>
               {% if data['teacher-contact-method'] == "email" %}
               <dd class="app-check-your-answers__answer">By email:<br/>
-                Email</dd>
+                {% if not teacher_email %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-email-address'] or "Incomplete" }}
+                {% if not teacher_email %}
+                </span>
+                {% endif %}
+              </dd>
               {% elseif data['teacher-contact-method'] == "mobile" %}
               <dd class="app-check-your-answers__answer">By text message:<br/>
-                Number</dd>
+                {% if not teacher_mobile %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-mobile-number'] or "Incomplete" }}
+                {% if not teacher_mobile %}
+                </span>
+                {% endif %}
+              </dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
