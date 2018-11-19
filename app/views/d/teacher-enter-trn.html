@@ -22,12 +22,13 @@
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-            <div class="govuk-form-group">
+            <div class="govuk-form-group {% if (data['teacher-error-no-trn']) %}govuk-form-group--error{% endif %}">
               <label class="govuk-label" for="teacher-trn">Teacher Reference Number</label>
-              <span id="teacher-trn-hint" class="govuk-hint">
-                Do we know where a teacher can find this?
-              </span>
-              <input class="govuk-input" id="teacher-trn" name="teacher-trn" type="text">
+              <span id="teacher-trn-hint" class="govuk-hint">Do we know where a teacher can find this?</span>
+              {% if (data['teacher-error-no-trn']) %}
+              <span id="enter-trn-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+              {% endif %}
+              <input class="govuk-input {% if (data['teacher-error-no-trn']) %}govuk-input--error{% endif %}" id="teacher-trn" name="teacher-trn" type="text">
             </div>
 
             <div class="govuk-form-group">
