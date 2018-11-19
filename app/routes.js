@@ -312,6 +312,25 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-contact-method)/, function (req, r
 
 })
 
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-check-send)/, function (req, res) {
+
+  if (req.params[0] == "d") {
+
+    // Error: No payment method provided
+    if (!req.session.data['teacher-contact-method']) {
+      req.session.data['teacher-error-no-contact'] = true;
+      req.session.data['error-message'] = "Select how you would like us to contact you";
+      res.redirect('teacher-contact-method');
+      next
+    } else {
+      req.session.data['teacher-error-no-contact'] = false;
+      res.redirect('teacher-check-send');
+    }
+
+  }
+
+})
+
 router.post(/admin-confirm-location-eligibility/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
