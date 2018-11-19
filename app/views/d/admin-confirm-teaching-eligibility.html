@@ -21,11 +21,7 @@
 
 {% block content %}
 
-  {% if data.applicant.full_name %}
-  {% set full_name = data.applicant.full_name %}
-  {% else %}
-  {% set full_name = globals.smd.teacher.full_name %}
-  {% endif %}
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
 
   <div class="govuk-grid-row">
 
@@ -43,11 +39,15 @@
                 <li>biology</li>
                 <li>chemistry</li>
                 <li>computer science</li>
-                <li>languages (excluding english)</li>
+                <li>languages (not including english)</li>
                 <li>physics</li>
               </ul>
-              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school.</p>
+              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school. If they were off on long-term leave or sick, it will not affect their claim – include the time they were scheduled to teach.</p>
+              {% if data['admin-eligibility-period'] == "yes-part" %}
+              <p class="govuk-body">For the period they taught at your school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
+              {% else %}
               <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
+              {% endif %}
             </div>
 
             <div class="govuk-form-group">
@@ -82,7 +82,7 @@
                   {% endif %}
                   <label class="govuk-label govuk-radios__label" for="eligibility-teaching-tbc">I don't know</label>
                   <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">
-                    Someone else needs to check or provide this information.
+                    Someone else needs to check this information.
                   </span>
 
                 </div>

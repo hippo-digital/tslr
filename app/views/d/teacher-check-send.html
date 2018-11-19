@@ -10,11 +10,7 @@
 
 {% block content %}
 
-  {% if data.applicant.full_name %}
-  {% set full_name = data.applicant.full_name %}
-  {% else %}
-  {% set full_name = globals.smd.teacher.full_name %}
-  {% endif %}
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
 
   {% set details_complete = true %}
   {% set teacher_bank_name = true %}
