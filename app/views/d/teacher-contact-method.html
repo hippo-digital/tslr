@@ -14,65 +14,68 @@
 
     <div class="govuk-grid-column-two-thirds">
 
+      <h1 class="govuk-heading-xl">How would you like us to contact you?</h1>
+
       <form action="teacher-check-send" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-            {% set contactByEmail %}
+            <span id="teacher-contact-method-conditional-hint" class="govuk-hint">Select one option.</span>
 
-            <h2 class="govuk-heading-m">Your email address</h2>
+            {% if (data['teacher-error-no-contact']) %}
+            <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
 
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="contact-email-address">Enter a valid email address</label>
-              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email">
+            <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+
+              <div class="govuk-radios__item">
+                {% if data['teacher-contact-method'] == "email" %}
+                <input class="govuk-radios__input" id="contact-method-conditional-email" name="teacher-contact-method" type="radio" value="email" data-aria-controls="conditional-contact-method-conditional-email" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="contact-method-conditional-email" name="teacher-contact-method" type="radio" value="email" data-aria-controls="conditional-contact-method-conditional-email">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-email">Contact by email</label>
+                <span id="contact-method-email-hint" class="govuk-hint govuk-radios__hint">Optional hint here</span>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-email">
+                <div class="govuk-form-group">
+                  <h2 class="govuk-heading-m">Your email address</h2>
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="teacher-email-address">Enter a valid email address</label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email" value="{{data['teacher-email-address']}}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                {% if data['teacher-contact-method'] == "mobile" %}
+                <input class="govuk-radios__input" id="contact-method-conditional-mobile" name="teacher-contact-method" type="radio" value="mobile" data-aria-controls="conditional-contact-method-conditional-mobile" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="contact-method-conditional-mobile" name="teacher-contact-method" type="radio" value="mobile" data-aria-controls="conditional-contact-method-conditional-mobile">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-mobile">Contact by text message</label>
+                <span id="contact-method-conditional-mobile-hint" class="govuk-hint govuk-radios__hint">Optional hint here</span>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-mobile">
+                <div class="govuk-form-group">
+                  <h2 class="govuk-heading-m">Your mobile number</h2>
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="teacher-mobile-number">Enter a valid mobile number</label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number" value="{{data['teacher-mobile-number']}}">
+                  </div>
+                </div>
+              </div>
+
             </div>
-
-            {% endset -%}
-
-            {% set contactByMobile %}
-
-            <h2 class="govuk-heading-m">Your mobile number</h2>
-
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="contact-mobile-number">Enter a valid mobile number</label>
-              <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number">
-            </div>
-
-            {% endset -%}
-
-            {{ govukRadios({
-              idPrefix: "contact-method-conditional",
-              name: "teacher-contact-method",
-              fieldset: {
-                legend: {
-                  text: "How would you like us to contact you?",
-                  isPageHeading: true,
-                  classes: "govuk-fieldset__legend--xl"
-                }
-              },
-              hint: {},
-              items: [
-                {
-                  value: "contact-by-email",
-                  text: "Contact by email",
-                  conditional: {
-                    html: contactByEmail
-                  }
-                },
-                {
-                  value: "contact-by-mobile",
-                  text: "Contact by text message",
-                  conditional: {
-                    html: contactByMobile
-                  }
-                }
-              ]
-            }) }}
 
           </fieldset>
         </div>
 
+        {% if data['teacher-check-send'] %}
+        <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+        {% else %}
         <button type="submit" class="govuk-button">Continue</button>
+        {% endif %}
 
       </form>
     </div>
