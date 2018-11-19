@@ -107,7 +107,7 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
 router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
 
-  // Error: No school name passed
+  // Error: No school name provided
   if (req.session.data['teacher-school-name'] == "") {
     req.session.data['teacher-error-no-school'] = true;
     req.session.data['error-message'] = "Enter the name or reference number of your school";
@@ -154,6 +154,21 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
     }
   } else {
     res.redirect('teacher-enter-location-confirm');
+  }
+
+})
+
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
+
+  // Error: No NI Number provided
+  if (req.session.data['teacher-ni'] == "") {
+    req.session.data['teacher-error-no-ni'] = true;
+    req.session.data['error-message'] = "Enter your NI Number";
+    res.redirect('teacher-enter-ni-number');
+    next
+  } else {
+    req.session.data['teacher-error-no-ni'] = false;
+    res.redirect('teacher-enter-trn');
   }
 
 })
