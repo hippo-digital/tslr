@@ -20,7 +20,7 @@
         <div class="govuk-form-group {% if (data['teacher-error-no-payment']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            <span id="admin-loan-amount-conditional-hint" class="govuk-hint">Select one option.</span>
+            <span id="teacher-payment-method-conditional-hint" class="govuk-hint">Select one option.</span>
 
             {% if (data['teacher-error-no-payment']) %}
             <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -29,7 +29,7 @@
             <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
               <div class="govuk-radios__item">
-                {% if data['admin-loan-details'] == "existing" %}
+                {% if data['teacher-payment-method'] == "existing" %}
                 <input class="govuk-radios__input" id="payment-method-conditional-existing" name="teacher-payment-method" type="radio" value="existing" data-aria-controls="conditional-payment-method-conditional-existing" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="payment-method-conditional-existing" name="teacher-payment-method" type="radio" value="existing" data-aria-controls="conditional-payment-method-conditional-existing">
