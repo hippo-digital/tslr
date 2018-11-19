@@ -293,6 +293,25 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-consent)/, function (req, res) {
 
 })
 
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-contact-method)/, function (req, res) {
+
+  if (req.params[0] == "d") {
+
+    // Error: No payment method provided
+    if (!req.session.data['teacher-payment-method']) {
+      req.session.data['teacher-error-no-payment'] = true;
+      req.session.data['error-message'] = "Select how you would like us to pay you";
+      res.redirect('teacher-payment-method');
+      next
+    } else {
+      req.session.data['teacher-error-no-payment'] = false;
+      res.redirect('teacher-contact-method');
+    }
+
+  }
+
+})
+
 router.post(/admin-confirm-location-eligibility/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
