@@ -32,8 +32,7 @@
                 <h3 class="govuk-heading-m">{{ school or "{School name}" }}</h3>
                 <ul class="govuk-list govuk-list--bullet">
                   <li><strong>Local authority</strong>: Kirklees</li>
-                  <li><strong>Education phase</strong>: Secondary</li>
-                  <li><strong>School type</strong>: Academy sponsor led</li>
+                  <li><strong>Eligible?</strong>: Yes</li>
                 </ul>
               </div>
             {% endfor %}
@@ -41,8 +40,8 @@
             {% set enterAnotherSchool %}
             <h2 class="govuk-heading-m">Which other school did you teach at during the {{ globals.tax_year.full }} tax year?</h2>
             <div class="govuk-form-group">
-              <label class="govuk-label" for="teacher-school-name">Enter the school name or reference number</label>
-              <input class="govuk-input" id="teacher-school-name" name="teacher-school-name" type="text">
+              <label class="govuk-label" for="teacher-another-school-name">Enter the school name or reference number</label>
+              <input class="govuk-input" id="teacher-another-school-name" name="teacher-another-school-name" type="text">
             </div>
             {% endset -%}
 
@@ -80,6 +79,14 @@
         </div>
 
       </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="teacher-enter-ni-number" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
+      </p>
 
     </div>
 

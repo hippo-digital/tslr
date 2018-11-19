@@ -101,8 +101,23 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 // Service Model C only
 // --------------------
 // Careful! Actually, there's nothing in this rule which is '/c/' specific!!
+// req.params[0] = a, b, c or d
+// req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
+// req.params[2] = page-name
 
-router.post(/teacher-enter-location-confirm/, function (req, res) {
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
+
+  // Error: No school name passed
+  if (req.session.data['teacher-school-name'] == "") {
+    req.session.data['teacher-error-no-school'] = true;
+    req.session.data['error-message'] = "Enter the name or reference number of your school";
+    res.redirect('teacher-enter-location-eligibility');
+    next
+  } else {
+    req.session.data['teacher-error-no-school'] = false;
+  }
+
+  req.session.data['temp-params'] = req.params;
 
   // From teacher-enter-location-eligibility
   var setup = req.session.data['teacher-schools-setup'];
@@ -116,7 +131,12 @@ router.post(/teacher-enter-location-confirm/, function (req, res) {
     num_schools = schools.length;
   }
 
-  var school_name = req.session.data['teacher-school-name'];
+  if (option == 'school-confirm-ya') {
+    var school_name = req.session.data['teacher-another-school-name'];
+  } else {
+    var school_name = req.session.data['teacher-school-name'];
+  }
+
   schools.push(school_name);
   num_schools++;
 
@@ -126,7 +146,12 @@ router.post(/teacher-enter-location-confirm/, function (req, res) {
 
   // Need to branch differently depending whether answer was yes, yes more or no
   if (option == 'school-confirm-y' || option == 'school-confirm-n') {
-    res.redirect('teacher-consent');
+    if (req.params[0] == "d") {
+      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
+      next
+    } else {
+      res.redirect('teacher-consent');
+    }
   } else {
     res.redirect('teacher-enter-location-confirm');
   }
