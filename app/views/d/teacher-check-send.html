@@ -72,7 +72,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Check your answers before confirming the claim</h1>
+      <h1 class="govuk-heading-xl">Check your answers</h1>
 
       <form action="teacher-check-send" method="POST" role="form">
         <div class="govuk-form-group">
@@ -92,7 +92,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">School(s)</dt>
+              <dt class="app-check-your-answers__question">School</dt>
               <dd class="app-check-your-answers__answer">
                 <ul class="govuk-list">
                 {% for school in data['teacher-schools'] %}
@@ -106,7 +106,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">NI Number</dt>
+              <dt class="app-check-your-answers__question">National Insurance number</dt>
               {% if data['teacher-ni'] %}
               <dd class="app-check-your-answers__answer">{{ data['teacher-ni'] }}</dd>
               {% else %}
@@ -118,7 +118,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">TRN</dt>
+              <dt class="app-check-your-answers__question">Teacher reference number</dt>
               {% if data['teacher-trn'] %}
               <dd class="app-check-your-answers__answer">{{ data['teacher-trn'] }}</dd>
               {% else %}
@@ -130,7 +130,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Payment details</dt>
+              <dt class="app-check-your-answers__question">Bank account</dt>
               {% if data['teacher-payment-method'] == "existing" %}
               <dd class="app-check-your-answers__answer">Existing bank account</dd>
               {% elseif data['teacher-payment-method'] == "other" %}
@@ -171,7 +171,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Contact details</dt>
+              <dt class="app-check-your-answers__question">We'll contact you by:</dt>
               {% if data['teacher-contact-method'] == "email" %}
               <dd class="app-check-your-answers__answer">By email:<br/>
                 {% if not teacher_email %}
@@ -206,8 +206,8 @@
 
       </form>
 
-      <h2 class="govuk-heading-m">Confirm the claim</h2>
-      <p>By clicking the button below you are confirming that, to the best of your knowledge, the details provided are correct.</p>
+      <h2 class="govuk-heading-m">Confirm your claim</h2>
+      <p>By submitting this claim you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
       <p class="govuk-body">
         {% if details_complete %}
         <a href="teacher-confirmation" role="button" draggable="false" class="govuk-button">Confirm and send</a>

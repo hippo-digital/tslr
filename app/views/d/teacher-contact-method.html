@@ -14,13 +14,12 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">How would you like us to contact you?</h1>
+      <h1 class="govuk-heading-xl">How do you want us to contact you?</h1>
+      <p>We'll only use these details to update you about your claim.</p>
 
       <form action="teacher-check-send" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
-
-            <span id="teacher-contact-method-conditional-hint" class="govuk-hint">Select one option.</span>
 
             {% if (data['teacher-error-no-contact']) %}
             <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -34,14 +33,12 @@
                 {% else %}
                 <input class="govuk-radios__input" id="contact-method-conditional-email" name="teacher-contact-method" type="radio" value="email" data-aria-controls="conditional-contact-method-conditional-email">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-email">Contact by email</label>
-                <span id="contact-method-email-hint" class="govuk-hint govuk-radios__hint">Optional hint here</span>
+                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-email">Email</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-email">
                 <div class="govuk-form-group">
-                  <h2 class="govuk-heading-m">Your email address</h2>
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="teacher-email-address">Enter a valid email address</label>
+                    <label class="govuk-label" for="teacher-email-address">Enter email address</label>
                     <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email" value="{{data['teacher-email-address']}}">
                   </div>
                 </div>
@@ -53,14 +50,12 @@
                 {% else %}
                 <input class="govuk-radios__input" id="contact-method-conditional-mobile" name="teacher-contact-method" type="radio" value="mobile" data-aria-controls="conditional-contact-method-conditional-mobile">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-mobile">Contact by text message</label>
-                <span id="contact-method-conditional-mobile-hint" class="govuk-hint govuk-radios__hint">Optional hint here</span>
+                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-mobile">Text message</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-mobile">
                 <div class="govuk-form-group">
-                  <h2 class="govuk-heading-m">Your mobile number</h2>
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="teacher-mobile-number">Enter a valid mobile number</label>
+                    <label class="govuk-label" for="teacher-mobile-number">Enter mobile number</label>
                     <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number" value="{{data['teacher-mobile-number']}}">
                   </div>
                 </div>
