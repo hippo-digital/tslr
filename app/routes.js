@@ -208,7 +208,7 @@ router.post(/admin-enter-repayment-amount/, function (req, res) {
 // req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
 // req.params[2] = page-name
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (req, res) {
 
   if (req.params[0] == "d") {
     // Error: No school name provided
@@ -259,8 +259,11 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
 
   // Need to branch differently depending whether answer was yes, yes more or no
   if (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n') {
-    if (req.params[0] == "d") {
+    if (req.params[0] == "d" && req.params[1] == "181121/") {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
+      next
+    } else if (req.params[0] == "d") {
+      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d-alt&userLOA=0');
       next
     } else {
       res.redirect('teacher-consent');
@@ -271,19 +274,19 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
 
 })
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-ni-number)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
-    // Error: No NI Number provided
-    if (req.session.data['teacher-ni'] == "") {
-      req.session.data['teacher-error-no-ni'] = true;
-      req.session.data['error-message'] = "Enter your NI Number";
-      res.redirect('teacher-enter-ni-number');
+    // Error: No TRN provided
+    if (req.session.data['teacher-trn'] == "") {
+      req.session.data['teacher-error-no-trn'] = true;
+      req.session.data['error-message'] = "Enter your teacher reference number";
+      res.redirect('teacher-enter-trn');
       next
     } else {
-      req.session.data['teacher-error-no-ni'] = false;
-      res.redirect('teacher-enter-trn');
+      req.session.data['teacher-error-no-trn'] = false;
+      res.redirect('teacher-enter-ni-number');
     }
 
   }
@@ -295,13 +298,13 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-consent)/, function (req, res) {
   if (req.params[0] == "d") {
 
     // Error: No NI Number provided
-    if (req.session.data['teacher-trn'] == "") {
-      req.session.data['teacher-error-no-trn'] = true;
-      req.session.data['error-message'] = "Enter your Teacher Reference Number (TRN)";
-      res.redirect('teacher-enter-trn');
+    if (req.session.data['teacher-ni'] == "") {
+      req.session.data['teacher-error-no-ni'] = true;
+      req.session.data['error-message'] = "Enter your NI Number";
+      res.redirect('teacher-enter-ni-number');
       next
     } else {
-      req.session.data['teacher-error-no-trn'] = false;
+      req.session.data['teacher-error-no-ni'] = false;
       res.redirect('teacher-consent');
     }
 

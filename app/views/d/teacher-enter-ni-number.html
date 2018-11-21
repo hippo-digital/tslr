@@ -16,13 +16,9 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if not (data['teacher-error-no-ni']) and not (data['teacher-check-send']) %}
-      <div class="govuk-inset-text">You have successfully confirmed your identity.</div>
-      {% endif %}
-
       <h1 class="govuk-heading-xl">What's your National Insurance number?</h1>
 
-      <form action="teacher-enter-trn" method="POST" role="form">
+      <form action="teacher-consent" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
