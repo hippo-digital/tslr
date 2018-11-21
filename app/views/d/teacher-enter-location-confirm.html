@@ -24,22 +24,31 @@
 
       <form action="teacher-enter-location-confirm" method="POST" role="form">
         <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             {% if data['teacher-num-schools'] | int > 1 %}
 
             {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
             {% for school in data['teacher-schools'] %}
               <div class="govuk-form-group">
-                <h3 class="govuk-heading-m">{{ school or "{School name}" }}</h3>
+                <h3 class="govuk-heading-m">{{ school.name or "{School name}" }}</h3>
+                {% if school.eligible %}
                 <p>This school is in a participating area.</p>
+                {% else %}
+                <p>This school is not in a participating area.</p>
+                {% endif %}
               </div>
             {% endfor %}
 
             {% else %}
 
               <div class="govuk-form-group">
+                {% set school = data['teacher-schools'] | first %}
+                {% if school.eligible %}
                 <p>This school is in a participating area.</p>
+                {% else %}
+                <p>This school is not in a participating area.</p>
+                {% endif %}
               </div>
 
             {% endif %}
@@ -71,11 +80,11 @@
 
             </div>
 
-            <div class="govuk-form-group">
-              <button type="submit" class="govuk-button">Continue</button>
-            </div>
-
           </fieldset>
+        </div>
+
+        <div class="govuk-form-group">
+          <button type="submit" class="govuk-button">Continue</button>
         </div>
 
       </form>

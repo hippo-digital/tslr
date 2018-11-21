@@ -242,7 +242,15 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
     var school_name = req.session.data['teacher-school-name'];
   }
 
-  schools.push(school_name);
+  var eligibility_calc = Math.floor((Math.random() * 2) + 1);
+  var school_eligible = eligibility_calc > 1 ? true : false;
+
+  var school = {
+    name: school_name,
+    eligible: school_eligible
+  }
+
+  schools.push(school);
   num_schools++;
 
   req.session.data['teacher-schools'] = schools;
