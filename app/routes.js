@@ -388,7 +388,16 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, functio
     req.session.data['admin-check-send'] = true;
   }
 
-  res.redirect('admin-confirm-teaching-eligibility');
+  // Error: No location eligibility
+  if (!req.session.data['admin-eligibility-period']) {
+    req.session.data['admin-error-no-eligibility-location'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('admin-confirm-location-eligibility');
+    next
+  } else {
+    req.session.data['admin-error-no-eligibility-location'] = false;
+    res.redirect('admin-confirm-teaching-eligibility');
+  }
 
 })
 
@@ -399,7 +408,31 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req
     req.session.data['admin-check-send'] = true;
   }
 
-  res.redirect('admin-enter-repayment-amount');
+  // Error: No teaching eligibility
+  if (!req.session.data['admin-eligibility-teaching']) {
+    req.session.data['admin-error-no-eligibility-teaching'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('admin-confirm-teaching-eligibility');
+    next
+  } else {
+    req.session.data['admin-error-no-eligibility-teaching'] = false;
+    res.redirect('admin-enter-repayment-amount');
+  }
+
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
+
+  // Error: No loan repayment amount
+  if (!req.session.data['admin-loan-details']) {
+    req.session.data['admin-error-no-loan-details'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('admin-enter-repayment-amount');
+    next
+  } else {
+    req.session.data['admin-error-no-loan-details'] = false;
+    res.redirect('admin-check-send');
+  }
 
 })
 
