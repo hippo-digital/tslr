@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Bank details :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">How do you want us to contact you?</h1>
+      <p>We'll only use these details to update you about your claim.</p>
+
+      <form action="teacher-check-send" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            {% if (data['teacher-error-no-contact']) %}
+            <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
+            <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+
+              <div class="govuk-radios__item">
+                {% if data['teacher-contact-method'] == "email" %}
+                <input class="govuk-radios__input" id="contact-method-conditional-email" name="teacher-contact-method" type="radio" value="email" data-aria-controls="conditional-contact-method-conditional-email" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="contact-method-conditional-email" name="teacher-contact-method" type="radio" value="email" data-aria-controls="conditional-contact-method-conditional-email">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-email">Email</label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-email">
+                <div class="govuk-form-group">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="teacher-email-address">Enter email address</label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email" value="{{data['teacher-email-address']}}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                {% if data['teacher-contact-method'] == "mobile" %}
+                <input class="govuk-radios__input" id="contact-method-conditional-mobile" name="teacher-contact-method" type="radio" value="mobile" data-aria-controls="conditional-contact-method-conditional-mobile" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="contact-method-conditional-mobile" name="teacher-contact-method" type="radio" value="mobile" data-aria-controls="conditional-contact-method-conditional-mobile">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="contact-method-conditional-mobile">Text message</label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-mobile">
+                <div class="govuk-form-group">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="teacher-mobile-number">Enter mobile number</label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number" value="{{data['teacher-mobile-number']}}">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </div>
+
+        {% if data['teacher-check-send'] %}
+        <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+        {% else %}
+        <button type="submit" class="govuk-button">Continue</button>
+        {% endif %}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">What's your teacher reference number?</h1>
+
+      <form action="teacher-consent" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            <div class="govuk-form-group {% if (data['teacher-error-no-trn']) %}govuk-form-group--error{% endif %}">
+              <label class="govuk-label" for="teacher-trn">Teacher reference number</label>
+              <span id="teacher-trn-hint" class="govuk-hint">This is on the certificate you got when you qualified as a teacher, or your school can tell you.</span>
+              {% if (data['teacher-error-no-trn']) %}
+              <span id="enter-trn-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+              {% endif %}
+              <input class="govuk-input {% if (data['teacher-error-no-trn']) %}govuk-input--error{% endif %}" id="teacher-trn" name="teacher-trn" type="text" value="{{data['teacher-trn']}}">
+            </div>
+
+            <div class="govuk-form-group">
+              {% if data['teacher-check-send'] %}
+              <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+              {% else %}
+              <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
+            </div>
+
+          </fieldset>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
