@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Check school information</h1>
+
+      <p class="govuk-body">Did <strong>{{ full_name | title }}</strong> teach at {{ globals.smd.teacher.school_name }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
+
+      <form action="admin-confirm-teaching-eligibility" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+
+              <div class="govuk-radios__item">
+                {% if data['admin-eligibility-period'] == "yes" %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-yes" name="admin-eligibility-period" type="radio" value="yes" data-aria-controls="conditional-eligibility-period-conditional-yes" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-yes" name="admin-eligibility-period" type="radio" value="yes" data-aria-controls="conditional-eligibility-period-conditional-yes">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-yes">Yes, for the whole year</label>
+              </div>
+
+              <div class="govuk-radios__item">
+                {% if data['admin-eligibility-period'] == "yes-part" %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-yes-part" name="admin-eligibility-period" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-period-conditional-yes-part" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-yes-part" name="admin-eligibility-period" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-period-conditional-yes-part">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-yes-part">Yes, but only for part of the year</label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-eligibility-period-conditional-yes-part">
+                <div class="govuk-form-group">
+                  <span id="start-date-hint" class="govuk-hint">{{ full_name | title }} taught here from...</span>
+                  <div class="govuk-date-input" id="start-date">
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="admin-start-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-start-day" name="admin-start-day" type="number" pattern="[0-9]*" value="{{ data['admin-start-day'] }}">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="admin-start-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-start-month" name="admin-start-month" type="number" pattern="[0-9]*" value="{{ data['admin-start-month'] }}">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="admin-start-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="admin-start-year" name="admin-start-year" type="number" pattern="[0-9]*" value="{{ data['admin-start-year'] }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="govuk-form-group">
+                  <span id="end-date-hint" class="govuk-hint">...until...</span>
+                  <div class="govuk-date-input" id="end-date">
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="admin-end-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-end-day" name="admin-end-day" type="number" pattern="[0-9]*" value="{{ data['admin-end-day'] }}">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="admin-end-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="admin-end-month" name="admin-end-month" type="number" pattern="[0-9]*" value="{{ data['admin-end-month'] }}">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="admin-end-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="admin-end-year" name="admin-end-year" type="number" pattern="[0-9]*" value="{{ data['admin-end-year'] }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                {% if data['admin-eligibility-period'] == "no" %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-no" name="admin-eligibility-period" type="radio" value="no" data-aria-controls="conditional-eligibility-period-conditional-no" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-no" name="admin-eligibility-period" type="radio" value="no" data-aria-controls="conditional-eligibility-period-conditional-no">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-no">No</label>
+              </div>
+
+              <div class="govuk-radios__divider">or</div>
+
+              <div class="govuk-radios__item">
+                {% if data['admin-eligibility-period'] == "tbc" %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-tbc" name="admin-eligibility-period" type="radio" value="tbc" data-aria-controls="conditional-eligibility-period-conditional-tbc" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="eligibility-period-conditional-tbc" name="admin-eligibility-period" type="radio" value="tbc" data-aria-controls="conditional-eligibility-period-conditional-tbc">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-tbc">I don't know</label>
+                <span id="eligibility-period-tbc-hint" class="govuk-hint govuk-radios__hint">
+                  Someone else needs to check or provide this information.
+                </span>
+              </div>
+
+            </div>
+
+            <hr class="govuk-section-break govuk-section-break--m">
+
+            <div class="govuk-form-group">
+              {% if data['admin-check-send'] == true %}
+              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
+              {% else %}
+              <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -79,10 +79,6 @@ router.post(/about-you-trn/, function (req, res) {
 
 })
 
-// Service Model B only
-// --------------------
-// Careful! Actually, there's nothing in this rule which is '/b/' specific!!
-
 router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
 
   // From admin-applications
@@ -95,68 +91,6 @@ router.get(/admin-confirm-eligibility_(name)_([a-z-]+)/, function (req, res) {
   };
   req.session.data['applicant'] = applicant;
   res.redirect('admin-confirm-eligibility');
-
-})
-
-// Service Model C only
-// --------------------
-// Careful! Actually, there's nothing in this rule which is '/c/' specific!!
-// req.params[0] = a, b, c or d
-// req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
-// req.params[2] = page-name
-
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
-
-  if (req.params[0] == "d") {
-    // Error: No school name provided
-    if (req.session.data['teacher-school-name'] == "") {
-      req.session.data['teacher-error-no-school'] = true;
-      req.session.data['error-message'] = "Enter the name or reference number of your school";
-      res.redirect('teacher-enter-location-eligibility');
-      next
-    } else {
-      req.session.data['teacher-error-no-school'] = false;
-    }
-  }
-
-  req.session.data['temp-params'] = req.params;
-
-  // From teacher-enter-location-eligibility
-  var setup = req.session.data['teacher-schools-setup'];
-
-  if (setup) {
-    var schools = [];
-    num_schools = 0;
-  } else {
-    var option = req.session.data['teacher-school-confirm'];
-    var schools = req.session.data['teacher-schools'];
-    num_schools = schools.length;
-  }
-
-  if (option == 'school-confirm-ya') {
-    var school_name = req.session.data['teacher-another-school-name'];
-  } else {
-    var school_name = req.session.data['teacher-school-name'];
-  }
-
-  schools.push(school_name);
-  num_schools++;
-
-  req.session.data['teacher-schools'] = schools;
-  req.session.data['teacher-num-schools'] = num_schools;
-  req.session.data['teacher-schools-setup'] = false;
-
-  // Need to branch differently depending whether answer was yes, yes more or no
-  if (option == 'school-confirm-y' || option == 'school-confirm-n') {
-    if (req.params[0] == "d") {
-      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
-      next
-    } else {
-      res.redirect('teacher-consent');
-    }
-  } else {
-    res.redirect('teacher-enter-location-confirm');
-  }
 
 })
 
@@ -235,8 +169,107 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 
 })
 
-// Service Model D only
-// --------------------
+router.post(/admin-confirm-location-eligibility/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-confirm-location-eligibility');
+
+})
+
+router.post(/admin-confirm-teaching-eligibility/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-confirm-teaching-eligibility');
+
+})
+
+router.post(/admin-enter-repayment-amount/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-enter-repayment-amount');
+
+})
+
+// !!! Service Model specific handling !!!
+// ---------------------------------------
+// req.params[0] = a, b, c or d
+// req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
+// req.params[2] = page-name
+
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function (req, res) {
+
+  if (req.params[0] == "d") {
+    // Error: No school name provided
+    if (req.session.data['teacher-school-name'] == "") {
+      req.session.data['teacher-error-no-school'] = true;
+      req.session.data['error-message'] = "Enter the name or reference number of your school";
+      res.redirect('teacher-enter-location-eligibility');
+      next
+    } else {
+      req.session.data['teacher-error-no-school'] = false;
+    }
+  }
+
+  req.session.data['temp-params'] = req.params;
+
+  // From teacher-enter-location-eligibility
+  var setup = req.session.data['teacher-schools-setup'];
+
+  if (setup) {
+    var schools = [];
+    num_schools = 0;
+  } else {
+    var option = req.session.data['teacher-school-confirm'];
+    var schools = req.session.data['teacher-schools'];
+    num_schools = schools.length;
+  }
+
+  if (option == 'n' || option == 'school-confirm-ya') {
+    var school_name = req.session.data['teacher-another-school-name'];
+  } else {
+    var school_name = req.session.data['teacher-school-name'];
+  }
+
+  var eligibility_calc = Math.floor((Math.random() * 2) + 1);
+  var school_eligible = eligibility_calc > 1 ? true : false;
+
+  var school = {
+    name: school_name,
+    eligible: school_eligible
+  }
+
+  schools.push(school);
+  num_schools++;
+
+  req.session.data['teacher-schools'] = schools;
+  req.session.data['teacher-num-schools'] = num_schools;
+  req.session.data['teacher-schools-setup'] = false;
+
+  // Need to branch differently depending whether answer was yes, yes more or no
+  if (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n') {
+    if (req.params[0] == "d") {
+      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
+      next
+    } else {
+      res.redirect('teacher-consent');
+    }
+  } else {
+    res.redirect('teacher-enter-location-confirm');
+  }
+
+})
 
 router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
 
@@ -311,39 +344,6 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-check-send)/, function (req, res) 
     }
 
   }
-
-})
-
-router.post(/admin-confirm-location-eligibility/, function (req, res) {
-
-  if (req.session.data['admin-check-send'] == "true") {
-    req.session.data['admin-check-send'] = false;
-    req.session.data['admin-check-send'] = true;
-  }
-
-  res.redirect('admin-confirm-location-eligibility');
-
-})
-
-router.post(/admin-confirm-teaching-eligibility/, function (req, res) {
-
-  if (req.session.data['admin-check-send'] == "true") {
-    req.session.data['admin-check-send'] = false;
-    req.session.data['admin-check-send'] = true;
-  }
-
-  res.redirect('admin-confirm-teaching-eligibility');
-
-})
-
-router.post(/admin-enter-repayment-amount/, function (req, res) {
-
-  if (req.session.data['admin-check-send'] == "true") {
-    req.session.data['admin-check-send'] = false;
-    req.session.data['admin-check-send'] = true;
-  }
-
-  res.redirect('admin-enter-repayment-amount');
 
 })
 
