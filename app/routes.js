@@ -274,7 +274,7 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
 
 })
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-ni-number)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
@@ -293,7 +293,7 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-ni-number)/, function (req, 
 
 })
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-consent)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
@@ -312,18 +312,48 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-consent)/, function (req, res) {
 
 })
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-contact-method)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
     // Error: No payment method provided
-    if (!req.session.data['teacher-payment-method']) {
-      req.session.data['teacher-error-no-payment'] = true;
-      req.session.data['error-message'] = "Select how you would like us to pay you";
+    if (!req.session.data['teacher-bank-account-name'] || !req.session.data['teacher-bank-account-number'] || !req.session.data['teacher-bank-sortcode-1'] || !req.session.data['teacher-bank-sortcode-2'] || !req.session.data['teacher-bank-sortcode-3']) {
+      req.session.data['teacher-error-payment-details'] = true;
+      req.session.data['error-message'] = "Check you have entered all your bank details";
+      if (!req.session.data['teacher-bank-account-name']) {
+        req.session.data['teacher-error-payment-details-name'] = true;
+      } else {
+        req.session.data['teacher-error-payment-details-name'] = false;
+      }
+      if (!req.session.data['teacher-bank-account-number']) {
+        req.session.data['teacher-error-payment-details-number'] = true;
+      } else {
+        req.session.data['teacher-error-payment-details-number'] = false;
+      }
+      if (!req.session.data['teacher-bank-sortcode-1']) {
+        req.session.data['teacher-error-payment-details-sort1'] = true;
+      } else {
+        req.session.data['teacher-error-payment-details-sort1'] = false;
+      }
+      if (!req.session.data['teacher-bank-sortcode-2']) {
+        req.session.data['teacher-error-payment-details-sort2'] = true;
+      } else {
+        req.session.data['teacher-error-payment-details-sort2'] = false;
+      }
+      if (!req.session.data['teacher-bank-sortcode-3']) {
+        req.session.data['teacher-error-payment-details-sort3'] = true;
+      } else {
+        req.session.data['teacher-error-payment-details-sort3'] = false;
+      }
       res.redirect('teacher-payment-method');
       next
     } else {
-      req.session.data['teacher-error-no-payment'] = false;
+      req.session.data['teacher-error-payment-details'] = false;
+      req.session.data['teacher-error-payment-details-name'] = false;
+      req.session.data['teacher-error-payment-details-number'] = false;
+      req.session.data['teacher-error-payment-details-sort1'] = false;
+      req.session.data['teacher-error-payment-details-sort2'] = false;
+      req.session.data['teacher-error-payment-details-sort3'] = false;
       res.redirect('teacher-contact-method');
     }
 
@@ -331,7 +361,7 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-contact-method)/, function (req, r
 
 })
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-check-send)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
 
   if (req.params[0] == "d") {
 

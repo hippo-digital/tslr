@@ -20,49 +20,26 @@
         <div class="govuk-form-group {% if (data['teacher-error-no-payment']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            {% if (data['teacher-error-no-payment']) %}
+            {% if (data['teacher-error-payment-details']) %}
             <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
 
-            <div class="govuk-radios govuk-radios--conditional" data-module="radios">
-
-              <div class="govuk-radios__item">
-                {% if data['teacher-payment-method'] == "existing" %}
-                <input class="govuk-radios__input" id="payment-method-conditional-existing" name="teacher-payment-method" type="radio" value="existing" data-aria-controls="conditional-payment-method-conditional-existing" checked>
-                {% else %}
-                <input class="govuk-radios__input" id="payment-method-conditional-existing" name="teacher-payment-method" type="radio" value="existing" data-aria-controls="conditional-payment-method-conditional-existing">
-                {% endif %}
-                <label class="govuk-label govuk-radios__label" for="payment-method-conditional-existing">Cheque</label>
+            <div class="govuk-form-group {% if (data['teacher-error-payment-details']) %}govuk-form-group--error{% endif %}">
+              <h2 class="govuk-heading-m">Enter your account details</h2>
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="bank-account-name">Name of account holder</label>
+                <input class="govuk-input govuk-!-width-two-thirds {% if (data['teacher-error-payment-details-name']) %}govuk-input--error{% endif %}" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text" value="{{data['teacher-bank-account-name']}}">
               </div>
-
-              <div class="govuk-radios__item">
-                {% if data['teacher-payment-method'] == "other" %}
-                <input class="govuk-radios__input" id="payment-method-conditional-other" name="teacher-payment-method" type="radio" value="other" data-aria-controls="conditional-payment-method-conditional-other" checked>
-                {% else %}
-                <input class="govuk-radios__input" id="payment-method-conditional-other" name="teacher-payment-method" type="radio" value="other" data-aria-controls="conditional-payment-method-conditional-other">
-                {% endif %}
-                <label class="govuk-label govuk-radios__label" for="payment-method-conditional-other">Your bank account</label>
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="bank-account-number">Account number</label>
+                <input class="govuk-input govuk-!-width-two-thirds {% if (data['teacher-error-payment-details-number']) %}govuk-input--error{% endif %}" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number" value="{{data['teacher-bank-account-number']}}">
               </div>
-              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-payment-method-conditional-other">
-                <div class="govuk-form-group">
-                  <h2 class="govuk-heading-m">Enter bank account details</h2>
-                  <div class="govuk-form-group">
-                    <label class="govuk-label" for="bank-account-name">Name of the account holder</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text" value="{{data['teacher-bank-account-name']}}">
-                  </div>
-                  <div class="govuk-form-group">
-                    <label class="govuk-label" for="bank-account-number">Account number</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number" value="{{data['teacher-bank-account-number']}}">
-                  </div>
-                  <div class="govuk-form-group">
-                    <label class="govuk-label" for="#">Sort code</label>
-                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-1" type="number" pattern="[0-9]*" value="{{data['teacher-bank-account-sortcode-1']}}">
-                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-2" type="number" pattern="[0-9]*" value="{{data['teacher-bank-account-sortcode-2']}}">
-                    <input class="govuk-input govuk-input--width-2" id="#" name="teacher-bank-sortcode-3" type="number" pattern="[0-9]*" value="{{data['teacher-bank-account-sortcode-3']}}">
-                  </div>
-                </div>
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="#">Sort code</label>
+                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort1']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-1" type="number" pattern="[0-9]*" value="{{data['teacher-bank-sortcode-1']}}">
+                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort2']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-2" type="number" pattern="[0-9]*" value="{{data['teacher-bank-sortcode-2']}}">
+                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort3']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-3" type="number" pattern="[0-9]*" value="{{data['teacher-bank-sortcode-3']}}">
               </div>
-
             </div>
 
           </fieldset>
