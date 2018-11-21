@@ -20,8 +20,6 @@
         <div class="govuk-form-group {% if (data['teacher-error-no-payment']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            <span id="teacher-payment-method-conditional-hint" class="govuk-hint">Select one option.</span>
-
             {% if (data['teacher-error-no-payment']) %}
             <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
@@ -34,8 +32,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="payment-method-conditional-existing" name="teacher-payment-method" type="radio" value="existing" data-aria-controls="conditional-payment-method-conditional-existing">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="payment-method-conditional-existing">The bank account you receive your school pay into</label>
-                <span id="payment-method-existing-hint" class="govuk-hint govuk-radios__hint">Optional hint here</span>
+                <label class="govuk-label govuk-radios__label" for="payment-method-conditional-existing">Cheque</label>
               </div>
 
               <div class="govuk-radios__item">
@@ -44,8 +41,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="payment-method-conditional-other" name="teacher-payment-method" type="radio" value="other" data-aria-controls="conditional-payment-method-conditional-other">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="payment-method-conditional-other">A different bank account</label>
-                <span id="payment-method-conditional-other-hint" class="govuk-hint govuk-radios__hint">Optional hint here</span>
+                <label class="govuk-label govuk-radios__label" for="payment-method-conditional-other">Your bank account</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-payment-method-conditional-other">
                 <div class="govuk-form-group">

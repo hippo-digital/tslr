@@ -17,7 +17,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       {% if data['teacher-num-schools'] | int == 1 %}
-      <h1 class="govuk-heading-xl">Where did you teach between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
+      <h1 class="govuk-heading-xl">Is this the only place you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
       {% else %}
       <h1 class="govuk-heading-xl">Where did you teach between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
       {% endif %}
@@ -30,17 +30,14 @@
             {% for school in data['teacher-schools'] %}
               <div class="govuk-form-group">
                 <h3 class="govuk-heading-m">{{ school or "{School name}" }}</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                  <li><strong>Local authority</strong>: Kirklees</li>
-                  <li><strong>Eligible?</strong>: Yes</li>
-                </ul>
+                  <p>This school is in a participating area.</p>
               </div>
             {% endfor %}
 
             {% set enterAnotherSchool %}
-            <h2 class="govuk-heading-m">Which other school did you teach at during the {{ globals.tax_year.full }} tax year?</h2>
+            <h2 class="govuk-heading-m">Which other school did you teach at?</h2>
             <div class="govuk-form-group">
-              <label class="govuk-label" for="teacher-another-school-name">Enter the school name or reference number</label>
+              <label class="govuk-label" for="teacher-another-school-name">Enter the school name</label>
               <input class="govuk-input" id="teacher-another-school-name" name="teacher-another-school-name" type="text">
             </div>
             {% endset -%}
@@ -58,15 +55,12 @@
                 },
                 {
                   value: "school-confirm-ya",
-                  text: "Yes, and I also taught at another school",
+                  text: "No, you also taught at another school",
                   conditional: {
                     html: enterAnotherSchool
                   }
                 },
                 {
-                  value: "school-confirm-n",
-                  text: "No",
-                  conditional: {}
                 }
               ]
             }) }}

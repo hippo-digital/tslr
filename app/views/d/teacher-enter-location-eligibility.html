@@ -27,17 +27,17 @@
             <span id="trn-hint" class="govuk-hint">
               <details class="govuk-details">
                 <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">What if I taught at more than one school?</span>
+                  <span class="govuk-details__summary-text">You taught at more than one school</span>
                 </summary>
                 <div class="govuk-details__text">
-                  <p class="govuk-body">Get started by searching for your first school. You can add more schools later.</p>
+                  <p class="govuk-body">Add one of the schools you taught at. You can add more later.</p>
                 </div>
               </details>
             </span>
 
             <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
               <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="true">
-              <label class="govuk-label" for="teacher-school-name">Enter the school name or Unique Reference Number (URN)</label>
+              <label class="govuk-label" for="teacher-school-name">Enter the school name</label>
               {% if (data['teacher-error-no-school']) %}
               <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}

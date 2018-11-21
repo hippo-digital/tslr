@@ -16,15 +16,15 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">What is your Teacher Reference Number (TRN)?</h1>
+      <h1 class="govuk-heading-xl">What's your teacher reference number?</h1>
 
       <form action="teacher-consent" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
             <div class="govuk-form-group {% if (data['teacher-error-no-trn']) %}govuk-form-group--error{% endif %}">
-              <label class="govuk-label" for="teacher-trn">Teacher Reference Number</label>
-              <span id="teacher-trn-hint" class="govuk-hint">Do we know where a teacher can find this?</span>
+              <label class="govuk-label" for="teacher-trn">Teacher reference number</label>
+              <span id="teacher-trn-hint" class="govuk-hint">This is on the certificate you got when you qualified as a teacher, or your school can tell you.</span>
               {% if (data['teacher-error-no-trn']) %}
               <span id="enter-trn-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
