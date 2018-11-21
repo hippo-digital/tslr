@@ -14,14 +14,39 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">How do you want us to contact you?</h1>
-      <p>We'll only use these details to update you about your claim.</p>
+      {% if (data['teacher-error-no-contact'] or data['teacher-error-no-email'] or data['teacher-error-no-mobile']) %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if (data['teacher-error-no-contact']) %}
+            <li><a href="#teacher-payment-method-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+            {% if (data['teacher-error-no-email']) %}
+            <li><a href="#enter-email-error">{{ data['error-message-email'] }}</a></li>
+            {% endif %}
+            {% if (data['teacher-error-no-mobile']) %}
+            <li><a href="#enter-mobile-error">{{ data['error-message-mobile'] }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
 
       <form action="teacher-check-send" method="POST" role="form">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group {% if (data['teacher-error-no-contact'] or data['teacher-error-no-email'] or data['teacher-error-no-mobile']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-            {% if (data['teacher-error-no-contact']) %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                How do you want us to contact you?
+              </h1>
+            </legend>
+            <span id="changed-name-hint" class="govuk-hint">
+              We'll only use these details to update you about your claim.
+            </span>
+
+            {% if (data['teacher-error-no-contact'] and not data['teacher-error-no-email'] and not data['teacher-error-no-mobile']) %}
             <span id="teacher-payment-method-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
 
@@ -39,6 +64,9 @@
                 <div class="govuk-form-group">
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="teacher-email-address">Enter email address</label>
+                    {% if (data['teacher-error-no-email']) %}
+                    <span id="enter-email-error" class="govuk-error-message">{{ data['error-message-email'] }}</span>
+                    {% endif %}
                     <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email" value="{{data['teacher-email-address']}}">
                   </div>
                 </div>
@@ -56,6 +84,9 @@
                 <div class="govuk-form-group">
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="teacher-mobile-number">Enter mobile number</label>
+                    {% if (data['teacher-error-no-mobile']) %}
+                    <span id="enter-mobile-error" class="govuk-error-message">{{ data['error-message-mobile'] }}</span>
+                    {% endif %}
                     <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number" value="{{data['teacher-mobile-number']}}">
                   </div>
                 </div>
