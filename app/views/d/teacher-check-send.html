@@ -29,27 +29,20 @@
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['teacher-payment-method'] %}
-  {{ "data.teacher-payment-method is incomplete" | log }}
-  {% set details_complete = false %}
+  {% if not data['teacher-bank-account-name'] %}
+    {{ "data.teacher-bank-account-name is incomplete" | log }}
+    {% set details_complete = false %}
+    {% set teacher_bank_name = false %}
   {% endif %}
-
-  {% if data['teacher-payment-method'] == "other" %}
-    {% if not data['teacher-bank-account-name'] %}
-      {{ "data.teacher-bank-account-name is incomplete" | log }}
-      {% set details_complete = false %}
-      {% set teacher_bank_name = false %}
-    {% endif %}
-    {% if not data['teacher-bank-account-number'] %}
-      {{ "data.teacher-bank-account-number is incomplete" | log }}
-      {% set details_complete = false %}
-      {% set teacher_bank_number = false %}
-    {% endif %}
-    {% if not data['teacher-bank-sortcode-1'] or not data['teacher-bank-sortcode-2'] or not data['teacher-bank-sortcode-3'] %}
-      {{ "data.teacher-bank-sortcode-x is incomplete" | log }}
-      {% set details_complete = false %}
-      {% set teacher_bank_sortcode = false %}
-    {% endif %}
+  {% if not data['teacher-bank-account-number'] %}
+    {{ "data.teacher-bank-account-number is incomplete" | log }}
+    {% set details_complete = false %}
+    {% set teacher_bank_number = false %}
+  {% endif %}
+  {% if not data['teacher-bank-sortcode-1'] or not data['teacher-bank-sortcode-2'] or not data['teacher-bank-sortcode-3'] %}
+    {{ "data.teacher-bank-sortcode-x is incomplete" | log }}
+    {% set details_complete = false %}
+    {% set teacher_bank_sortcode = false %}
   {% endif %}
 
   {% if not data['teacher-contact-method'] %}
@@ -96,24 +89,12 @@
               <dd class="app-check-your-answers__answer">
                 <ul class="govuk-list">
                 {% for school in data['teacher-schools'] %}
-                  <li>{{ school or "{School name}" }}</li>
+                  <li>{{ school.name or "{School name}" }}</li>
                 {% endfor %}
                 </ul>
               </dd>
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="teacher-enter-location-confirm">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
-              </dd>
-            </div>
-
-            <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">National Insurance number</dt>
-              {% if data['teacher-ni'] %}
-              <dd class="app-check-your-answers__answer">{{ data['teacher-ni'] }}</dd>
-              {% else %}
-              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
-              {% endif %}
-              <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" formaction="teacher-enter-ni-number">Change<span class="govuk-visually-hidden"> NI Number</span></button>
               </dd>
             </div>
 
@@ -130,11 +111,20 @@
             </div>
 
             <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">National Insurance number</dt>
+              {% if data['teacher-ni'] %}
+              <dd class="app-check-your-answers__answer">{{ data['teacher-ni'] }}</dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="teacher-enter-ni-number">Change<span class="govuk-visually-hidden"> NI Number</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Bank account</dt>
-              {% if data['teacher-payment-method'] == "existing" %}
-              <dd class="app-check-your-answers__answer">Existing bank account</dd>
-              {% elseif data['teacher-payment-method'] == "other" %}
-              <dd class="app-check-your-answers__answer">Other bank account:<br/>
+              <dd class="app-check-your-answers__answer">
                 Account name:
                 {% if not teacher_bank_name %}
                 <span class="answer-incomplete">
@@ -162,9 +152,6 @@
                 </span>
                 {% endif %}
               </dd>
-              {% else %}
-              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
-              {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="teacher-payment-method">Change<span class="govuk-visually-hidden"> payment method</span></button>
               </dd>

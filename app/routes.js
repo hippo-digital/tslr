@@ -169,39 +169,6 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 
 })
 
-router.post(/admin-confirm-location-eligibility/, function (req, res) {
-
-  if (req.session.data['admin-check-send'] == "true") {
-    req.session.data['admin-check-send'] = false;
-    req.session.data['admin-check-send'] = true;
-  }
-
-  res.redirect('admin-confirm-location-eligibility');
-
-})
-
-router.post(/admin-confirm-teaching-eligibility/, function (req, res) {
-
-  if (req.session.data['admin-check-send'] == "true") {
-    req.session.data['admin-check-send'] = false;
-    req.session.data['admin-check-send'] = true;
-  }
-
-  res.redirect('admin-confirm-teaching-eligibility');
-
-})
-
-router.post(/admin-enter-repayment-amount/, function (req, res) {
-
-  if (req.session.data['admin-check-send'] == "true") {
-    req.session.data['admin-check-send'] = false;
-    req.session.data['admin-check-send'] = true;
-  }
-
-  res.redirect('admin-enter-repayment-amount');
-
-})
-
 // !!! Service Model specific handling !!!
 // ---------------------------------------
 // req.params[0] = a, b, c or d
@@ -214,7 +181,7 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
     // Error: No school name provided
     if (req.session.data['teacher-school-name'] == "") {
       req.session.data['teacher-error-no-school'] = true;
-      req.session.data['error-message'] = "Enter the name or reference number of your school";
+      req.session.data['error-message'] = "Enter the school name or reference number";
       res.redirect('teacher-enter-location-eligibility');
       next
     } else {
@@ -322,26 +289,31 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res)
       req.session.data['error-message'] = "Check you have entered all your bank details";
       if (!req.session.data['teacher-bank-account-name']) {
         req.session.data['teacher-error-payment-details-name'] = true;
+        req.session.data['error-message-account-name'] = "Enter your account name";
       } else {
         req.session.data['teacher-error-payment-details-name'] = false;
       }
       if (!req.session.data['teacher-bank-account-number']) {
         req.session.data['teacher-error-payment-details-number'] = true;
+        req.session.data['error-message-account-number'] = "Enter your account number";
       } else {
         req.session.data['teacher-error-payment-details-number'] = false;
       }
       if (!req.session.data['teacher-bank-sortcode-1']) {
         req.session.data['teacher-error-payment-details-sort1'] = true;
+        req.session.data['error-message-account-sortcode'] = "Enter your account sortcode";
       } else {
         req.session.data['teacher-error-payment-details-sort1'] = false;
       }
       if (!req.session.data['teacher-bank-sortcode-2']) {
         req.session.data['teacher-error-payment-details-sort2'] = true;
+        req.session.data['error-message-account-sortcode'] = "Enter your account sortcode";
       } else {
         req.session.data['teacher-error-payment-details-sort2'] = false;
       }
       if (!req.session.data['teacher-bank-sortcode-3']) {
         req.session.data['teacher-error-payment-details-sort3'] = true;
+        req.session.data['error-message-account-sortcode'] = "Enter your account sortcode";
       } else {
         req.session.data['teacher-error-payment-details-sort3'] = false;
       }
@@ -369,14 +341,65 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
     if (!req.session.data['teacher-contact-method']) {
       req.session.data['teacher-error-no-contact'] = true;
       req.session.data['error-message'] = "Select how you would like us to contact you";
+      req.session.data['teacher-error-no-email'] = false;
+      req.session.data['teacher-error-no-mobile'] = false;
+      res.redirect('teacher-contact-method');
+      next
+    } else if (req.session.data['teacher-contact-method'] == "email" && !req.session.data['teacher-email-address']) {
+      req.session.data['teacher-error-no-email'] = true;
+      req.session.data['error-message-email'] = "Enter your email address";
+      req.session.data['teacher-error-no-contact'] = false;
+      req.session.data['teacher-error-no-mobile'] = false;
+      res.redirect('teacher-contact-method');
+      next
+    } else if (req.session.data['teacher-contact-method'] == "mobile" && !req.session.data['teacher-mobile-number']) {
+      req.session.data['teacher-error-no-mobile'] = true;
+      req.session.data['error-message-mobile'] = "Enter your mobile number";
+      req.session.data['teacher-error-no-contact'] = false;
+      req.session.data['teacher-error-no-email'] = false;
       res.redirect('teacher-contact-method');
       next
     } else {
       req.session.data['teacher-error-no-contact'] = false;
+      req.session.data['teacher-error-no-email'] = false;
+      req.session.data['teacher-error-no-mobile'] = false;
       res.redirect('teacher-check-send');
     }
 
   }
+
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-confirm-location-eligibility');
+
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-confirm-teaching-eligibility');
+
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
+
+  if (req.session.data['admin-check-send'] == "true") {
+    req.session.data['admin-check-send'] = false;
+    req.session.data['admin-check-send'] = true;
+  }
+
+  res.redirect('admin-enter-repayment-amount');
 
 })
 
