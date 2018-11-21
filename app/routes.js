@@ -274,19 +274,19 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
 
 })
 
-router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-trn)/, function (req, res) {
+router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-ni-number)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
-    // Error: No NI Number provided
-    if (req.session.data['teacher-ni'] == "") {
-      req.session.data['teacher-error-no-ni'] = true;
-      req.session.data['error-message'] = "Enter your NI Number";
-      res.redirect('teacher-enter-ni-number');
+    // Error: No TRN provided
+    if (req.session.data['teacher-trn'] == "") {
+      req.session.data['teacher-error-no-trn'] = true;
+      req.session.data['error-message'] = "Enter your teacher reference number";
+      res.redirect('teacher-enter-trn');
       next
     } else {
-      req.session.data['teacher-error-no-ni'] = false;
-      res.redirect('teacher-enter-trn');
+      req.session.data['teacher-error-no-trn'] = false;
+      res.redirect('teacher-enter-ni-number');
     }
 
   }
@@ -298,13 +298,13 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-consent)/, function (req, res) {
   if (req.params[0] == "d") {
 
     // Error: No NI Number provided
-    if (req.session.data['teacher-trn'] == "") {
-      req.session.data['teacher-error-no-trn'] = true;
-      req.session.data['error-message'] = "Enter your Teacher Reference Number (TRN)";
-      res.redirect('teacher-enter-trn');
+    if (req.session.data['teacher-ni'] == "") {
+      req.session.data['teacher-error-no-ni'] = true;
+      req.session.data['error-message'] = "Enter your NI Number";
+      res.redirect('teacher-enter-ni-number');
       next
     } else {
-      req.session.data['teacher-error-no-trn'] = false;
+      req.session.data['teacher-error-no-ni'] = false;
       res.redirect('teacher-consent');
     }
 
