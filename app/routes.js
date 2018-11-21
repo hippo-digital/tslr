@@ -236,7 +236,7 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
     num_schools = schools.length;
   }
 
-  if (option == 'school-confirm-ya') {
+  if (option == 'n' || option == 'school-confirm-ya') {
     var school_name = req.session.data['teacher-another-school-name'];
   } else {
     var school_name = req.session.data['teacher-school-name'];
@@ -250,7 +250,7 @@ router.post(/([abcd])\/([a-z0-9]*\/*)(teacher-enter-location-confirm)/, function
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  if (option == 'school-confirm-y' || option == 'school-confirm-n') {
+  if (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n') {
     if (req.params[0] == "d") {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
       next
