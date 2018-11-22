@@ -19,13 +19,18 @@
   {% set teacher_email = true %}
   {% set teacher_mobile = true %}
 
+  {% if not data['teacher-trn'] %}
+  {{ "data.teacher-trn is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
   {% if not data['teacher-ni'] %}
   {{ "data.teacher-ni is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['teacher-trn'] %}
-  {{ "data.teacher-trn is incomplete" | log }}
+  {% if not data['teacher-loan-amount'] %}
+  {{ "data.teacher-loan-amount is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
@@ -119,6 +124,18 @@
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="teacher-enter-ni-number">Change<span class="govuk-visually-hidden"> NI Number</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Student loan amount</dt>
+              {% if data['teacher-loan-amount'] %}
+              <dd class="app-check-your-answers__answer">£{{ data['teacher-loan-amount'] }}</dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="teacher-enter-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
               </dd>
             </div>
 
