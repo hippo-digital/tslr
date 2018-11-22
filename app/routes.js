@@ -7,6 +7,14 @@ const router = express.Router()
 // All Service Models
 // ------------------
 
+router.get("/", function (req, res) {
+
+  // Unset everything
+  req.session.data = {}
+  res.redirect("launch");
+
+})
+
 router.post(/eligibility-schools/, function (req, res) {
 
   // From eligibility-qts
