@@ -7,6 +7,14 @@ const router = express.Router()
 // All Service Models
 // ------------------
 
+router.get("/", function (req, res) {
+
+  // Unset everything
+  req.session.data = {}
+  res.redirect("launch");
+
+})
+
 router.post(/eligibility-schools/, function (req, res) {
 
   // From eligibility-qts
@@ -260,7 +268,7 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
@@ -272,6 +280,25 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
       next
     } else {
       req.session.data['teacher-error-no-ni'] = false;
+      res.redirect('teacher-enter-repayment-amount');
+    }
+
+  }
+
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+
+  if (req.params[0] == "d") {
+
+    // Error: No NI Number provided
+    if (!req.session.data['teacher-loan-amount']) {
+      req.session.data['teacher-error-no-loan-amount'] = true;
+      req.session.data['error-message'] = "Enter your loan repayment amount";
+      res.redirect('teacher-enter-repayment-amount');
+      next
+    } else {
+      req.session.data['teacher-error-no-loan-amount'] = false;
       res.redirect('teacher-consent');
     }
 
