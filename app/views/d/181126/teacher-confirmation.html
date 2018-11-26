@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Education",
+        href: "#"
+      },
+      {
+        text: "Funding",
+        href: "#"
+      },
+      {
+        text: "Student loans",
+        href: "#"
+      },
+      {
+        text: "Teachers' student loan reimbursement",
+        href: "#"
+      },
+      {
+        text: "Application complete"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Application received</h1>
+        <div class="govuk-panel__body">
+          We've sent you a confirmation email
+        </div>
+      </div>
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+        <p>We’ll contact your school or schools to confirm the details you gave us.</p>
+        <p>We’ll update you about your claim within {time period}.</p>
+
+      <h2 class="govuk-heading-m">Save your application</h2>
+      <p class="govuk-body"><a href="#">Save this application as a PDF</a></p>
+
+      <h2 class="govuk-heading-m">Contact us</h2>
+      <p class="govuk-body">To get in touch:
+      <ul class="govuk-list govuk-list--bullet">
+        <li>email, {email}</li>
+        <li>call, {number}</li>
+        <li>{other contact methods}
+      </ul>
+
+      <h2 class="govuk-heading-m">Feedback</h2>
+      <p class="govuk-body"><a href="#">What did you think of this service?</a> (Takes 30 seconds)</p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="teacher-application-complete-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Notification email</a>
+      </p>
+
+    </div>
+
+  </div>
+
+  </div>
+
+{% endblock %}

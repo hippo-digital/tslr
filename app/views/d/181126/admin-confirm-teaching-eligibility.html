@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if (data['admin-error-no-eligibility-teaching']) %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if (data['admin-error-no-eligibility-teaching']) %}
+            <li><a href="#admin-teaching-eligibility-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <form action="admin-enter-repayment-amount" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['admin-error-no-eligibility-teaching']) %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Check subject information
+              </h1>
+            </legend>
+
+            <div class="govuk-form-group">
+              <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>computer science</li>
+                <li>languages (not including english)</li>
+                <li>physics</li>
+              </ul>
+              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school. If they were off on long-term leave or sick, it will not affect their claim – include the time they were scheduled to teach.</p>
+              {% if data['admin-eligibility-period'] == "yes-part" %}
+              <p class="govuk-body">For the period they taught at your school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
+              {% else %}
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
+              {% endif %}
+            </div>
+
+            {% if (data['admin-error-no-eligibility-teaching']) %}
+            <span id="admin-teaching-eligibility-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
+            <div class="govuk-form-group">
+
+              <div class="govuk-radios">
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-eligibility-teaching'] == "yes" %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes</label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-eligibility-teaching'] == "no" %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No</label>
+                </div>
+
+                <div class="govuk-radios__divider">or</div>
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-eligibility-period'] == "tbc" %}
+                  <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="eligibility-teaching-tbc">I don't know</label>
+                  <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">
+                    Someone else needs to check this information.
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="govuk-form-group">
+              {% if data['admin-check-send'] == true %}
+              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
+              {% else %}
+              <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
