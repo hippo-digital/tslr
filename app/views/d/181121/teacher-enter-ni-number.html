@@ -16,30 +16,17 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['teacher-error-no-ni']) %}
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            <li>
-              <a href="#enter-ni-error">{{ data['error-message'] }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      {% if not (data['teacher-error-no-ni']) and not (data['teacher-check-send']) %}
+      <div class="govuk-inset-text">You have successfully confirmed your identity.</div>
       {% endif %}
 
-      <form action="teacher-enter-repayment-amount" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-no-ni']) %}govuk-form-group--error{% endif %}">
+      <h1 class="govuk-heading-xl">What's your National Insurance number?</h1>
+
+      <form action="teacher-enter-trn" method="POST" role="form">
+        <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h1 class="govuk-fieldset__heading">
-                What's your National Insurance number?
-              </h1>
-            </legend>
-
-            <div class="govuk-form-group">
+            <div class="govuk-form-group {% if (data['teacher-error-no-ni']) %}govuk-form-group--error{% endif %}">
               <label class="govuk-label" for="teacher-ni">National Insurance number</label>
               <span id="national-insurance-number-hint" class="govuk-hint">
                 It's on your payslip, P60, National Insurance card or benefit letter. For example, ‘QQ 12 34 56 C’.

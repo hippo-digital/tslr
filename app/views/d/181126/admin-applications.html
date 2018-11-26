@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Teacher applications</h1>
+
+      <p class="govuk-body">These teachers have applied to claim back their student loan payments for the {{globals.tax_year.full}} tax year.</p>
+      <ul class="app-task-list">
+        <li>
+          <h2 class="app-task-list__section">To be processed (2)</h2>
+          <ul class="app-task-list__items">
+            <li class="app-task-list__item">
+              <a class="app-task-list__task-name" href="admin-confirm-location-eligibility_name_barbara-smith">Barbara Smith<span class="date-applied">Applied 12th Oct 2018</span></a>
+              <strong class="govuk-tag incomplete app-task-list__task-completed">To do</strong>
+            </li>
+            <li class="app-task-list__item">
+              <a class="app-task-list__task-name" href="admin-confirm-location-eligibility_name_david-powell">
+                David Powell<span class="date-applied">Applied 19th Oct 2018</span>
+              </a>
+              <strong class="govuk-tag incomplete app-task-list__task-completed">To do</strong>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h2 class="app-task-list__section">Completed applications (3)</h2>
+          <ul class="app-task-list__items">
+            <li class="app-task-list__item">
+              ID: TSLR-1024 <span class="date-applied">Processed 5th Oct 2018</span>
+              <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+            </li>
+            <li class="app-task-list__item">
+              ID: TSLR-1007 <span class="date-applied">Processed 5th Oct 2018</span>
+              <strong class="govuk-tag app-task-list__task-completed" id="contact-details-completed">Completed</strong>
+            </li>
+            <li class="app-task-list__item">
+              ID: TSLR-894 <span class="date-applied">Processed 20th Sep 2018</span>
+              <strong class="govuk-tag app-task-list__task-completed" id="contact-details-completed">Completed</strong>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+{% endblock %}

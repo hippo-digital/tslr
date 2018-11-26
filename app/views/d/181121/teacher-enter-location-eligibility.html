@@ -16,28 +16,11 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['teacher-error-no-school']) %}
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            <li>
-              <a href="#enter-school-error">{{ data['error-message'] }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      {% endif %}
+      <h1 class="govuk-heading-xl">Where did you teach between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
 
       <form action="teacher-enter-location-confirm" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
+        <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
-
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h1 class="govuk-fieldset__heading">
-                Where did you teach between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
-              </h1>
-            </legend>
 
             <input class="govuk-input" id="teacher-num-schools" name="teacher-num-schools" type="hidden" value="1">
 
@@ -52,7 +35,7 @@
               </details>
             </span>
 
-            <div class="govuk-form-group">
+            <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
               <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="true">
               <label class="govuk-label" for="teacher-school-name">Enter the school name</label>
               {% if (data['teacher-error-no-school']) %}

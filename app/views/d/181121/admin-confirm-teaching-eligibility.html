@@ -27,31 +27,14 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['admin-error-no-eligibility-teaching']) %}
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['admin-error-no-eligibility-teaching']) %}
-            <li><a href="#admin-teaching-eligibility-error">{{ data['error-message'] }}</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-      {% endif %}
+      <h1 class="govuk-heading-xl">Check subject information</h1>
+      <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
 
       <form action="admin-enter-repayment-amount" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['admin-error-no-eligibility-teaching']) %}govuk-form-group--error{% endif %}">
+        <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h1 class="govuk-fieldset__heading">
-                Check subject information
-              </h1>
-            </legend>
-
             <div class="govuk-form-group">
-              <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>
@@ -66,10 +49,6 @@
               <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
               {% endif %}
             </div>
-
-            {% if (data['admin-error-no-eligibility-teaching']) %}
-            <span id="admin-teaching-eligibility-error" class="govuk-error-message">{{ data['error-message'] }}</span>
-            {% endif %}
 
             <div class="govuk-form-group">
 
