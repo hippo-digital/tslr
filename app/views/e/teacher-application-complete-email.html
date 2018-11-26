@@ -1,0 +1,41 @@
+{% extends "layout-email.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-s">Notification email</h1>
+
+    </div>
+
+    <div class="govuk-grid-column-two-thirds email-bg">
+
+      <h2 class="govuk-heading-s">Subject</h2>
+      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application received</p>
+      <h2 class="govuk-heading-s">Body</h2>
+      <p class="govuk-body">Dear {name}</p>
+      <p class="govuk-body">Your application has been received.</p>
+      <p class="govuk-body"><strong>What happens next</strong></p>
+      <p class="govuk-body">We will contact HMRC to confirm how much you should be reimbursed and what schools you have taught at in the last tax year.</p>
+      <p class="govuk-body">We will contact your school to confirm that you are eligible.</p>
+      <p class="govuk-body">Once we have completed that process, we will email you with the outcome.</p>
+      <p class="govuk-body">Kind regards</p>
+      <p class="govuk-body">{Signatory}</p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Notification email (Admin)</a>
+        <a href="teacher-claim-eligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Outcome email (Eligible)</a>
+        <a href="teacher-claim-ineligible-email" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Outcome email (Ineligible)</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
