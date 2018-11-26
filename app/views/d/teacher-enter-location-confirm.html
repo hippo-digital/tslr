@@ -84,7 +84,11 @@
         </div>
 
         <div class="govuk-form-group">
+          {% if data['teacher-check-send'] and data['teacher-school-confirm'] == "y" %}
+          <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+          {% else %}
           <button type="submit" class="govuk-button">Continue</button>
+          {% endif %}
         </div>
 
       </form>
@@ -94,7 +98,9 @@
     <div class="govuk-grid-column-one-third">
 
       <p class="govuk-body">
+        {% if not data['teacher-check-send'] %}
         <a href="teacher-enter-trn" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
+        {% endif %}
       </p>
 
     </div>
