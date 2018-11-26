@@ -199,7 +199,8 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
 
   req.session.data['temp-params'] = req.params;
 
-  // From teacher-enter-location-eligibility
+  var check_send = req.session.data['teacher-check-send'];
+
   var setup = req.session.data['teacher-schools-setup'];
 
   if (setup) {
@@ -225,15 +226,17 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
     eligible: school_eligible
   }
 
-  schools.push(school);
-  num_schools++;
+  if (!check_send || (check_send && option == 'n')) {
+    schools.push(school);
+    num_schools++;
+  }
 
   req.session.data['teacher-schools'] = schools;
   req.session.data['teacher-num-schools'] = num_schools;
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  if (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n') {
+  if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n')) {
     if (req.params[0] == "d" && req.params[1] == "181121/") {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
       next
@@ -243,6 +246,8 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
     } else {
       res.redirect('teacher-consent');
     }
+  } else if (check_send && option == 'y') {
+    res.redirect('teacher-check-send');
   } else {
     res.redirect('teacher-enter-location-confirm');
   }
