@@ -13,11 +13,12 @@
     <div class="govuk-grid-column-two-thirds email-bg">
 
       <h2 class="govuk-heading-s">Subject</h2>
-      <p class="govuk-body">Teachers’ Student Loan Reimbursement: Application processed</p>
+      <p class="govuk-body">You've checked a claim for repayment of a student loan</p>
       <h2 class="govuk-heading-s">Body</h2>
       <p class="govuk-body">Dear {School admin name}</p>
-      <p class="govuk-body">You have completed processing {{ data['applicant']['full_name'] | title }}'s application to get their student loan payments reimbursed.</p>
-      <p class="govuk-body">Confirm what will happen next.</p>
+      <p class="govuk-body">You have checked {{ data['applicant']['full_name'] | title }}'s application to claim back their student loan payments.</p>
+      <p class="govuk-body"><strong>What happens next</strong></p>
+      <p class="govuk-body">We’ll contact {{ data['applicant']['full_name'] | title }} within [time period] to update them about their claim.</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Signatory}</p>
 
