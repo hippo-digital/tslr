@@ -15,18 +15,18 @@
     <div class="govuk-grid-column-two-thirds email-bg">
 
       <h2 class="govuk-heading-s">Subject</h2>
-      <p class="govuk-body">{{ full_name | title }}: claim for repayment of student loan</p>
+      <p class="govuk-body">Check student loan repayment claim for {{ full_name | title }}</p>
       <h2 class="govuk-heading-s">Body</h2>
-      <p class="govuk-body">Dear [name]</p>
+      <p class="govuk-body">Dear Headteacher</p>
       <p class="govuk-body">{{ full_name | title }} has applied to claim back their student loan payments.</p>
-      <p class="govuk-body">To process the claim, we need you to check what the teacher has told us about:</p>
+      <p class="govuk-body">To give them the money back, we need you to check what the teacher has told us about:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>the subject they taught</li>
         <li>how much of their time was spent teaching that subject</li>
         <li>how much student loan they paid back through their wages</li>
       </ul>
-      <p class="govuk-body">Check this information before {date}. If you cannot, {do something}.</p>
-      <p class="govuk-body"><a href="admin-dfe-signin_name_jane-jones">Sign in to DfE</a> to confirm {{ full_name | title }}’s details</p>
+      <p class="govuk-body"><a href="admin-dfe-signin_name_jane-jones">Confirm {{ full_name | title }}’s details</a></p>
+      <p class="govuk-body">Check this information before {date}. If you cannot, email {email}.</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Service name}</p>
 
