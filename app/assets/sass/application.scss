@@ -172,6 +172,12 @@ table {
     }
   }
 
+  &.cols-5 {
+    th.govuk-table__header {
+      &.col-1, &.col-2, &.col-3, &.col-4, &.col-5 { width: 20%; }
+    }
+  }
+
   dl.release-desc {
 
     margin: 0;

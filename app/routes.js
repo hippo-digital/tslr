@@ -121,6 +121,7 @@ router.get(/admin-dfe-signin_(name)_([a-z-]+)/, function (req, res) {
 
   // Delete previous applicant data
   req.session.data['admin-check-send'] = false;
+  req.session.data['admin-task-list'] = false;
   req.session.data['admin-eligibility-period'] = false;
   req.session.data['admin-end-day'] = false;
   req.session.data['admin-end-month'] = false;
@@ -151,6 +152,7 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 
   // Delete previous applicant data
   req.session.data['admin-check-send'] = false;
+  req.session.data['admin-task-list'] = false;
   req.session.data['admin-eligibility-period'] = false;
   req.session.data['admin-end-day'] = false;
   req.session.data['admin-end-month'] = false;
@@ -179,7 +181,7 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 
 // !!! Service Model specific handling !!!
 // ---------------------------------------
-// req.params[0] = a, b, c or d
+// req.params[0] = a, b, c, d or e
 // req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
 // req.params[2] = page-name
 
@@ -402,7 +404,15 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(admin-task-list)/, function (req, res) {
+
+  req.session.data['admin-task-list'] = true;
+  res.redirect('admin-task-list');
+  next
+
+})
+
+router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -413,7 +423,7 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, functio
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -433,7 +443,7 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, functio
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -453,7 +463,7 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
 
   // Error: No loan repayment amount
   if (!req.session.data['admin-loan-details']) {
