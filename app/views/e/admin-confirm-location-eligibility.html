@@ -74,7 +74,7 @@
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-eligibility-period-conditional-yes-part">
                 <div class="govuk-form-group">
-                  <span id="start-date-hint" class="govuk-hint">{{ full_name | title }} taught here from...</span>
+                  <span id="start-date-hint" class="govuk-hint">Start date</span>
                   <div class="govuk-date-input" id="start-date">
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
@@ -97,7 +97,7 @@
                   </div>
                 </div>
                 <div class="govuk-form-group">
-                  <span id="end-date-hint" class="govuk-hint">...until...</span>
+                  <span id="end-date-hint" class="govuk-hint">End date</span>
                   <div class="govuk-date-input" id="end-date">
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
@@ -138,9 +138,9 @@
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-period-conditional-tbc" name="admin-eligibility-period" type="radio" value="tbc" data-aria-controls="conditional-eligibility-period-conditional-tbc">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-tbc">I don't know</label>
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-tbc">You don't know</label>
                 <span id="eligibility-period-tbc-hint" class="govuk-hint govuk-radios__hint">
-                  Someone else needs to check or provide this information.
+                  You need to check this information.
                 </span>
               </div>
 
