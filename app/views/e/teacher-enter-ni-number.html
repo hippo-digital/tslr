@@ -44,7 +44,7 @@
               {% if (data['teacher-error-no-ni']) %}
               <span id="enter-ni-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" pattern="[a-zA-Z][a-zA-Z][ -]?[0-9]{2}[ -]?[0-9]{2}[ -]?[0-9]{2}[ -]?[a-dA-D]" title="Your NI number should be 2 letters, 6 numbers and a letter" value="{{data['teacher-ni']}}">
+              <input class="govuk-input {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" value="{{data['teacher-ni']}}">
             </div>
 
             <div class="govuk-form-group">
