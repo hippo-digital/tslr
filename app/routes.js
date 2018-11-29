@@ -481,4 +481,25 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
 
 })
 
+// Eligibility checker
+// -------------------
+
+// router.post(/([z])\/([0-9]*\/?)(check-qts)/, function (req, res) {
+// })
+
+router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
+
+  // Error: No qts year provided
+  if (!req.session.data['check-qts']) {
+    req.session.data['check-error-no-qts'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-qts');
+    next
+  } else {
+    req.session.data['check-error-no-qts'] = false;
+    res.redirect('check-location-search');
+  }
+
+})
+
 module.exports = router
