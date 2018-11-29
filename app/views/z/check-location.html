@@ -16,20 +16,20 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if data['teacher-num-schools'] | int == 1 %}
-      <h1 class="govuk-heading-xl">Is {{ data['teacher-school-name'] }} the only place you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
+      {% if data['check-num-schools'] | int == 1 %}
+      <h1 class="govuk-heading-xl">Is {{ data['check-school-name'] }} the only place you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
       {% else %}
       <h1 class="govuk-heading-xl">Are these the only places you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
       {% endif %}
 
-      <form action="teacher-enter-location-confirm" method="POST" role="form">
+      <form action="check-location" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            {% if data['teacher-num-schools'] | int > 1 %}
+            {% if data['check-num-schools'] | int > 1 %}
 
             {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
-            {% for school in data['teacher-schools'] %}
+            {% for school in data['check-schools'] %}
               <div class="govuk-form-group">
                 <h3 class="govuk-heading-m">{{ school.name or "{School name}" }}</h3>
                 {% if school.eligible %}
@@ -43,7 +43,7 @@
             {% else %}
 
               <div class="govuk-form-group">
-                {% set school = data['teacher-schools'] | first %}
+                {% set school = data['check-schools'] | first %}
                 {% if school.eligible %}
                 <p>This school is in a participating area.</p>
                 {% else %}
@@ -57,23 +57,23 @@
 
               <div class="govuk-radios__item">
                 {% if data['teacher-school-confirm'] == "y" %}
-                <input class="govuk-radios__input" id="school-confirm-conditional-y" name="teacher-school-confirm" type="radio" value="y" data-aria-controls="conditional-school-confirm-conditional-y" checked>
+                <input class="govuk-radios__input" id="school-confirm-conditional-y" name="check-school-confirm" type="radio" value="y" data-aria-controls="conditional-school-confirm-conditional-y" checked>
                 {% else %}
-                <input class="govuk-radios__input" id="school-confirm-conditional-y" name="teacher-school-confirm" type="radio" value="y" data-aria-controls="conditional-school-confirm-conditional-y">
+                <input class="govuk-radios__input" id="school-confirm-conditional-y" name="check-school-confirm" type="radio" value="y" data-aria-controls="conditional-school-confirm-conditional-y">
                 {% endif %}
                 <label class="govuk-label govuk-radios__label" for="school-confirm-conditional-y">Yes</label>
               </div>
 
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="school-confirm-conditional-n" name="teacher-school-confirm" type="radio" value="n" data-aria-controls="conditional-school-confirm-conditional-n">
+                <input class="govuk-radios__input" id="school-confirm-conditional-n" name="check-school-confirm" type="radio" value="n" data-aria-controls="conditional-school-confirm-conditional-n">
                 <label class="govuk-label govuk-radios__label" for="school-confirm-conditional-n">No, you also taught at another school</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-school-confirm-conditional-n">
                 <div class="govuk-form-group">
                   <h2 class="govuk-heading-m">Which other school did you teach at?</h2>
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="teacher-another-school-name">Enter the school name</label>
-                    <input class="govuk-input" id="teacher-another-school-name" name="teacher-another-school-name" type="text">
+                    <label class="govuk-label" for="check-another-school-name">Enter the school name</label>
+                    <input class="govuk-input" id="check-another-school-name" name="check-another-school-name" type="text">
                   </div>
                 </div>
               </div>
@@ -84,24 +84,14 @@
         </div>
 
         <div class="govuk-form-group">
-          {% if data['teacher-check-send'] and data['teacher-school-confirm'] == "y" %}
-          <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+          {% if data['check-eligibility-review'] and data['teacher-school-confirm'] == "y" %}
+          <button type="submit" class="govuk-button" formaction="check-eligibility-review">Update</button>
           {% else %}
           <button type="submit" class="govuk-button">Continue</button>
           {% endif %}
         </div>
 
       </form>
-
-    </div>
-
-    <div class="govuk-grid-column-one-third">
-
-      <p class="govuk-body">
-        {% if not data['teacher-check-send'] %}
-        <a href="teacher-enter-trn" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
-        {% endif %}
-      </p>
 
     </div>
 

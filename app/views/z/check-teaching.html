@@ -50,26 +50,52 @@
               </h1>
             </legend>
 
-            <div class="govuk-form-group">
-              <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
-              <ul class="govuk-list govuk-list--bullet">
-                <li>biology</li>
-                <li>chemistry</li>
-                <li>computer science</li>
-                <li>languages (not including english)</li>
-                <li>physics</li>
-              </ul>
-              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school. If they were off on long-term leave or sick, it will not affect their claim – include the time they were scheduled to teach.</p>
-              {% if data['admin-eligibility-period'] == "yes-part" %}
-              <p class="govuk-body">For the period they taught at your school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
-              {% else %}
-              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
-              {% endif %}
-            </div>
-
             {% if (data['admin-error-no-eligibility-teaching']) %}
             <span id="admin-teaching-eligibility-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
+
+            <div class="govuk-form-group">
+              <span id="waste-hint" class="govuk-hint">
+                Select all that apply.
+              </span>
+
+
+              <div class="govuk-checkboxes">
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-eligibility-teaching'] == "yes" %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes</label>
+                </div>
+
+                <div class="govuk-checkboxes__item">
+                  {% if data['check-teaching'] == "biology" %}
+                  <input class="govuk-checkboxes__input" id="check-teaching-biology" name="check-teaching" type="checkbox" value="biology" checked>
+                  {% else %}
+                  {% endif %}
+                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-biology">Biology</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="check-teaching-chemistry" name="check-teaching" type="checkbox" value="chemistry">
+                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-chemistry">Chemistry</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="check-teaching-computer-science" name="check-teaching" type="checkbox" value="computer-science">
+                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-computer-science">Computer science</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="check-teaching-languages" name="check-teaching" type="checkbox" value="languages">
+                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-languages">Languages (not including english)</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="check-teaching-physics" name="check-teaching" type="checkbox" value="physics">
+                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-physics">Physics</label>
+                </div>
+              </div>
+            </div>
 
             <div class="govuk-form-group">
 

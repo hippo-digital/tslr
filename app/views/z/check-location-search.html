@@ -16,21 +16,21 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['teacher-error-no-school']) %}
+      {% if (data['check-error-no-school']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
             <li>
-              <a href="#enter-school-error">{{ data['error-message'] }}</a>
+              <a href="#check-error-no-school">{{ data['error-message'] }}</a>
             </li>
           </ul>
         </div>
       </div>
       {% endif %}
 
-      <form action="teacher-enter-location-confirm" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
+      <form action="check-location" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['check-error-no-school']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -39,7 +39,7 @@
               </h1>
             </legend>
 
-            <input class="govuk-input" id="teacher-num-schools" name="teacher-num-schools" type="hidden" value="1">
+            <input class="govuk-input" id="check-num-schools" name="check-num-schools" type="hidden" value="1">
 
             <span id="trn-hint" class="govuk-hint">
               <details class="govuk-details">
@@ -53,12 +53,12 @@
             </span>
 
             <div class="govuk-form-group">
-              <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="true">
-              <label class="govuk-label" for="teacher-school-name">Enter the school name</label>
-              {% if (data['teacher-error-no-school']) %}
-              <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+              <input class="govuk-input" id="check-schools-setup" name="check-schools-setup" type="hidden" value="true">
+              <label class="govuk-label" for="check-school-name">Enter the school name</label>
+              {% if (data['check-error-no-school']) %}
+              <span id="check-error-no-school" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['teacher-error-no-school']) %}govuk-input--error{% endif %}" id="teacher-school-name" name="teacher-school-name" type="text">
+              <input class="govuk-input {% if (data['check-error-no-school']) %}govuk-input--error{% endif %}" id="check-school-name" name="check-school-name" type="text">
             </div>
 
             <div class="govuk-form-group">
