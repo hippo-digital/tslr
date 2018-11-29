@@ -185,9 +185,9 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 // req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
 // req.params[2] = page-name
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (req, res) {
 
-  if (req.params[0] == "d") {
+  if (req.params[0] == "d" || req.params[0] == "e") {
     // Error: No school name provided
     if (req.session.data['teacher-school-name'] == "") {
       req.session.data['teacher-error-no-school'] = true;
@@ -245,6 +245,9 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
     } else if (req.params[0] == "d") {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d-alt&userLOA=0');
       next
+    } else if (req.params[0] == "e") {
+      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
+      next
     } else {
       res.redirect('teacher-consent');
     }
@@ -256,9 +259,9 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (r
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
 
-  if (req.params[0] == "d") {
+  if (req.params[0] == "d" || req.params[0] == "e") {
 
     // Error: No TRN provided
     if (req.session.data['teacher-trn'] == "") {
@@ -275,9 +278,9 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (req, res) {
 
-  if (req.params[0] == "d") {
+  if (req.params[0] == "d" || req.params[0] == "e") {
 
     // Error: No NI Number provided
     if (req.session.data['teacher-ni'] == "") {
@@ -294,9 +297,9 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (r
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
-  if (req.params[0] == "d") {
+  if (req.params[0] == "d" || req.params[0] == "e") {
 
     // Error: No NI Number provided
     if (!req.session.data['teacher-loan-amount']) {
@@ -313,9 +316,9 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res) {
 
-  if (req.params[0] == "d") {
+  if (req.params[0] == "d" || req.params[0] == "e") {
 
     // Error: No payment method provided
     if (!req.session.data['teacher-bank-account-name'] || !req.session.data['teacher-bank-account-number'] || !req.session.data['teacher-bank-sortcode-1'] || !req.session.data['teacher-bank-sortcode-2'] || !req.session.data['teacher-bank-sortcode-3']) {
@@ -367,9 +370,9 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res)
 
 })
 
-router.post(/([abcd])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
+router.post(/([abcde])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
 
-  if (req.params[0] == "d") {
+  if (req.params[0] == "d" || req.params[0] == "e") {
 
     // Error: No payment method provided
     if (!req.session.data['teacher-contact-method']) {
