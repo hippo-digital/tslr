@@ -229,3 +229,15 @@ table {
   }
 
 }
+
+/* Eligibility checker */
+/* Should probably move this to a separate file for better dev separation */
+p {
+
+  &.callout {
+    margin: 2em 0;
+    background-color: #dee0e2;
+    padding: 2em;
+  }
+
+}
