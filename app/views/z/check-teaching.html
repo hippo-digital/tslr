@@ -16,13 +16,16 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['check-error-no-teaching']) %}
+      {% if (data['check-error-no-teaching-subjects'] or data['check-error-no-teaching-proportion']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['check-error-no-teaching']) %}
-            <li><a href="#check-teaching-error">{{ data['error-message'] }}</a></li>
+            {% if (data['check-error-no-teaching-subjects']) %}
+            <li><a href="#check-teaching-error-subjects">{{ data['error-message'] }}</a></li>
+            {% endif %}
+            {% if (data['check-error-no-teaching-proportion']) %}
+            <li><a href="#check-teaching-error-proportion">{{ data['error-message'] }}</a></li>
             {% endif %}
           </ul>
         </div>
@@ -30,7 +33,7 @@
       {% endif %}
 
       <form action="check-eligible" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['check-error-no-teaching']) %}govuk-form-group--error{% endif %}">
+        <div class="govuk-form-group {% if (data['check-error-no-teaching-subjects']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -39,74 +42,79 @@
               </h1>
             </legend>
 
-            {% if (data['check-error-no-teaching']) %}
-            <span id="check-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
-            {% endif %}
-
             <div class="govuk-form-group">
+
               <span id="check-teaching-hint" class="govuk-hint">
-                Select all that apply.
+                Select one option.
               </span>
 
-              <div class="govuk-checkboxes">
+              <p class="govuk-body">Any content needed here?</p>
 
-                <div class="govuk-checkboxes__item">
-                  {% if data['check-teaching'] == "biology" %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-biology" name="check-teaching" type="checkbox" value="biology" checked>
+              <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+
+                {% if (data['check-error-no-teaching-subjects']) %}
+                <span id="check-teaching-error-subjects" class="govuk-error-message">{{ data['error-message'] }}</span>
+                {% endif %}
+
+                <div class="govuk-radios__item">
+                  {% if data['check-teaching-subjects'] == "eligible" %}
+                  <input class="govuk-radios__input" id="teaching-subjects-conditional-eligible" name="check-teaching-subjects" type="radio" value="eligible" data-aria-controls="conditional-teaching-subjects-conditional-eligible" checked>
                   {% else %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-biology" name="check-teaching" type="checkbox" value="biology">
+                  <input class="govuk-radios__input" id="teaching-subjects-conditional-eligible" name="check-teaching-subjects" type="radio" value="eligible" data-aria-controls="conditional-teaching-subjects-conditional-eligible">
                   {% endif %}
-                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-biology">Biology</label>
+                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-eligible">Did you teach one of these subjects? !!! CONTENT TBC !!!</label>
+                  <span id="check-teaching-subjects-eligible-hint" class="govuk-hint govuk-radios__hint">
+                    We can have a hint here if needed
+                  </span>
                 </div>
-                <div class="govuk-checkboxes__item">
-                  {% if data['check-teaching'] == "chemistry" %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-chemistry" name="check-teaching" type="checkbox" value="chemistry" checked>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-teaching-subjects-conditional-eligible">
+                  <div class="govuk-form-group {% if (data['check-error-no-teaching-proportion']) %}govuk-form-group--error{% endif %}">
+                    {% if (data['check-error-no-teaching-proportion']) %}
+                    <span id="check-teaching-error-proportion" class="govuk-error-message">{{ data['error-message'] }}</span>
+                    {% endif %}
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <h2 class="govuk-fieldset__heading">
+                        Did you teach more than 50%? !!! CONTENT TBC !!!
+                      </h2>
+                    </legend>
+                    <span id="changed-name-hint" class="govuk-hint">
+                      We can have another hint here if needed
+                    </span>
+                    <div class="govuk-radios govuk-radios--inline">
+                      <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="teaching-proportion-eligible" name="check-teaching-proportion" type="radio" value="eligible">
+                        <label class="govuk-label govuk-radios__label" for="teaching-proportion-eligible">
+                          Yes, 50% or more
+                        </label>
+                      </div>
+                      <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="teaching-proportion-ineligible" name="check-teaching-proportion" type="radio" value="ineligible">
+                        <label class="govuk-label govuk-radios__label" for="teaching-proportion-ineligible">
+                          No, less than 50%
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="govuk-radios__item">
+                  {% if data['check-teaching-subjects'] == "ineligible" %}
+                  <input class="govuk-radios__input" id="teaching-subjects-conditional-ineligible" name="check-teaching-subjects" type="radio" value="ineligible" data-aria-controls="conditional-teaching-subjects-conditional-ineligible" checked>
                   {% else %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-chemistry" name="check-teaching" type="checkbox" value="chemistry">
+                  <input class="govuk-radios__input" id="teaching-subjects-conditional-ineligible" name="check-teaching-subjects" type="radio" value="ineligible" data-aria-controls="conditional-teaching-subjects-conditional-ineligible">
                   {% endif %}
-                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-chemistry">Chemistry</label>
+                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-ineligible">You did not teach one of these subjects</label>
+                  <span id="check-teaching-subjects-ineligible-hint" class="govuk-hint govuk-radios__hint">
+                    We can have another hint here if needed
+                  </span>
                 </div>
-                <div class="govuk-checkboxes__item">
-                  {% if data['check-teaching'] == "computer-science" %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-computer-science" name="check-teaching" type="checkbox" value="computer-science" checked>
-                  {% else %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-computer-science" name="check-teaching" type="checkbox" value="computer-science">
-                  {% endif %}
-                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-computer-science">Computer science</label>
-                </div>
-                <div class="govuk-checkboxes__item">
-                  {% if data['check-teaching'] == "languages" %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-languages" name="check-teaching" type="checkbox" value="languages" checked>
-                  {% else %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-languages" name="check-teaching" type="checkbox" value="languages">
-                  {% endif %}
-                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-languages">Languages (not including english)</label>
-                </div>
-                <div class="govuk-checkboxes__item">
-                  {% if data['check-teaching'] == "physics" %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-physics" name="check-teaching" type="checkbox" value="physics" checked>
-                  {% else %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-physics" name="check-teaching" type="checkbox" value="physics">
-                  {% endif %}
-                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-physics">Physics</label>
-                </div>
-                <div class="govuk-checkboxes__item">
-                  {% if data['check-teaching'] == "none" %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-none" name="check-teaching" type="checkbox" value="none" checked>
-                  {% else %}
-                  <input class="govuk-checkboxes__input" id="check-teaching-none" name="check-teaching" type="checkbox" value="none">
-                  {% endif %}
-                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-none">None of the above</label>
-                </div>
+
               </div>
+
             </div>
 
             <div class="govuk-form-group">
-              {% if data['check-eligibility-review'] == true %}
-              <button type="submit" class="govuk-button" formaction="check-eligibility-review">Update</button>
-              {% else %}
               <button type="submit" class="govuk-button">Continue</button>
-              {% endif %}
             </div>
 
           </fieldset>
