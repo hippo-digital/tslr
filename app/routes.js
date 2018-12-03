@@ -566,7 +566,19 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
 // router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
 // })
 
-// router.post(/([z])\/([0-9]*\/?)(check-results)/, function (req, res) {
-// })
+router.post(/([z])\/([0-9]*\/?)(check-results)/, function (req, res) {
+
+  // Error: No teaching info supplied
+  if (!req.session.data['check-teaching']) {
+    req.session.data['check-error-no-teaching'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-teaching');
+    next
+  } else {
+    req.session.data['check-error-no-teaching'] = false;
+    res.redirect('check-results');
+  }
+
+})
 
 module.exports = router
