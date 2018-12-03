@@ -18,7 +18,7 @@
 
       {% if (data['check-error-no-teaching-subjects'] or data['check-error-no-teaching-proportion']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
             {% if (data['check-error-no-teaching-subjects']) %}
@@ -38,17 +38,26 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Check subject information
+                The subject you're teaching
               </h1>
             </legend>
 
             <div class="govuk-form-group">
 
+              <p class="govuk-body">You can only claim your student loan payments back if you've been teaching one or more of these subjects since 6 April 2018:</p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>physics</li>
+                <li>computer science</li>
+                <li>languages (not including English)</li>
+              </ul>
+              <div class="govuk-form-group">
+                <p class="govuk-body">Since 6 April 2018, have you taught one or more of these subjects?</p>
+              </div>
               <span id="check-teaching-hint" class="govuk-hint">
-                Select one option.
+                If you've been off on long-term leave or sick, include the time you were scheduled to teach.
               </span>
-
-              <p class="govuk-body">Any content needed here?</p>
 
               <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
@@ -62,38 +71,13 @@
                   {% else %}
                   <input class="govuk-radios__input" id="teaching-subjects-conditional-eligible" name="check-teaching-subjects" type="radio" value="eligible" data-aria-controls="conditional-teaching-subjects-conditional-eligible">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-eligible">Did you teach one of these subjects? !!! CONTENT TBC !!!</label>
-                  <span id="check-teaching-subjects-eligible-hint" class="govuk-hint govuk-radios__hint">
-                    We can have a hint here if needed
-                  </span>
+                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-eligible">Yes, for <strong>more</strong> than 50% of your teaching time</label>
                 </div>
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-teaching-subjects-conditional-eligible">
                   <div class="govuk-form-group {% if (data['check-error-no-teaching-proportion']) %}govuk-form-group--error{% endif %}">
                     {% if (data['check-error-no-teaching-proportion']) %}
                     <span id="check-teaching-error-proportion" class="govuk-error-message">{{ data['error-message'] }}</span>
                     {% endif %}
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                      <h2 class="govuk-fieldset__heading">
-                        Did you teach more than 50%? !!! CONTENT TBC !!!
-                      </h2>
-                    </legend>
-                    <span id="changed-name-hint" class="govuk-hint">
-                      We can have another hint here if needed
-                    </span>
-                    <div class="govuk-radios govuk-radios--inline">
-                      <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="teaching-proportion-eligible" name="check-teaching-proportion" type="radio" value="eligible">
-                        <label class="govuk-label govuk-radios__label" for="teaching-proportion-eligible">
-                          Yes, 50% or more
-                        </label>
-                      </div>
-                      <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="teaching-proportion-ineligible" name="check-teaching-proportion" type="radio" value="ineligible">
-                        <label class="govuk-label govuk-radios__label" for="teaching-proportion-ineligible">
-                          No, less than 50%
-                        </label>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
@@ -103,10 +87,16 @@
                   {% else %}
                   <input class="govuk-radios__input" id="teaching-subjects-conditional-ineligible" name="check-teaching-subjects" type="radio" value="ineligible" data-aria-controls="conditional-teaching-subjects-conditional-ineligible">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-ineligible">You did not teach one of these subjects</label>
-                  <span id="check-teaching-subjects-ineligible-hint" class="govuk-hint govuk-radios__hint">
-                    We can have another hint here if needed
-                  </span>
+                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-ineligible">Yes, for <strong>less</strong> than 50% of your teaching time</label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  {% if data['check-teaching-subjects'] == "ineligible" %}
+                  <input class="govuk-radios__input" id="teaching-subjects-conditional-ineligible" name="check-teaching-subjects" type="radio" value="ineligible" data-aria-controls="conditional-teaching-subjects-conditional-ineligible" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="teaching-subjects-conditional-ineligible" name="check-teaching-subjects" type="radio" value="ineligible" data-aria-controls="conditional-teaching-subjects-conditional-ineligible">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="teaching-subjects-conditional-ineligible">No, you did not teach any of these subjects</label>
                 </div>
 
               </div>

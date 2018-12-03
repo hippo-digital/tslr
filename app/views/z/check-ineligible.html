@@ -22,30 +22,12 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                You're not eligible for TSLR !!! TBC !!!
+                You’re not eligible to claim student loan payments
               </h1>
             </legend>
 
             <div class="govuk-form-group">
               <p class="govuk-body">Content TBC.</p>
-              <p class="govuk-body">This is shown to everyone regardless of reason for ineligibility.</p>
-
-              {% if (data['check-ineligible-reason'] == "qts") %}
-
-              <p class="govuk-body">This is shown if ineligible due to qts.</p>
-
-              {% elseif (data['check-ineligible-reason'] == "school-location") %}
-
-              {% elseif (data['check-ineligible-reason'] == "teaching-subjects") %}
-
-              <p class="govuk-body">This is shown if ineligible due to teaching subjects.</p>
-
-              {% elseif (data['check-ineligible-reason'] == "teaching-proportion") %}
-
-              <p class="govuk-body">This is shown if ineligible due to teaching proportion.</p>
-
-              {% endif %}
-
               <p class="govuk-body">Probably going to need a list here:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>with a first option</li>
