@@ -481,4 +481,104 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
 
 })
 
+// Eligibility checker
+// -------------------
+
+// router.post(/([z])\/([0-9]*\/?)(check-qts)/, function (req, res) {
+// })
+
+router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
+
+  // Error: No qts year provided
+  if (!req.session.data['check-qts']) {
+    req.session.data['check-error-no-qts'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-qts');
+    next
+  } else {
+    req.session.data['check-error-no-qts'] = false;
+    res.redirect('check-location-search');
+  }
+
+})
+
+// router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
+// })
+
+router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
+
+  // Error: No school name provided
+  if (req.session.data['check-school-name'] == "") {
+    req.session.data['check-error-no-school'] = true;
+    req.session.data['error-message'] = "Enter the school name or reference number";
+    res.redirect('check-location-search');
+    next
+  } else {
+    req.session.data['check-error-no-school'] = false;
+  }
+
+  // var check_send = req.session.data['teacher-check-send'];
+  var check_send = false;
+
+  var setup = req.session.data['check-schools-setup'];
+
+  if (setup) {
+    var schools = [];
+    num_schools = 0;
+  } else {
+    var option = req.session.data['check-school-confirm'];
+    var schools = req.session.data['check-schools'];
+    num_schools = schools.length;
+  }
+
+  if (option == 'n') {
+    var school_name = req.session.data['check-another-school-name'];
+  } else {
+    var school_name = req.session.data['check-school-name'];
+  }
+
+  var eligibility_calc = Math.floor((Math.random() * 2) + 1);
+  var school_eligible = eligibility_calc > 1 ? true : false;
+
+  var school = {
+    name: school_name,
+    eligible: school_eligible
+  }
+
+  if (!check_send || (check_send && option == 'n')) {
+    schools.push(school);
+    num_schools++;
+  }
+
+  req.session.data['check-schools'] = schools;
+  req.session.data['check-num-schools'] = num_schools;
+  req.session.data['check-schools-setup'] = false;
+
+  // Need to branch differently depending whether answer was yes, yes more or no
+  if (option == 'y') {
+    res.redirect('check-teaching');
+  } else {
+    res.redirect('check-location');
+  }
+
+})
+
+// router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
+// })
+
+router.post(/([z])\/([0-9]*\/?)(check-results)/, function (req, res) {
+
+  // Error: No teaching info supplied
+  if (!req.session.data['check-teaching']) {
+    req.session.data['check-error-no-teaching'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-teaching');
+    next
+  } else {
+    req.session.data['check-error-no-teaching'] = false;
+    res.redirect('check-results');
+  }
+
+})
+
 module.exports = router

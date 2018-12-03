@@ -51,7 +51,7 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">Only teachers in the following subjects can claim their student loan payments back:</p>
+              <p class="govuk-body">While they worked at {{ globals.smd.teacher.school_name }}, did <strong>{{ full_name | title }}</strong> teach any of these subjects:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>
@@ -73,24 +73,29 @@
 
             <div class="govuk-form-group">
 
-              <div class="govuk-radios">
+              <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
                 <div class="govuk-radios__item">
                   {% if data['admin-eligibility-teaching'] == "yes" %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" checked>
+                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes">
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes, they taught one or more of these subjects</label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-y">
+                  <div class="govuk-form-group">
+                    <p>Hello Yes</p>
+                  </div>
                 </div>
 
                 <div class="govuk-radios__item">
                   {% if data['admin-eligibility-teaching'] == "no" %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
+                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
+                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
                 </div>
 
                 <div class="govuk-radios__divider">or</div>
@@ -105,7 +110,6 @@
                   <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">
                     Someone else needs to check this information.
                   </span>
-
                 </div>
 
               </div>
