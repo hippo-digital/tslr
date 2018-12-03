@@ -47,7 +47,7 @@
                 Check school information
               </h1>
             </legend>
-            <p class="govuk-body">Did <strong>{{ full_name | title }}</strong> teach at {{ globals.smd.teacher.school_name }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+            <p class="govuk-body">Did <strong>{{ full_name | title }}</strong> teach at {{ globals.smd.teacher.school_name }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
 
             {% if (data['admin-error-no-eligibility-location']) %}
             <span id="admin-location-eligibility-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -61,7 +61,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-period-conditional-yes" name="admin-eligibility-period" type="radio" value="yes" data-aria-controls="conditional-eligibility-period-conditional-yes">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-yes">Yes, for the whole year</label>
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-yes">Yes, for the whole tax year</label>
               </div>
 
               <div class="govuk-radios__item">
@@ -70,7 +70,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-period-conditional-yes-part" name="admin-eligibility-period" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-period-conditional-yes-part">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-yes-part">Yes, but only for part of the year</label>
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-yes-part">Yes, but only for part of the tax year</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-eligibility-period-conditional-yes-part">
                 <div class="govuk-form-group">
@@ -138,10 +138,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-period-conditional-tbc" name="admin-eligibility-period" type="radio" value="tbc" data-aria-controls="conditional-eligibility-period-conditional-tbc">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-tbc">You don't know</label>
-                <span id="eligibility-period-tbc-hint" class="govuk-hint govuk-radios__hint">
-                  You need to check this information.
-                </span>
+                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-tbc">You do not know</label>
               </div>
 
             </div>
@@ -149,8 +146,8 @@
             <hr class="govuk-section-break govuk-section-break--m">
 
             <div class="govuk-form-group">
-              {% if data['admin-task-list'] == true %}
-              <button type="submit" class="govuk-button" formaction="admin-task-list">Update</button>
+              {% if data['admin-check-send'] == true %}
+              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
               {% else %}
               <button type="submit" class="govuk-button">Continue</button>
               {% endif %}
