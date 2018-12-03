@@ -30,11 +30,6 @@
             {% for school in data['check-schools'] %}
               <div class="govuk-form-group">
                 <h3 class="govuk-heading-m">{{ school.name or "{School name}" }}</h3>
-                {% if school.eligible %}
-                <p>This school is in a participating area.</p>
-                {% else %}
-                <p>This school is not in a participating area.</p>
-                {% endif %}
               </div>
             {% endfor %}
 

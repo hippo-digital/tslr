@@ -29,7 +29,7 @@
       </div>
       {% endif %}
 
-      <form action="check-results" method="POST" role="form">
+      <form action="check-eligible" method="POST" role="form">
         <div class="govuk-form-group {% if (data['check-error-no-teaching']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
@@ -89,6 +89,14 @@
                   <input class="govuk-checkboxes__input" id="check-teaching-physics" name="check-teaching" type="checkbox" value="physics">
                   {% endif %}
                   <label class="govuk-label govuk-checkboxes__label" for="check-teaching-physics">Physics</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  {% if data['check-teaching'] == "none" %}
+                  <input class="govuk-checkboxes__input" id="check-teaching-none" name="check-teaching" type="checkbox" value="none" checked>
+                  {% else %}
+                  <input class="govuk-checkboxes__input" id="check-teaching-none" name="check-teaching" type="checkbox" value="none">
+                  {% endif %}
+                  <label class="govuk-label govuk-checkboxes__label" for="check-teaching-none">None of the above</label>
                 </div>
               </div>
             </div>
