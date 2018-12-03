@@ -500,6 +500,7 @@ router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
     next
   } else if(req.session.data['check-qts'] == "none") {
     req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "qts";
     res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-qts'] = false;
@@ -582,6 +583,7 @@ router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
     next
   } else if (req.session.data['check-teaching-subjects'] == "ineligible") {
     req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "teaching-subjects";
     res.redirect('check-ineligible');
   } else {
     if (!req.session.data['check-teaching-proportion']) {
@@ -592,6 +594,7 @@ router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
       next
     } else if (req.session.data['check-teaching-proportion'] == "ineligible") {
       req.session.data['check-eligible'] = false;
+      req.session.data['check-ineligible-reason'] = "teaching-proportion";
       res.redirect('check-ineligible');
     } else {
       req.session.data['check-error-no-teaching-subjects'] = false;
