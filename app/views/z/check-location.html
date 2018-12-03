@@ -24,27 +24,14 @@
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
-            {% if data['check-num-schools'] | int > 1 %}
-
             {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
-            {% for school in data['check-schools'] %}
-              <div class="govuk-form-group">
-                <h3 class="govuk-heading-m">{{ school.name or "{School name}" }}</h3>
-              </div>
-            {% endfor %}
-
-            {% else %}
-
-              <div class="govuk-form-group">
-                {% set school = data['check-schools'] | first %}
-                {% if school.eligible %}
-                <p>This school is in a participating area.</p>
-                {% else %}
-                <p>This school is not in a participating area.</p>
-                {% endif %}
-              </div>
-
-            {% endif %}
+            <div class="govuk-form-group">
+              <ul class="govuk-list govuk-list--bullet">
+                {% for school in data['check-schools'] %}
+                <li>{{ school.name or "{School name}" }}</li>
+                {% endfor %}
+              </ul>
+            </div>
 
             <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
