@@ -59,12 +59,6 @@
                 <li>languages (not including english)</li>
                 <li>physics</li>
               </ul>
-              <p class="govuk-body">They need to have been teaching this subject, or a combination of the subjects, for at least 50% of their time at your school. If they were off on long-term leave or sick, it will not affect their claim – include the time they were scheduled to teach.</p>
-              {% if data['admin-eligibility-period'] == "yes-part" %}
-              <p class="govuk-body">For the period they taught at your school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
-              {% else %}
-              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} did <strong>{{ full_name | title }}</strong> meet this criteria?</p>
-              {% endif %}
             </div>
 
             {% if (data['admin-error-no-eligibility-teaching']) %}
@@ -85,30 +79,49 @@
                 </div>
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-y">
                   <div class="govuk-form-group">
-                    <p>Hello Yes</p>
+                    <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h2 class="govuk-fieldset__heading">
+                          How much of their time at the school was spent teaching one or more of these subjects?
+                        </h2>
+                      </legend>
+                      <span id="changed-name-hint" class="govuk-hint">
+                        If they were off on long-term leave or sick, include the time they were scheduled to teach.
+                      </span>
+                      <div class="govuk-radios govuk-radios--inline">
+                        <div class="govuk-radios__item">
+                          <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" value="yes">
+                          <label class="govuk-label govuk-radios__label" for="changed-name-1">
+                            More than 50% of their time
+                          </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                          <input class="govuk-radios__input" id="changed-name-2" name="changed-name" type="radio" value="no">
+                          <label class="govuk-label govuk-radios__label" for="changed-name-2">
+                            Less than 50% of their time
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
                   </div>
                 </div>
-
-                <div class="govuk-radios__item">
-                  {% if data['admin-eligibility-teaching'] == "no" %}
-                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
-                  {% else %}
-                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
-                  {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
-                </div>
-
+              <div class="govuk-radios__item">
+                {% if data['admin-eligibility-teaching'] == "no" %}
+                <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
+              </div>
                 <div class="govuk-radios__divider">or</div>
-
                 <div class="govuk-radios__item">
-                  {% if data['admin-eligibility-period'] == "tbc" %}
-                  <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc" checked>
-                  {% else %}
-                  <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc">
-                  {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="eligibility-teaching-tbc">I don't know</label>
-                  <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">
-                    Someone else needs to check this information.
+                {% if data['admin-eligibility-period'] == "tbc" %}
+                <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc" checked>
+                {% else %}
+                <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc">
+                {% endif %}
+                <label class="govuk-label govuk-radios__label" for="eligibility-teaching-tbc">You do not know</label>
+                <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">You need to check this information.
                   </span>
                 </div>
 

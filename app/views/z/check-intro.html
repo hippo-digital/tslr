@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="check-qts" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Check eligibility
+              </h1>
+            </legend>
+
+            <input id="check-eligible" name="check-eligible" type="hidden" value="true">
+
+            <div class="govuk-form-group">
+              <p class="govuk-body">Content TBC.</p>
+              <p class="govuk-body">Probably going to need a list here:</p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>with a first option</li>
+                <li>another option</li>
+                <li>and yet another option</li>
+              </ul>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue to questions</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

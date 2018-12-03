@@ -39,7 +39,6 @@
         </div>
       </div>
       {% endif %}
-
       <form action="admin-check-send" method="POST" role="form">
         <div class="govuk-form-group {% if (data['admin-error-no-loan-details']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
@@ -49,9 +48,8 @@
                 Enter repayment amount
               </h1>
             </legend>
-
-            <span id="admin-loan-amount-conditional-hint" class="govuk-hint">Select one option.</span>
-
+                  <p>Do you know how much student loan <strong>{{ full_name | title }}</strong> paid back through their wages while they were at the school?</p>
+            <span id="loan-details-conditional-yes-hint" class="govuk-hint govuk-radios__hint">You can find this information on their payslips or P60.</span>
             {% if (data['admin-error-no-loan-details']) %}
             <span id="admin-loan-details-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
@@ -64,8 +62,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="loan-details-conditional-yes" name="admin-loan-details" type="radio" value="yes" data-aria-controls="conditional-loan-details-conditional-yes">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="loan-details-conditional-yes">I know how much student loan <strong>{{ full_name | title }}</strong> paid between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</label>
-                <span id="loan-details-conditional-yes-hint" class="govuk-hint govuk-radios__hint">You can find this information on their payslips or P60.</span>
+                <label class="govuk-label govuk-radios__label" for="loan-details-conditional-yes">Yes</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-loan-details-conditional-yes">
                 <div class="govuk-form-group">
@@ -82,10 +79,7 @@
                 {% else %}
                 <input class="govuk-radios__input" id="loan-details-conditional-tbc" name="admin-loan-details" type="radio" value="tbc" data-aria-controls="conditional-loan-details-conditional-tbc">
                 {% endif %}
-                <label class="govuk-label govuk-radios__label" for="loan-details-conditional-tbc">I don't know</label>
-                <span id="loan-details-tbc-hint" class="govuk-hint govuk-radios__hint">
-                  Someone else needs to check or provide this information.
-                </span>
+                <label class="govuk-label govuk-radios__label" for="loan-details-conditional-tbc">No, you need to check</label>
               </div>
 
             </div>
@@ -93,8 +87,8 @@
             <hr class="govuk-section-break govuk-section-break--m">
 
             <div class="govuk-form-group">
-              {% if data['admin-task-list'] == true %}
-              <button type="submit" class="govuk-button" formaction="admin-task-list">Update</button>
+              {% if data['admin-check-send'] == true %}
+              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
               {% else %}
               <button type="submit" class="govuk-button">Continue</button>
               {% endif %}
