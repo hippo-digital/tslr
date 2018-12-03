@@ -484,6 +484,9 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
 // Eligibility checker
 // -------------------
 
+// router.get(/([z])\/([0-9]*\/?)(check-intro)/, function (req, res) {
+// })
+
 // router.post(/([z])\/([0-9]*\/?)(check-qts)/, function (req, res) {
 // })
 
@@ -495,15 +498,15 @@ router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
     req.session.data['error-message'] = "Select one of the options";
     res.redirect('check-qts');
     next
+  } else if(req.session.data['check-qts'] == "none") {
+    req.session.data['check-eligible'] = false;
+    res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-qts'] = false;
     res.redirect('check-location-search');
   }
 
 })
-
-// router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
-// })
 
 router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
 
@@ -563,10 +566,13 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
 
 })
 
-// router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
-// })
+//router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
 
-router.post(/([z])\/([0-9]*\/?)(check-results)/, function (req, res) {
+  // Need some logic here to catch single/all schools being ineligible
+
+//})
+
+router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
 
   // Error: No teaching info supplied
   if (!req.session.data['check-teaching']) {
@@ -574,9 +580,12 @@ router.post(/([z])\/([0-9]*\/?)(check-results)/, function (req, res) {
     req.session.data['error-message'] = "Select one of the options";
     res.redirect('check-teaching');
     next
+  } else if(req.session.data['check-teaching'] == "none") {
+    req.session.data['check-eligible'] = false;
+    res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-teaching'] = false;
-    res.redirect('check-results');
+    res.redirect('check-eligible');
   }
 
 })
