@@ -541,46 +541,29 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
     var school_name = req.session.data['check-school-name'];
   }
 
-  // Spoof GIAS lookup using local json data as dataset via Fuse.js
-  // $.getJSON("/public/data/gias_eligible-min-subset_181203a.min.json", function(json) {
-  //   console.log(json); // this will show the info it in firebug console
-  // });
-  // Synchronous
-  // var fs = require("fs");
-  // console.log("\n *START* \n");
-  // var content = fs.readFileSync("../../data/gias_eligible-min-subset_181203a.min.json");
-  // console.log("Output Content : \n"+ content);
-  // console.log("\n *EXIT* \n");
-
-  // var gias_request = require("request")
-  // var gias_json_url = "/public/data/gias_eligible-min-subset_181203a.min.json"
-  // gias_request({
-  //   url: gias_json_url,
-  //   json: true
-  // }, function (error, response, body) {
-  //   if (!error && response.statusCode === 200) {
-  //     console.log(body) // Print the json response
-  //   }
-  // })
-  // console.log(gias_request);
-
   var eligibility_calc = Math.floor((Math.random() * 2) + 1);
   var school_eligible = eligibility_calc > 1 ? true : false;
 
-  // var fuse_options = {
-  //   shouldSort: true,
-  //   threshold: 0.6,
-  //   location: 0,
-  //   distance: 100,
-  //   maxPatternLength: 32,
-  //   minMatchCharLength: 1,
-  //   keys: [
-  //     "est_name"
-  //   ]
-  // };
-  //
-  // var fuse = new Fuse(fuse_list, fuse_options); // "list" is the item array
-  // var result = fuse.search("");
+  var fuseJS = require('fuse.js');
+
+  var fuse_options = {
+    shouldSort: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+      "est_name"
+    ]
+  };
+
+  var fuse_list = [
+    {la_code:873,est_name:"The Starship Children's Centre",est_type_code:47,phase_code:0},
+    {la_code:380,est_name:"Abbey Green Nursery School & Children's Centre",est_type_code:47,phase_code:0}
+  ]
+  var gias_search = new Fuse(fuse_list, fuse_options); // "list" is the item array
+  var result = fuse.search("");
 
   var school = {
     name: school_name,
