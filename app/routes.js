@@ -575,17 +575,29 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
 router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
 
   // Error: No teaching info supplied
-  if (!req.session.data['check-teaching']) {
-    req.session.data['check-error-no-teaching'] = true;
+  if (!req.session.data['check-teaching-subjects']) {
+    req.session.data['check-error-no-teaching-subjects'] = true;
     req.session.data['error-message'] = "Select one of the options";
     res.redirect('check-teaching');
     next
-  } else if(req.session.data['check-teaching'] == "none") {
+  } else if (req.session.data['check-teaching-subjects'] == "ineligible") {
     req.session.data['check-eligible'] = false;
     res.redirect('check-ineligible');
   } else {
-    req.session.data['check-error-no-teaching'] = false;
-    res.redirect('check-eligible');
+    if (!req.session.data['check-teaching-proportion']) {
+      req.session.data['check-error-no-teaching-subjects'] = false;
+      req.session.data['check-error-no-teaching-proportion'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('check-teaching');
+      next
+    } else if (req.session.data['check-teaching-proportion'] == "ineligible") {
+      req.session.data['check-eligible'] = false;
+      res.redirect('check-ineligible');
+    } else {
+      req.session.data['check-error-no-teaching-subjects'] = false;
+      req.session.data['check-error-no-teaching-proportion'] = false;
+      res.redirect('check-eligible');
+    }
   }
 
 })
