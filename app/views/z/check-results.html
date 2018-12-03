@@ -4,19 +4,8 @@
   Teachers' Student Loan Reimbursement
 {% endblock %}
 
-{% block header %}
-  {% include "includes/cookie-banner.html" %}
-  {# Set serviceName in config.js. #}
-  {{ govukHeader({
-    serviceName: "Confirm teachers' student loan reimbursement claims",
-    containerClasses: "govuk-width-container govuk-tslr-header"
-  }) }}
-{% endblock %}
-
 {% block beforeContent %}
-
   {% include "includes/phase-banner.html" %}
-
 {% endblock %}
 
 {% block content %}
@@ -46,7 +35,7 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Results
+                Results !!! TBC !!! TBC !!!
               </h1>
             </legend>
 
@@ -57,10 +46,6 @@
             <div class="govuk-form-group">
               <p class="govuk-body">Add logic here depending whether eligible or not.</p>
               <p class="govuk-body">See GDS pattern: <a href="https://design-system.service.gov.uk/patterns/check-a-service-is-suitable/">Check a service is suitable</a></p>
-            </div>
-
-            <div class="govuk-form-group">
-
             </div>
 
             <div class="govuk-form-group">

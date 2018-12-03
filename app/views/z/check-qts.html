@@ -4,19 +4,8 @@
   Teachers' Student Loan Reimbursement
 {% endblock %}
 
-{% block header %}
-  {% include "includes/cookie-banner.html" %}
-  {# Set serviceName in config.js. #}
-  {{ govukHeader({
-    serviceName: "Confirm teachers' student loan reimbursement claims",
-    containerClasses: "govuk-width-container govuk-tslr-header"
-  }) }}
-{% endblock %}
-
 {% block beforeContent %}
-
   {% include "includes/phase-banner.html" %}
-
 {% endblock %}
 
 {% block content %}
