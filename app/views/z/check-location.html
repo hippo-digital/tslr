@@ -15,9 +15,9 @@
     <div class="govuk-grid-column-two-thirds">
 
       {% if data['check-num-schools'] | int == 1 %}
-      <h1 class="govuk-heading-xl">Is {{ data['check-school-name'] }} the only place you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
+      <h1 class="govuk-heading-xl">Is {{ data['check-school-name'] }} the only place you've taught at since 6 April 2018?</h1>
       {% else %}
-      <h1 class="govuk-heading-xl">Are these the only places you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
+      <h1 class="govuk-heading-xl">Are these the only places you've taught at since 6 April 2018?</h1>
       {% endif %}
 
       <form action="check-location" method="POST" role="form">
@@ -48,11 +48,11 @@
 
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="school-confirm-conditional-n" name="check-school-confirm" type="radio" value="n" data-aria-controls="conditional-school-confirm-conditional-n">
-                <label class="govuk-label govuk-radios__label" for="school-confirm-conditional-n">No, you also taught at another school</label>
+                <label class="govuk-label govuk-radios__label" for="school-confirm-conditional-n">No, you've also taught at another school</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-school-confirm-conditional-n">
                 <div class="govuk-form-group">
-                  <h2 class="govuk-heading-m">Which other school did you teach at?</h2>
+                  <h2 class="govuk-heading-m">Which other school have you taught at?</h2>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="check-another-school-name">Enter the school name</label>
                     <input class="govuk-input" id="check-another-school-name" name="check-another-school-name" type="text">
