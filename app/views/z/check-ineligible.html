@@ -22,36 +22,51 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                You're not eligible for TSLR !!! TBC !!!
+                You’re not eligible to claim student loan payments
               </h1>
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">Content TBC.</p>
-              <p class="govuk-body">This is shown to everyone regardless of reason for ineligibility.</p>
 
               {% if (data['check-ineligible-reason'] == "qts") %}
 
-              <p class="govuk-body">This is shown if ineligible due to qts.</p>
+              <p class="govuk-body">You must have qualified as a teacher after {{ globals.eligibility_criteria.qualified_date }}.</p>
+              <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
 
               {% elseif (data['check-ineligible-reason'] == "school-location") %}
 
-              {% elseif (data['check-ineligible-reason'] == "teaching-subjects") %}
+              <p class="govuk-body">You can only claim if your school is in an eligible area for this scheme.</p>
+              <p class="govuk-body"><a href="guidance">Check what the eligible areas are</a></p>
 
-              <p class="govuk-body">This is shown if ineligible due to teaching subjects.</p>
+              {% elseif (data['check-ineligible-reason'] == "school-type") %}
 
-              {% elseif (data['check-ineligible-reason'] == "teaching-proportion") %}
+              <p class="govuk-body">You can only claim if your school is a state-funded secondary or special school in England.</p>
+              <p class="govuk-body"><a href="guidance">Check what the eligible areas are</a></p>
 
-              <p class="govuk-body">This is shown if ineligible due to teaching proportion.</p>
+              {% elseif (data['check-ineligible-reason'] == "loan") %}
+
+              <p class="govuk-body">You can only claim if student loan payments were taken from your teaching wages while you were at {{ data['check-ineligible-school-name'] }}.</p>
+              <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
+
+              {% elseif (data['check-ineligible-reason'] == "teaching" or data['check-ineligible-reason'] == "teaching-less") %}
+
+              <p class="govuk-body">You must have taught one of these subjects, or a combination of subjects, for at leas 50% of your teaching hours since {{ globals.tax_year.start_date }}. </p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>physics</li>
+                <li>computer science</li>
+                <li>languages (not including English)</li>
+              </ul>
+              <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
+
+              {% elseif (data['check-ineligible-reason'] == "still-teaching") %}
+
+              <p class="govuk-body">You must be currently teaching in a school in the UK.</p>
+              <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
 
               {% endif %}
 
-              <p class="govuk-body">Probably going to need a list here:</p>
-              <ul class="govuk-list govuk-list--bullet">
-                <li>with a first option</li>
-                <li>another option</li>
-                <li>and yet another option</li>
-              </ul>
             </div>
 
           </fieldset>

@@ -35,17 +35,13 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Check when you qualified
+                When did you qualify as a teacher?
               </h1>
             </legend>
 
             {% if (data['check-error-no-qts']) %}
             <span id="check-error-no-qts" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
-
-            <div class="govuk-form-group">
-              <p class="govuk-body">When did you qualify as a teacher?</p>
-            </div>
 
             <div class="govuk-form-group">
 
@@ -57,7 +53,7 @@
                   {% else %}
                   <input class="govuk-radios__input" id="check-qts-2012" name="check-qts" type="radio" value="2012-13">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-qts-2012">On or after 13 August 2013</label>
+                  <label class="govuk-label govuk-radios__label" for="check-qts-2012">On or after 1 September 2012</label>
                 </div>
 
                 <div class="govuk-radios__item">
@@ -66,7 +62,7 @@
                   {% else %}
                   <input class="govuk-radios__input" id="check-qts-none" name="check-qts" type="radio" value="none">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-qts-none">Before 13 August 2013</label>
+                  <label class="govuk-label govuk-radios__label" for="check-qts-none">Before 1 September 2012</label>
 
                 </div>
               </div>

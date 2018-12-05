@@ -509,98 +509,185 @@ router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
 
 })
 
-router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
+router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
   // Error: No school name provided
   if (req.session.data['check-school-name'] == "") {
     req.session.data['check-error-no-school'] = true;
-    req.session.data['error-message'] = "Enter the school name or reference number";
+    req.session.data['error-message'] = "Enter the school name";
     res.redirect('check-location-search');
     next
   } else {
     req.session.data['check-error-no-school'] = false;
   }
 
-  // var check_send = req.session.data['teacher-check-send'];
   var check_send = false;
 
-  var setup = req.session.data['check-schools-setup'];
+  var schools = [];
+  num_schools = 0;
 
-  if (setup) {
-    var schools = [];
-    num_schools = 0;
+  var school_search = req.session.data['check-school-name'];
+
+  /* Eligible Local Authorities
+  873	Cambridgeshire
+  380	Bradford
+  806	Middlesbrough
+  928	Northamptonshire
+  340	Knowsley
+  935	Suffolk
+  371	Doncaster
+  867	Bracknell Forest
+  353	Oldham
+  830	Derbyshire
+  370	Barnsley
+  929	Northumberland
+  926	Norfolk
+  831	Derby
+  890	Blackpool
+  355	Salford
+  815	North Yorkshire
+  821	Luton
+  874	Peterborough
+  812	North East Lincolnshire
+  876	Halton
+  851	Portsmouth
+  861	Stoke-on-Trent
+  343	Sefton
+  342	St. Helens
+  */
+
+  var fs = require("fs");
+  // GIAS data test (10 eligible schools only)
+  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+  // GIAS data (eligible schools e.g. 25 LAs)
+  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+  // GIAS data (all schools)
+  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+  // TBC
+  var gias_data = JSON.parse(gias_file);
+  req.session.data['check-gias-data'] = gias_data;
+
+  var Fuse = require('fuse.js')
+  var fuse_options = {
+    shouldSort: true,
+    includeScore: true,
+    threshold: 0.2,
+    location: 0,
+    distance: 50,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+      "est_name"
+    ]
+  };
+  var gias_search = new Fuse(gias_data, fuse_options); // "list" is the item array
+  var gias_result = gias_search.search(school_search);
+
+  req.session.data['fuse-search-result'] = gias_result;
+
+  if (Array.isArray(gias_result) && gias_result.length > 0) {
+    var school = {
+      name: gias_result[0].item.est_name,
+      la_code: gias_result[0].item.la_code,
+      est_type_code: gias_result[0].item.est_type_code,
+      phase_code: gias_result[0].item.phase_code
+    }
+    if (gias_result[0].score < 0.2) {
+      school.matched = true;
+      school.eligible = true;
+      school.location = true;
+      school.type = true;
+    }
   } else {
-    var option = req.session.data['check-school-confirm'];
-    var schools = req.session.data['check-schools'];
-    num_schools = schools.length;
+    var school = {
+      name: school_search,
+      search_term: school_search,
+      matched: false,
+      eligible: false,
+      location: false,
+      type: false
+    }
   }
 
-  if (option == 'n') {
-    var school_name = req.session.data['check-another-school-name'];
-  } else {
-    var school_name = req.session.data['check-school-name'];
-  }
-
-  var eligibility_calc = Math.floor((Math.random() * 2) + 1);
-  var school_eligible = eligibility_calc > 1 ? true : false;
-
-  var school = {
-    name: school_name,
-    eligible: school_eligible
-  }
-
-  if (!check_send || (check_send && option == 'n')) {
-    schools.push(school);
-    num_schools++;
-  }
+  schools.push(school);
+  num_schools++;
 
   req.session.data['check-schools'] = schools;
   req.session.data['check-num-schools'] = num_schools;
-  req.session.data['check-schools-setup'] = false;
 
-  // Need to branch differently depending whether answer was yes, yes more or no
-  if (option == 'y') {
-    res.redirect('check-teaching');
+  if (!school.location) {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "school-location";
+    res.redirect('check-ineligible');
+  } else if (!school.type) {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "school-type";
+    res.redirect('check-ineligible');
   } else {
-    res.redirect('check-location');
+    req.session.data['check-error-no-school'] = false;
+    res.redirect('check-loan');
   }
 
 })
 
-//router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
+router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
 
-  // Need some logic here to catch single/all schools being ineligible
+  // Error: No qts year provided
+  if (!req.session.data['check-loan']) {
+    req.session.data['check-error-no-loan'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-loan');
+    next
+  } else if(req.session.data['check-loan'] == "no") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "loan";
+    req.session.data['check-ineligible-school-name'] = req.session.data['check-schools'][0]['name'];
+    res.redirect('check-ineligible');
+  } else {
+    req.session.data['check-error-no-loan'] = false;
+    res.redirect('check-teaching');
+  }
 
-//})
+})
 
-router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
 
   // Error: No teaching info supplied
-  if (!req.session.data['check-teaching-subjects']) {
-    req.session.data['check-error-no-teaching-subjects'] = true;
+  if (!req.session.data['check-teaching']) {
+    req.session.data['check-error-no-teaching'] = true;
     req.session.data['error-message'] = "Select one of the options";
     res.redirect('check-teaching');
     next
-  } else if (req.session.data['check-teaching-subjects'] == "ineligible") {
+  } else if (req.session.data['check-teaching'] == "ineligible") {
     req.session.data['check-eligible'] = false;
-    req.session.data['check-ineligible-reason'] = "teaching-subjects";
+    req.session.data['check-ineligible-reason'] = "teaching";
+    res.redirect('check-ineligible');
+  } else if (req.session.data['check-teaching'] == "ineligible-less") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "teaching-less";
     res.redirect('check-ineligible');
   } else {
-    if (!req.session.data['check-teaching-proportion']) {
-      req.session.data['check-error-no-teaching-subjects'] = false;
-      req.session.data['check-error-no-teaching-proportion'] = true;
-      req.session.data['error-message'] = "Select one of the options";
-      res.redirect('check-teaching');
-      next
-    } else if (req.session.data['check-teaching-proportion'] == "ineligible") {
-      req.session.data['check-eligible'] = false;
-      req.session.data['check-ineligible-reason'] = "teaching-proportion";
-      res.redirect('check-ineligible');
-    } else {
-      req.session.data['check-error-no-teaching-subjects'] = false;
-      req.session.data['check-error-no-teaching-proportion'] = false;
-      res.redirect('check-eligible');
-    }
+    req.session.data['check-error-no-teaching'] = false;
+    res.redirect('check-still-teaching');
+  }
+
+})
+
+router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+
+  // Error: No still teaching provided
+  if (!req.session.data['check-still-teaching']) {
+    req.session.data['check-error-no-still-teaching'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-still-teaching');
+    next
+  } else if(req.session.data['check-still-teaching'] == "no") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "still-teaching";
+    res.redirect('check-ineligible');
+  } else {
+    req.session.data['check-error-no-still-teaching'] = false;
+    res.redirect('check-eligible');
   }
 
 })

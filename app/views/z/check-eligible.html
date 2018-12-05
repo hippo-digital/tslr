@@ -16,29 +16,27 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      <form action="check-qts" method="POST" role="form">
+      <div class="govuk-form-group">
+
+        <h1 class="govuk-heading-xl">
+          You're eligible to claim your student loan repayments
+        </h1>
+
         <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
-
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h1 class="govuk-fieldset__heading">
-                You're eligible for TSLR !!! TBC !!!
-              </h1>
-            </legend>
-
-            <div class="govuk-form-group">
-              <p class="govuk-body">Content TBC.</p>
-              <p class="govuk-body">Probably going to need a list here:</p>
-              <ul class="govuk-list govuk-list--bullet">
-                <li>with a first option</li>
-                <li>another option</li>
-                <li>and yet another option</li>
-              </ul>
-            </div>
-
-          </fieldset>
+          <p class="govuk-body">Based on your answers, you are eligible to claim your student loan repayments back.</p>
+          <p class="govuk-body">You can apply from September 2019. Register your details and we'll sned you updates about the service.</p>
+          <div class="govuk-form-group">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsPCS79pQlIJpx7TUf_vYCfq1wBtYgInDYS7CNycwBee3REA/viewform">
+              <button type="submit" class="govuk-button">Register for updates</button>
+            </a>
+          </div>
         </div>
-      </form>
+
+        <div class="govuk-form-group">
+          <p class="govuk-body">If you've worked at another school since {{ globals.tax_year.start_date }} <a href="check-location-search">check your eligibility again</a>.</p>
+        </div>
+
+      </div>
 
     </div>
 

@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if (data['check-error-no-loan']) %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if (data['check-error-no-loan']) %}
+            <li><a href="#check-error-no-loan">{{ data['error-message'] }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <form action="check-teaching" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['check-error-no-loan']) %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Did you pay back your student loan while you were at {{ data['check-schools'][0]['name'] }}?
+              </h1>
+            </legend>
+
+            {% if (data['check-error-no-loan']) %}
+            <span id="check-error-no-loan" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
+            <div class="govuk-form-group">
+
+              <div class="govuk-radios">
+
+                <div class="govuk-radios__item">
+                  {% if data['check-loan'] == "yes" %}
+                  <input class="govuk-radios__input" id="check-loan-yes" name="check-loan" type="radio" value="yes" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="check-loan-yes" name="check-loan" type="radio" value="yes">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="check-loan-yes">Yes</label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  {% if data['check-loan'] == "no" %}
+                  <input class="govuk-radios__input" id="check-loan-no" name="check-loan" type="radio" value="no" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="check-loan-no" name="check-loan" type="radio" value="no">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="check-loan-no">No</label>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Continue</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
