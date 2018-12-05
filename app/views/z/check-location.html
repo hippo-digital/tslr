@@ -15,7 +15,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       {% if data['check-num-schools'] | int == 1 %}
-      <h1 class="govuk-heading-xl">Is {{ data['check-school-name'] }} the only place you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
+      <h1 class="govuk-heading-xl">Is {{ data['check-schools'][0]['name'] }} the only place you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
       {% else %}
       <h1 class="govuk-heading-xl">Are these the only places you taught between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</h1>
       {% endif %}

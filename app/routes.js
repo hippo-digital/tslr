@@ -536,21 +536,47 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
   }
 
   if (option == 'n') {
-    var school_name = req.session.data['check-another-school-name'];
+    var school_search = req.session.data['check-another-school-name'];
   } else {
-    var school_name = req.session.data['check-school-name'];
+    var school_search = req.session.data['check-school-name'];
   }
 
-  var eligibility_calc = Math.floor((Math.random() * 2) + 1);
-  var school_eligible = eligibility_calc > 1 ? true : false;
+  /* Local Authorities
+  873	Cambridgeshire
+  380	Bradford
+  806	Middlesbrough
+  928	Northamptonshire
+  340	Knowsley
+  935	Suffolk
+  371	Doncaster
+  867	Bracknell Forest
+  353	Oldham
+  830	Derbyshire
+  370	Barnsley
+  929	Northumberland
+  926	Norfolk
+  831	Derby
+  890	Blackpool
+  355	Salford
+  815	North Yorkshire
+  821	Luton
+  874	Peterborough
+  812	North East Lincolnshire
+  876	Halton
+  851	Portsmouth
+  861	Stoke-on-Trent
+  343	Sefton
+  342	St. Helens
+  */
 
-  var fuseJS = require('fuse.js');
+  var Fuse = require('fuse.js')
 
   var fuse_options = {
     shouldSort: true,
-    threshold: 0.6,
+    includeScore: true,
+    threshold: 0.2,
     location: 0,
-    distance: 100,
+    distance: 50,
     maxPatternLength: 32,
     minMatchCharLength: 1,
     keys: [
@@ -558,22 +584,44 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
     ]
   };
 
-  var fuse_list = [
-    {la_code:873,est_name:"The Starship Children's Centre",est_type_code:47,phase_code:0},
-    {la_code:380,est_name:"Abbey Green Nursery School & Children's Centre",est_type_code:47,phase_code:0}
-  ]
-  var gias_search = new Fuse(fuse_list, fuse_options); // "list" is the item array
-  var result = fuse.search("");
+  var fs = require("fs");
+  // GIAS data for quick testing (10 eligible schools)
+  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+  // GIAS data (all eligible schools e.g. 25 LAs)
+  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+  // GIAS data (all schools)
+  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+  // TBC
+  var gias_data = JSON.parse(gias_file);
+  req.session.data['check-gias-data'] = gias_data;
 
-  var school = {
-    name: school_name,
-    eligible: school_eligible
+  var gias_search = new Fuse(gias_data, fuse_options); // "list" is the item array
+  var gias_result = gias_search.search(school_search);
+
+  req.session.data['fuse-search-result'] = gias_result;
+
+  if (Array.isArray(gias_result) && gias_result.length > 0) {
+    var school = {
+      name: gias_result[0].item.est_name,
+      la_code: gias_result[0].item.la_code,
+      est_type_code: gias_result[0].item.est_type_code,
+      phase_code: gias_result[0].item.phase_code
+    }
+    if (gias_result[0].score < 0.2) {
+      school.matched = true;
+      school.eligible = true;
+    }
+  } else {
+    var school = {
+      name: school_search,
+      search_term: school_search,
+      matched: false,
+      eligible: false
+    }
   }
 
-  if (!check_send || (check_send && option == 'n')) {
-    schools.push(school);
-    num_schools++;
-  }
+  schools.push(school);
+  num_schools++;
 
   req.session.data['check-schools'] = schools;
   req.session.data['check-num-schools'] = num_schools;
