@@ -541,7 +541,7 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
     var school_search = req.session.data['check-school-name'];
   }
 
-  /* Local Authorities
+  /* Eligible Local Authorities
   873	Cambridgeshire
   380	Bradford
   806	Middlesbrough
@@ -569,8 +569,18 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
   342	St. Helens
   */
 
-  var Fuse = require('fuse.js')
+  var fs = require("fs");
+  // GIAS data test (10 eligible schools only)
+  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+  // GIAS data (eligible schools e.g. 25 LAs)
+  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+  // GIAS data (all schools)
+  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+  // TBC
+  var gias_data = JSON.parse(gias_file);
+  req.session.data['check-gias-data'] = gias_data;
 
+  var Fuse = require('fuse.js')
   var fuse_options = {
     shouldSort: true,
     includeScore: true,
@@ -583,18 +593,6 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
       "est_name"
     ]
   };
-
-  var fs = require("fs");
-  // GIAS data for quick testing (10 eligible schools)
-  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
-  // GIAS data (all eligible schools e.g. 25 LAs)
-  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
-  // GIAS data (all schools)
-  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
-  // TBC
-  var gias_data = JSON.parse(gias_file);
-  req.session.data['check-gias-data'] = gias_data;
-
   var gias_search = new Fuse(gias_data, fuse_options); // "list" is the item array
   var gias_result = gias_search.search(school_search);
 
