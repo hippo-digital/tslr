@@ -560,10 +560,9 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   // GIAS data test (10 eligible schools only)
   // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
   // GIAS data (eligible schools e.g. 25 LAs)
-  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+  // var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
   // GIAS data (all schools)
-  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
-  // TBC
+  var gias_file = fs.readFileSync("app/data/gias_all.min.json");
   var gias_data = JSON.parse(gias_file);
   req.session.data['check-gias-data'] = gias_data;
 
