@@ -595,13 +595,17 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
     if (gias_result[0].score < 0.2) {
       school.matched = true;
       school.eligible = true;
+      school.location = true;
+      school.type = true;
     }
   } else {
     var school = {
       name: school_search,
       search_term: school_search,
       matched: false,
-      eligible: false
+      eligible: false,
+      location: false,
+      type: false
     }
   }
 
@@ -611,12 +615,40 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   req.session.data['check-schools'] = schools;
   req.session.data['check-num-schools'] = num_schools;
 
-  res.redirect('check-loan');
+  if (!school.location) {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "school-location";
+    res.redirect('check-ineligible');
+  } else if (!school.type) {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "school-type";
+    res.redirect('check-ineligible');
+  } else {
+    req.session.data['check-error-no-school'] = false;
+    res.redirect('check-loan');
+  }
 
 })
 
-//router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
-//})
+router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
+
+  // Error: No qts year provided
+  if (!req.session.data['check-loan']) {
+    req.session.data['check-error-no-loan'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-loan');
+    next
+  } else if(req.session.data['check-loan'] == "no") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "loan";
+    req.session.data['check-ineligible-school-name'] = req.session.data['check-schools'][0]['name'];
+    res.redirect('check-ineligible');
+  } else {
+    req.session.data['check-error-no-loan'] = false;
+    res.redirect('check-teaching');
+  }
+
+})
 
 router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
 
@@ -641,7 +673,23 @@ router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
 
 })
 
-//router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
-//})
+router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+
+  // Error: No still teaching provided
+  if (!req.session.data['check-still-teaching']) {
+    req.session.data['check-error-no-still-teaching'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-still-teaching');
+    next
+  } else if(req.session.data['check-still-teaching'] == "no") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "still-teaching";
+    res.redirect('check-ineligible');
+  } else {
+    req.session.data['check-error-no-still-teaching'] = false;
+    res.redirect('check-eligible');
+  }
+
+})
 
 module.exports = router

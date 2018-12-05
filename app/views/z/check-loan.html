@@ -16,13 +16,13 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['check-error-no-qts']) %}
+      {% if (data['check-error-no-loan']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['check-error-no-qts']) %}
-            <li><a href="#check-error-no-qts">{{ data['error-message'] }}</a></li>
+            {% if (data['check-error-no-loan']) %}
+            <li><a href="#check-error-no-loan">{{ data['error-message'] }}</a></li>
             {% endif %}
           </ul>
         </div>
@@ -30,7 +30,7 @@
       {% endif %}
 
       <form action="check-teaching" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['check-error-no-qts']) %}govuk-form-group--error{% endif %}">
+        <div class="govuk-form-group {% if (data['check-error-no-loan']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -39,8 +39,8 @@
               </h1>
             </legend>
 
-            {% if (data['check-error-no-qts']) %}
-            <span id="check-error-no-qts" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% if (data['check-error-no-loan']) %}
+            <span id="check-error-no-loan" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
 
             <div class="govuk-form-group">
