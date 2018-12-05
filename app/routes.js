@@ -564,7 +564,8 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   // GIAS data (all schools)
   var gias_file = fs.readFileSync("app/data/gias_all.min.json");
   var gias_data = JSON.parse(gias_file);
-  req.session.data['check-gias-data'] = gias_data;
+  // Output JSON as session variable for easier debug
+  //req.session.data['check-gias-data'] = gias_data;
 
   var Fuse = require('fuse.js')
   var fuse_options = {
@@ -584,26 +585,51 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
   req.session.data['fuse-search-result'] = gias_result;
 
+  // Results are sorted by match accuracy so just use first school for prototype
   if (Array.isArray(gias_result) && gias_result.length > 0) {
+    // There are match[es]
+
     var school = {
       name: gias_result[0].item.est_name,
       la_code: gias_result[0].item.la_code,
       est_type_code: gias_result[0].item.est_type_code,
       phase_code: gias_result[0].item.phase_code
     }
+
     if (gias_result[0].score < 0.2) {
       school.matched = true;
       school.eligible = true;
+      school.location = false;
+      school.phase = false;
+      school.type = false;
+    }
+
+    var local_auths = [873, 380, 806, 928, 340, 935, 371, 867, 353, 830, 370, 929, 926, 831, 890, 355, 815, 821, 874, 812, 876, 851, 861, 343, 342];
+    var secondary_phases = [4, 5];
+    var school_types = [7, 8, 12, 14, 32, 33, 36, 43, 44];
+
+    if (local_auths.includes(school.la_code)) {
       school.location = true;
+    }
+
+    if (secondary_phases.includes(school.phase_code)) {
+      school.phase = true;
+    }
+
+    if (school_types.includes(school.est_type_code)) {
       school.type = true;
     }
+
   } else {
+    // No match
+
     var school = {
       name: school_search,
       search_term: school_search,
       matched: false,
       eligible: false,
       location: false,
+      phase: false,
       type: false
     }
   }
@@ -615,10 +641,17 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   req.session.data['check-num-schools'] = num_schools;
 
   if (!school.location) {
+    // Not in eligible LA
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-location";
     res.redirect('check-ineligible');
+  } else if (!school.phase && !school.type) {
+    // Not a secondary
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "school-phase";
+    res.redirect('check-ineligible');
   } else if (!school.type) {
+    // Not a SEN
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-type";
     res.redirect('check-ineligible');
