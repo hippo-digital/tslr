@@ -509,37 +509,24 @@ router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
 
 })
 
-router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
+router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
   // Error: No school name provided
   if (req.session.data['check-school-name'] == "") {
     req.session.data['check-error-no-school'] = true;
-    req.session.data['error-message'] = "Enter the school name or reference number";
+    req.session.data['error-message'] = "Enter the school name";
     res.redirect('check-location-search');
     next
   } else {
     req.session.data['check-error-no-school'] = false;
   }
 
-  // var check_send = req.session.data['teacher-check-send'];
   var check_send = false;
 
-  var setup = req.session.data['check-schools-setup'];
+  var schools = [];
+  num_schools = 0;
 
-  if (setup) {
-    var schools = [];
-    num_schools = 0;
-  } else {
-    var option = req.session.data['check-school-confirm'];
-    var schools = req.session.data['check-schools'];
-    num_schools = schools.length;
-  }
-
-  if (option == 'n') {
-    var school_search = req.session.data['check-another-school-name'];
-  } else {
-    var school_search = req.session.data['check-school-name'];
-  }
+  var school_search = req.session.data['check-school-name'];
 
   /* Eligible Local Authorities
   873	Cambridgeshire
@@ -623,44 +610,38 @@ router.post(/([z])\/([0-9]*\/?)(check-location)/, function (req, res) {
 
   req.session.data['check-schools'] = schools;
   req.session.data['check-num-schools'] = num_schools;
-  req.session.data['check-schools-setup'] = false;
 
-  // Need to branch differently depending whether answer was yes, yes more or no
-  if (option == 'y') {
-    res.redirect('check-teaching');
-  } else {
-    res.redirect('check-location');
-  }
+  res.redirect('check-loan');
 
 })
 
 //router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
-
-  // Need some logic here to catch single/all schools being ineligible
-
 //})
 
-router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
 
   // Error: No teaching info supplied
-  if (!req.session.data['check-teaching-subjects']) {
-    req.session.data['check-error-no-teaching-subjects'] = true;
+  if (!req.session.data['check-teaching']) {
+    req.session.data['check-error-no-teaching'] = true;
     req.session.data['error-message'] = "Select one of the options";
     res.redirect('check-teaching');
     next
-  } else if (req.session.data['check-teaching-subjects'] == "ineligible") {
+  } else if (req.session.data['check-teaching'] == "ineligible") {
     req.session.data['check-eligible'] = false;
-    req.session.data['check-ineligible-reason'] = "teaching-subjects";
+    req.session.data['check-ineligible-reason'] = "teaching";
     res.redirect('check-ineligible');
-  } else if (req.session.data['check-teaching-subjects'] == "ineligible-50") {
+  } else if (req.session.data['check-teaching'] == "ineligible-less") {
     req.session.data['check-eligible'] = false;
-    req.session.data['check-ineligible-reason'] = "teaching-subjects-50";
+    req.session.data['check-ineligible-reason'] = "teaching-less";
     res.redirect('check-ineligible');
   } else {
-    req.session.data['check-error-no-teaching-subjects'] = false;
-    res.redirect('check-eligible');
+    req.session.data['check-error-no-teaching'] = false;
+    res.redirect('check-still-teaching');
   }
 
 })
+
+//router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+//})
 
 module.exports = router
