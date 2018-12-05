@@ -22,7 +22,7 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                You're not eligible for TSLR !!! TBC !!!
+                You’re not eligible to claim student loan payments
               </h1>
             </legend>
 
@@ -32,17 +32,26 @@
 
               {% if (data['check-ineligible-reason'] == "qts") %}
 
-              <p class="govuk-body">This is shown if ineligible due to qts.</p>
+              <p class="govuk-body">You must have qualified as a teacher after 1 September 2012.</p>
 
               {% elseif (data['check-ineligible-reason'] == "school-location") %}
 
+              <p class="govuk-body">The scheme is only running in certain types of schools in certain areas of England – areas that have fewer teachers in these subjects at the moment).</p>
+              <p class="govuk-body">See [a list of participating areas].</p>
+
               {% elseif (data['check-ineligible-reason'] == "teaching-subjects") %}
 
-              <p class="govuk-body">This is shown if ineligible due to teaching subjects.</p>
+              <p class="govuk-body">You must have taught one of the following subjects, or a combination of subjects, for at least 50% of your teaching hours since 6 April 2018:</p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>biology</li>
+                <li>chemistry</li>
+                <li>physics</li>
+                <li>computer science</li>
+                <li>languages (not including English)</li>
 
-              {% elseif (data['check-ineligible-reason'] == "teaching-proportion") %}
+              {% elseif (data['check-ineligible-reason'] == "teaching-subjects-50") %}
 
-              <p class="govuk-body">This is shown if ineligible due to teaching proportion.</p>
+              <p class="govuk-body">This is shown if ineligible due to less than 50</p>
 
               {% endif %}
 

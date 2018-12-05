@@ -652,22 +652,13 @@ router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "teaching-subjects";
     res.redirect('check-ineligible');
+  } else if (req.session.data['check-teaching-subjects'] == "ineligible-50") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "teaching-subjects-50";
+    res.redirect('check-ineligible');
   } else {
-    if (!req.session.data['check-teaching-proportion']) {
-      req.session.data['check-error-no-teaching-subjects'] = false;
-      req.session.data['check-error-no-teaching-proportion'] = true;
-      req.session.data['error-message'] = "Select one of the options";
-      res.redirect('check-teaching');
-      next
-    } else if (req.session.data['check-teaching-proportion'] == "ineligible") {
-      req.session.data['check-eligible'] = false;
-      req.session.data['check-ineligible-reason'] = "teaching-proportion";
-      res.redirect('check-ineligible');
-    } else {
-      req.session.data['check-error-no-teaching-subjects'] = false;
-      req.session.data['check-error-no-teaching-proportion'] = false;
-      res.redirect('check-eligible');
-    }
+    req.session.data['check-error-no-teaching-subjects'] = false;
+    res.redirect('check-eligible');
   }
 
 })
