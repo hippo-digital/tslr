@@ -107,9 +107,9 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Did they work at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
-              {% if data['admin-eligibility-period'] == 'yes' %}
+              {% if data['admin-eligibility-location'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
-              {% elseif data['admin-eligibility-period'] == 'yes-part' %}
+              {% elseif data['admin-eligibility-location'] == 'yes-part' %}
               <dd class="app-check-your-answers__answer">Yes, for part of the year<br/>
                 {% if not admin_start_date %}
                 <span class="answer-incomplete">
@@ -127,7 +127,7 @@
                 </span>
                 {% endif %}
               </dd>
-              {% elseif data['admin-eligibility-period'] == 'no' %}
+              {% elseif data['admin-eligibility-location'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>

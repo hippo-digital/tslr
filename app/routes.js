@@ -525,20 +525,41 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       req.session.data['error-message'] = "Select one of the options";
       res.redirect('admin-confirm-location-eligibility');
       next
+    } else if (req.session.data['update-location'] == "update" && req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
+      req.session.data['admin-error-no-location-period'] = true;
+      if (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year']) {
+        // Error: Meant to update location with start date
+        req.session.data['admin-error-no-location-start-date'] = true;
+        req.session.data['error-message'] = "Enter the start date";
+      } else {
+        req.session.data['admin-error-no-location-start-date'] = false;
+      }
+      if (!req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year']) {
+        // Error: Meant to update location with start date
+        req.session.data['admin-error-no-location-end-date'] = true;
+        req.session.data['error-message-b'] = "Enter the end date";
+      } else {
+        req.session.data['admin-error-no-location-end-date'] = false;
+      }
+      res.redirect('admin-confirm-location-eligibility');
+      next
     } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-eligibility-teaching']) {
-      // Error: Meant to update location
+      // Error: Meant to update teaching
       req.session.data['admin-error-no-teaching'] = true;
       req.session.data['error-message'] = "Select one of the options";
       res.redirect('admin-confirm-teaching-eligibility');
       next
     } else if (req.session.data['update-loan'] == "update" && !req.session.data['admin-loan-amount']) {
-      // Error: Meant to update location
+      // Error: Meant to update loan
       req.session.data['admin-error-no-loan'] = true;
-      req.session.data['error-message'] = "Select one of the options";
+      req.session.data['error-message'] = "Enter the loan amount";
       res.redirect('admin-confirm-repayment-amount');
       next
     } else {
       req.session.data['admin-error-no-location'] = false;
+      req.session.data['admin-error-no-location-period'] = false;
+      req.session.data['admin-error-no-location-start-date'] = false;
+      req.session.data['admin-error-no-location-end-date'] = false;
       req.session.data['admin-error-no-teaching'] = false;
       req.session.data['admin-error-no-loan'] = false;
     }
