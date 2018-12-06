@@ -45,7 +45,7 @@
   {% endif %}
 
   {% if data['admin-eligibility-period'] == "yes-part" %}
-  {% if not data['admin-start-day'] or not data['admin-start-month'] or not data['admin-start-year'] %}
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_day'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_month'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_year'] %}
   {{ "data.admin-eligibility-period start dates are incomplete" | log }}
   {% set admin_start_date = false %}
   {% set details_complete = false %}
@@ -53,7 +53,7 @@
   {% endif %}
 
   {% if data['admin-eligibility-period'] == "yes-part" %}
-  {% if not data['admin-end-day'] or not data['admin-end-month'] or not data['admin-end-year'] %}
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_day'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_month'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_year'] %}
   {{ "data.admin-eligibility-period end dates are incomplete" | log }}
   {% set admin_end_date = false %}
   {% set details_complete = false %}
@@ -119,14 +119,14 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Did they work at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
-              {% if data['admin-eligibility-location'] == 'yes' %}
+              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
-              {% elseif data['admin-eligibility-location'] == 'yes-part' %}
+              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes-part' %}
               <dd class="app-check-your-answers__answer">Yes, for part of the year<br/>
                 {% if not admin_start_date %}
                 <span class="answer-incomplete">
                 {% endif %}
-                {{ data['admin-start-day'] if data['admin-start-day'] else "dd" }}/{{ data['admin-start-month'] if data['admin-start-month'] else "mm"}}/{{ data['admin-start-year'] if data['admin-start-year'] else "yyyy" }}
+                {{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_year'] or "yyyy" }}
                 {% if not admin_start_date %}
                 </span>
                 {% endif %}
@@ -134,12 +134,12 @@
                 {% if not admin_end_date %}
                 <span class="answer-incomplete">
                 {% endif %}
-                {{ data['admin-end-day'] if data['admin-end-day'] else "dd" }}/{{ data['admin-end-month'] if data['admin-end-month'] else "mm" }}/{{ data['admin-end-year'] if data['admin-end-year'] else "yyyy" }}
+                {{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_year'] or "yyyy" }}
                 {% if not admin_end_date %}
                 </span>
                 {% endif %}
               </dd>
-              {% elseif data['admin-eligibility-location'] == 'no' %}
+              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
@@ -165,8 +165,8 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">How much student loan did they repay between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
-              {% if data['admin-loan-amount'] %}
-              <dd class="app-check-your-answers__answer">£{{ data['admin-loan-amount'] }}</dd>
+              {% if data['admin-claims-data']['claims'][array_ref]['loan-amount'] %}
+              <dd class="app-check-your-answers__answer">£{{ data['admin-claims-data']['claims'][array_ref]['loan-amount'] }}</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}

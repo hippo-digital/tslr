@@ -520,12 +520,15 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
   } else {
 
     if (req.session.data['update-location'] == "update" && !req.session.data['admin-eligibility-location']) {
+
       // Error: Meant to update location
       req.session.data['admin-error-no-location'] = true;
       req.session.data['error-message'] = "Select one of the options";
       res.redirect('admin-confirm-location-eligibility');
       next
+
     } else if (req.session.data['update-location'] == "update" && req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
+
       req.session.data['admin-error-no-location-period'] = true;
       if (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year']) {
         // Error: Meant to update location with start date
@@ -543,25 +546,65 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       }
       res.redirect('admin-confirm-location-eligibility');
       next
+
     } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-eligibility-teaching']) {
+
       // Error: Meant to update teaching
       req.session.data['admin-error-no-teaching'] = true;
       req.session.data['error-message'] = "Select one of the options";
       res.redirect('admin-confirm-teaching-eligibility');
       next
+
     } else if (req.session.data['update-loan'] == "update" && !req.session.data['admin-loan-amount']) {
+
       // Error: Meant to update loan
       req.session.data['admin-error-no-loan'] = true;
       req.session.data['error-message'] = "Enter the loan amount";
       res.redirect('admin-confirm-repayment-amount');
       next
+
     } else {
+
+      // Everything looks good so sync the latest data to the relevant JSON
+      var claim_id = req.session.data['claim-id'];
+      var array_ref = claim_id - 1;
+
+      if (req.session.data['update-location'] == "update") {
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = req.session.data['admin-eligibility-location'];
+        if (req.session.data['admin-eligibility-location'] == "yes-part") {
+          var eligiblity_period = {};
+          eligiblity_period.start_day = req.session.data['admin-start-day'];
+          eligiblity_period.start_month = req.session.data['admin-start-month'];
+          eligiblity_period.start_year = req.session.data['admin-start-year'];
+          eligiblity_period.end_day = req.session.data['admin-end-day'];
+          eligiblity_period.end_month = req.session.data['admin-end-month'];
+          eligiblity_period.end_year = req.session.data['admin-end-year'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location-period'] = eligiblity_period;
+          req.session.data['admin-start-day'] = "0";
+          req.session.data['admin-start-month'] = "0";
+          req.session.data['admin-start-year'] = "0";
+          req.session.data['admin-end-day'] = "0";
+          req.session.data['admin-end-month'] = "0";
+          req.session.data['admin-end-year'] = "0";
+        }
+        req.session.data['admin-eligibility-location'] = "0";
+        req.session.data['update-location'] = "null";
+      }
+
+      if (req.session.data['update-loan'] == "update") {
+        req.session.data['admin-claims-data']['claims'][array_ref]['loan-amount'] = req.session.data['admin-loan-amount'];
+        req.session.data['admin-loan-amount'] = "0";
+        req.session.data['update-loan'] = "null";
+      }
+
+      // ..and then reset all the error variables
       req.session.data['admin-error-no-location'] = false;
       req.session.data['admin-error-no-location-period'] = false;
       req.session.data['admin-error-no-location-start-date'] = false;
       req.session.data['admin-error-no-location-end-date'] = false;
       req.session.data['admin-error-no-teaching'] = false;
       req.session.data['admin-error-no-loan'] = false;
+
     }
 
     res.redirect('admin-claim');

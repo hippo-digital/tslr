@@ -72,7 +72,7 @@
             <div class="govuk-form-group">
               <label class="govuk-label" for="admin-loan-amount">Enter the amount</label>
               <span id="loan-amount-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
-              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-loan-amount']}}">
+              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-claims-data']['claims'][array_ref]['loan-amount']}}">
             </div>
 
             <div class="govuk-form-group">
