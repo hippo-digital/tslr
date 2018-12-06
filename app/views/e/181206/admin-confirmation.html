@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Verify (Enter TRN) :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  {% if data.applicant.full_name %}
+  {% set full_name = data.applicant.full_name %}
+  {% else %}
+  {% set full_name = globals.smd.teacher.full_name %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">You’ve checked their details</h1>
+      <p class="govuk-body">Thank you for checking details for {{ full_name | title }}.</p>
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p class="govuk-body">We’ll contact {{ full_name | title }} within {xx} days to update them about their claim.</p>
+      <p class="govuk-body">
+        <a href="admin-applications" role="button" draggable="false" class="govuk-button">Continue</a>
+      </p>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-process-complete-email" role="button" draggable="false" class="govuk-button hidden-button">Continue</a>
+      </p>
+
+    </div>
+
+  </div>
+
+  </div>
+
+{% endblock %}
