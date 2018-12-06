@@ -415,7 +415,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-task-list)/, function (req, res) {
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -426,7 +426,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, functi
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -446,7 +446,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, functi
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -514,13 +514,50 @@ router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
 router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
   if (!req.session.data['admin-claims-data']) {
+
     res.redirect('admin-dfe-signin');
+
   } else {
+
+    if (req.session.data['update-location'] == "update" && !req.session.data['admin-eligibility-location']) {
+      // Error: Meant to update location
+      req.session.data['admin-error-no-location'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-location-eligibility');
+      next
+    } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-eligibility-teaching']) {
+      // Error: Meant to update location
+      req.session.data['admin-error-no-teaching'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
+    } else if (req.session.data['update-loan'] == "update" && !req.session.data['admin-loan-amount']) {
+      // Error: Meant to update location
+      req.session.data['admin-error-no-loan'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-repayment-amount');
+      next
+    } else {
+      req.session.data['admin-error-no-location'] = false;
+      req.session.data['admin-error-no-teaching'] = false;
+      req.session.data['admin-error-no-loan'] = false;
+    }
+
     res.redirect('admin-claim');
     next
+
   }
 
 })
+
+// router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
+// })
+
+// router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
+// })
+
+// router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-repayment-eligibility)/, function (req, res) {
+// })
 
 // Eligibility checker
 // -------------------

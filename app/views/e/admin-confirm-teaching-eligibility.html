@@ -29,13 +29,13 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['admin-error-no-eligibility-teaching']) %}
+      {% if (data['admin-error-no-teaching']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['admin-error-no-eligibility-teaching']) %}
-            <li><a href="#admin-teaching-eligibility-error">{{ data['error-message'] }}</a></li>
+            {% if (data['admin-error-no-teaching']) %}
+            <li><a href="#admin-teaching-error">{{ data['error-message'] }}</a></li>
             {% endif %}
           </ul>
         </div>
@@ -43,7 +43,7 @@
       {% endif %}
 
       <form action="admin-claim" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['admin-error-no-eligibility-teaching']) %}govuk-form-group--error{% endif %}">
+        <div class="govuk-form-group {% if (data['admin-error-no-teaching']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -63,8 +63,8 @@
               </ul>
             </div>
 
-            {% if (data['admin-error-no-eligibility-teaching']) %}
-            <span id="admin-teaching-eligibility-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% if (data['admin-error-no-teaching']) %}
+            <span id="admin-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
 
             <div class="govuk-form-group">
@@ -123,7 +123,8 @@
             </div>
 
             <div class="govuk-form-group">
-              <button type="submit" class="govuk-button">Update</button>
+              <button type="submit" class="govuk-button" name="update-teaching" value="update">Update</button>
+              <button type="submit" class="button-as-link" name="update-teaching" value="cancel">Cancel</button>
             </div>
 
           </fieldset>

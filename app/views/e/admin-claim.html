@@ -153,7 +153,7 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">How much student loan did they repay between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
-              {% if data['admin-loan-details'] == "yes" and data['admin-loan-amount'] %}
+              {% if data['admin-loan-amount'] %}
               <dd class="app-check-your-answers__answer">£{{ data['admin-loan-amount'] }}</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
