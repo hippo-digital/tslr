@@ -14,7 +14,20 @@
 {% endblock %}
 
 {% block beforeContent %}
+
+  {% set claim_id = data['claim-id'] | int %}
+  {# Need to replace the below with proper JSON object access #}
+  {% set array_ref = claim_id - 1 %}
+
   {% include "includes/phase-banner.html" %}
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="admin-claims">All claims: {{ data['admin-claims-data']['school_name'] }}</a></li>
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="admin-claim">{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</a></li>
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">Confirm school eligibility</li>
+    </ol>
+  </div>
+
 {% endblock %}
 
 {% block content %}
