@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Teacher claims for {{ data['admin-claims-data']['school_name'] }}</h1>
+
+      <p class="govuk-body">These teachers have applied to claim back their student loan payments for the {{globals.tax_year.full}} tax year.</p>
+
+      <form action="admin-claim" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <ul class="app-task-list">
+              <li>
+                <h2 class="app-task-list__section">Open claims (X)</h2>
+                <ul class="app-task-list__items">
+                  {% for claim in data['admin-claims-data']['claims'] %}
+                    {% if claim.status == "open" %}
+                      <li class="app-task-list__item">
+                        <button type="submit" class="button-as-link" formaction="admin-claim" name="claim-id" value="{{ claim.id }}">{{ claim.first_name | title }} {{ claim.last_name | title }}<span class="date-applied">Complete by {{ claim.expiry_date }}</span></button>
+                        <strong class="govuk-tag incomplete app-task-list__task-completed">To do</strong>
+                      </li>
+                    {% endif %}
+                  {% else %}
+                    <li>No claims awaiting processing</li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li>
+                <h2 class="app-task-list__section">Completed claims (Y)</h2>
+                <ul class="app-task-list__items">
+                  {% for claim in data['admin-claims-data']['claims'] %}
+                    {% if claim.status == "closed" %}
+                      <li class="app-task-list__item">
+                        ID: {{ claim.claim_code }} <span class="date-applied">Completed on {{ claim.processed_date }}</span>
+                        <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                      </li>
+                    {% endif %}
+                  {% else %}
+                    <li>No claims completed</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            </ul>
+
+    </div>
+
+  </div>
+
+{% endblock %}

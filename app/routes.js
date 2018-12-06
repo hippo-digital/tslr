@@ -481,6 +481,47 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
 
 })
 
+// router.all(/([e])\/([0-9]*\/?)(admin-claim-received-email)/, function (req, res) {
+//
+//   if (!req.session.data['admin-claims-data']) {
+//     var fs = require("fs");
+//     var claims_file = fs.readFileSync("app/data/claims.json");
+//     var claims_data = JSON.parse(claims_file);
+//     // Output JSON as session variable for easier debug
+//     req.session.data['admin-claims-data'] = claims_data;
+//   }
+//
+//   res.redirect('admin-claim-received-email');
+//   next
+//
+// })
+
+router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
+
+  if (!req.session.data['admin-claims-data']) {
+    var fs = require("fs");
+    var claims_file = fs.readFileSync("app/data/claims.json");
+    var claims_data = JSON.parse(claims_file);
+    // Output JSON as session variable for easier debug
+    req.session.data['admin-claims-data'] = claims_data;
+  }
+
+  res.redirect('admin-claims');
+  next
+
+})
+
+router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
+
+  if (!req.session.data['admin-claims-data']) {
+    res.redirect('admin-dfe-signin');
+  } else {
+    res.redirect('admin-claim');
+    next
+  }
+
+})
+
 // Eligibility checker
 // -------------------
 
