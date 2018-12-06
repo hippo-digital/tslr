@@ -19,7 +19,9 @@
 
 {% block content %}
 
-  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+  {% set claim_id = data['claim-id'] | int %}
+  {# Need to replace the below with proper JSON object access #}
+  {% set array_ref = claim_id - 1 %}
 
   <div class="govuk-grid-row">
 
@@ -38,7 +40,7 @@
       </div>
       {% endif %}
 
-      <form action="admin-confirm-teaching-eligibility" method="POST" role="form">
+      <form action="admin-claim" method="POST" role="form">
         <div class="govuk-form-group {% if (data['admin-error-no-eligibility-location']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
@@ -47,7 +49,7 @@
                 Check school information
               </h1>
             </legend>
-            <p class="govuk-body">Did <strong>{{ full_name | title }}</strong> teach at {{ globals.smd.teacher.school_name }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
+            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> teach at {{ data['admin-claims-data']['school_name'] }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
 
             {% if (data['admin-error-no-eligibility-location']) %}
             <span id="admin-location-eligibility-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -130,27 +132,12 @@
                 <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-no">No</label>
               </div>
 
-              <div class="govuk-radios__divider">or</div>
-
-              <div class="govuk-radios__item">
-                {% if data['admin-eligibility-period'] == "tbc" %}
-                <input class="govuk-radios__input" id="eligibility-period-conditional-tbc" name="admin-eligibility-period" type="radio" value="tbc" data-aria-controls="conditional-eligibility-period-conditional-tbc" checked>
-                {% else %}
-                <input class="govuk-radios__input" id="eligibility-period-conditional-tbc" name="admin-eligibility-period" type="radio" value="tbc" data-aria-controls="conditional-eligibility-period-conditional-tbc">
-                {% endif %}
-                <label class="govuk-label govuk-radios__label" for="eligibility-period-conditional-tbc">You do not know</label>
-              </div>
-
             </div>
 
             <hr class="govuk-section-break govuk-section-break--m">
 
             <div class="govuk-form-group">
-              {% if data['admin-check-send'] == true %}
-              <button type="submit" class="govuk-button" formaction="admin-check-send">Update</button>
-              {% else %}
-              <button type="submit" class="govuk-button">Continue</button>
-              {% endif %}
+              <button type="submit" class="govuk-button">Update</button>
             </div>
 
           </fieldset>

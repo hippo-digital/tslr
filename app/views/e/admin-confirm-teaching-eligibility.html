@@ -21,7 +21,9 @@
 
 {% block content %}
 
-  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+  {% set claim_id = data['claim-id'] | int %}
+  {# Need to replace the below with proper JSON object access #}
+  {% set array_ref = claim_id - 1 %}
 
   <div class="govuk-grid-row">
 
@@ -40,7 +42,7 @@
       </div>
       {% endif %}
 
-      <form action="admin-enter-repayment-amount" method="POST" role="form">
+      <form action="admin-claim" method="POST" role="form">
         <div class="govuk-form-group {% if (data['admin-error-no-eligibility-teaching']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
@@ -51,7 +53,7 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">While they worked at {{ globals.smd.teacher.school_name }}, did <strong>{{ full_name | title }}</strong> teach any of these subjects:</p>
+              <p class="govuk-body">While they worked at {{ data['admin-claims-data']['school_name'] }}, did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> teach any of these subjects:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>
@@ -77,10 +79,11 @@
                   {% endif %}
                   <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes, they taught one or more of these subjects</label>
                 </div>
+
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-y">
                   <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
                           How much of their time at the school was spent teaching one or more of these subjects?
                         </h2>
@@ -105,24 +108,14 @@
                     </fieldset>
                   </div>
                 </div>
-              <div class="govuk-radios__item">
-                {% if data['admin-eligibility-teaching'] == "no" %}
-                <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
-                {% else %}
-                <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
-                {% endif %}
-                <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
-              </div>
-                <div class="govuk-radios__divider">or</div>
+
                 <div class="govuk-radios__item">
-                {% if data['admin-eligibility-period'] == "tbc" %}
-                <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc" checked>
-                {% else %}
-                <input class="govuk-radios__input" id="eligibility-teaching-tbc" name="admin-eligibility-teaching" type="radio" value="tbc">
-                {% endif %}
-                <label class="govuk-label govuk-radios__label" for="eligibility-teaching-tbc">You do not know</label>
-                <span id="eligibility-teaching-tbc-hint" class="govuk-hint govuk-radios__hint">You need to check this information.
-                  </span>
+                  {% if data['admin-eligibility-teaching'] == "no" %}
+                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
                 </div>
 
               </div>
@@ -130,11 +123,7 @@
             </div>
 
             <div class="govuk-form-group">
-              {% if data['admin-task-list'] == true %}
-              <button type="submit" class="govuk-button" formaction="admin-task-list">Update</button>
-              {% else %}
-              <button type="submit" class="govuk-button">Continue</button>
-              {% endif %}
+              <button type="submit" class="govuk-button">Update</button>
             </div>
 
           </fieldset>

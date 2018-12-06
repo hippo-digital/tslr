@@ -19,11 +19,9 @@
 
 {% block content %}
 
-  {% if data.applicant.full_name %}
-  {% set full_name = data.applicant.full_name %}
-  {% else %}
-  {% set full_name = globals.smd.teacher.full_name %}
-  {% endif %}
+  {% set claim_id = data['claim-id'] | int %}
+  {# Need to replace the below with proper JSON object access #}
+  {% set array_ref = claim_id - 1 %}
 
   {% set details_complete = true %}
   {% set admin_start_date = true %}
@@ -63,12 +61,12 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Check your answers</h1>
+      <h1 class="govuk-heading-xl">Claim details</h1>
 
       <form action="admin-check-send" method="POST" role="form">
         <div class="govuk-form-group">
 
-          <input id="admin-check-send" name="admin-check-send" type="hidden" value="true">
+          <input id="admin-claim" name="admin-claim" type="hidden" value="true">
 
           <!-- only add a heading for a list if there is more than one list -->
           <h2 class="govuk-heading-m">Teacher details</h2>
@@ -81,19 +79,19 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Teacher name</dt>
-              <dd class="app-check-your-answers__answer">{{ full_name | title }}</dd>
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</dd>
               <dd class="app-check-your-answers__change">&nbsp;</dd>
             </div>
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Teacher reference number (TRN)</dt>
-              <dd class="app-check-your-answers__answer">1234567</dd>
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['trn'] }}</dd>
               <dd class="app-check-your-answers__change">&nbsp;</dd>
             </div>
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">School</dt>
-              <dd class="app-check-your-answers__answer">{{ globals.sm3.teacher.school_name }}</dd>
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['school_name'] }}</dd>
               <dd class="app-check-your-answers__change">&nbsp;</dd>
             </div>
 
@@ -103,7 +101,7 @@
 
         <div class="govuk-form-group">
 
-          <h2 class="govuk-heading-m">Claim details for {{ full_name | title }}</h2>
+          <h2 class="govuk-heading-m">Claim details for {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</h2>
 
           <dl class="app-check-your-answers wider-titles full-width-titles-xxx app-check-your-answers--short">
 
@@ -161,7 +159,7 @@
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" formaction="admin-enter-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
+                <button type="submit" class="button-as-link" formaction="admin-confirm-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
               </dd>
             </div>
 

@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Confirm teachers' student loan reimbursement claims",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% set claim_id = data['claim-id'] | int %}
+  {# Need to replace the below with proper JSON object access #}
+  {% set array_ref = claim_id - 1 %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if (data['admin-error-no-loan-details']) %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if (data['admin-error-no-loan-details']) %}
+            <li><a href="#admin-loan-details-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <form action="admin-claim" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['admin-error-no-loan-details']) %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Enter repayment amount
+              </h1>
+            </legend>
+
+            <p>How much student loan did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> pay back through their wages while they were at {{ data['admin-claims-data']['school_name'] }}?</p>
+
+            {% if (data['admin-error-no-loan-details']) %}
+            <span id="admin-loan-details-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="admin-loan-amount">Enter the amount</label>
+              <span id="loan-amount-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
+              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-loan-amount']}}">
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Update</button>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
