@@ -31,32 +31,15 @@
 {% block content %}
 
   {% set claim_id = data['claim-id'] | int %}
-  {# Need to replace the below with proper JSON object access #}
-  {% set array_ref = claim_id - 1 %}
+  {% set array_ref = data['array-ref'] | int %}
 
   {% set details_complete = true %}
   {% set admin_start_date = true %}
   {% set admin_end_date = true %}
 
-  {% if not data['admin-eligibility-period'] %}
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-location'] %}
   {{ "data.admin-eligibility-period is incomplete" | log }}
   {% set details_complete = false %}
-  {% endif %}
-
-  {% if data['admin-eligibility-period'] == "yes-part" %}
-  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_day'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_month'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_year'] %}
-  {{ "data.admin-eligibility-period start dates are incomplete" | log }}
-  {% set admin_start_date = false %}
-  {% set details_complete = false %}
-  {% endif %}
-  {% endif %}
-
-  {% if data['admin-eligibility-period'] == "yes-part" %}
-  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_day'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_month'] or not data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_year'] %}
-  {{ "data.admin-eligibility-period end dates are incomplete" | log }}
-  {% set admin_end_date = false %}
-  {% set details_complete = false %}
-  {% endif %}
   {% endif %}
 
   {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] %}
@@ -64,7 +47,7 @@
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-loan-amount'] %}
+  {% if not data['admin-claims-data']['claims'][array_ref]['loan-amount'] %}
   {{ "data.admin-loan-amount is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
@@ -74,7 +57,7 @@
 
       <h1 class="govuk-heading-xl">Claim details</h1>
 
-      <form action="admin-check-send" method="POST" role="form">
+      <form action="admin-confirmation" method="POST" role="form">
         <div class="govuk-form-group">
 
           <input id="admin-claim" name="admin-claim" type="hidden" value="true">
@@ -184,17 +167,17 @@
 
         </div>
 
-      </form>
+        <h2 class="govuk-heading-m">Confirm the claim</h2>
+        <p>By clicking the button below you are confirming that, to the best of your knowledge, the details provided are correct.</p>
+        <p class="govuk-body">
+          {% if details_complete %}
+          <button type="submit" class="govuk-button" name="update-claim" value="update">Confirm and send</button>
+          {% else %}
+          <button type="submit" class="govuk-button disabled-button" name="update-claim" value="update">Confirm and send</button>
+          {% endif %}
+        </p>
 
-      <h2 class="govuk-heading-m">Confirm the claim</h2>
-      <p>By clicking the button below you are confirming that, to the best of your knowledge, the details provided are correct.</p>
-      <p class="govuk-body">
-        {% if details_complete %}
-        <a href="admin-confirmation" role="button" draggable="false" class="govuk-button">Confirm and send</a>
-        {% else %}
-        <a href="#" role="button" draggable="false" class="govuk-button disabled-button">Confirm and send</a>
-        {% endif %}
-      </p>
+      </form>
 
     </div>
 

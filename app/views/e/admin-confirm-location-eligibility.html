@@ -77,7 +77,7 @@
             <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
               <div class="govuk-radios__item">
-                {% if data['admin-eligibility-location'] == "yes" %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "yes" %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes" name="admin-eligibility-location" type="radio" value="yes" data-aria-controls="conditional-eligibility-location-conditional-yes" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes" name="admin-eligibility-location" type="radio" value="yes" data-aria-controls="conditional-eligibility-location-conditional-yes">
@@ -86,7 +86,7 @@
               </div>
 
               <div class="govuk-radios__item">
-                {% if data['admin-eligibility-location'] == "yes-part" %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "yes-part" %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes-part" name="admin-eligibility-location" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-location-conditional-yes-part" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes-part" name="admin-eligibility-location" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-location-conditional-yes-part">
@@ -107,19 +107,19 @@
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="admin-start-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-start-date']) %}govuk-input--error{% endif %}" id="admin-start-day" name="admin-start-day" type="number" pattern="[0-9]*" value="{{ data['admin-start-day'] }}">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-start-date']) %}govuk-input--error{% endif %}" id="admin-start-day" name="admin-start-day" type="number" pattern="[0-9]*" value="{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_day'] }}">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="admin-start-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-start-date']) %}govuk-input--error{% endif %}" id="admin-start-month" name="admin-start-month" type="number" pattern="[0-9]*" value="{{ data['admin-start-month'] }}">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-start-date']) %}govuk-input--error{% endif %}" id="admin-start-month" name="admin-start-month" type="number" pattern="[0-9]*" value="{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_month'] }}">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="admin-start-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 {% if (data['admin-error-no-location-start-date']) %}govuk-input--error{% endif %}" id="admin-start-year" name="admin-start-year" type="number" pattern="[0-9]*" value="{{ data['admin-start-year'] }}">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 {% if (data['admin-error-no-location-start-date']) %}govuk-input--error{% endif %}" id="admin-start-year" name="admin-start-year" type="number" pattern="[0-9]*" value="{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_year'] }}">
                       </div>
                     </div>
                   </div>
@@ -137,19 +137,19 @@
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="admin-end-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-end-date']) %}govuk-input--error{% endif %}" id="admin-end-day" name="admin-end-day" type="number" pattern="[0-9]*" value="{{ data['admin-end-day'] }}">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-end-date']) %}govuk-input--error{% endif %}" id="admin-end-day" name="admin-end-day" type="number" pattern="[0-9]*" value="{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_day'] }}">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="admin-end-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-end-date']) %}govuk-input--error{% endif %}" id="admin-end-month" name="admin-end-month" type="number" pattern="[0-9]*" value="{{ data['admin-end-month'] }}">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if (data['admin-error-no-location-end-date']) %}govuk-input--error{% endif %}" id="admin-end-month" name="admin-end-month" type="number" pattern="[0-9]*" value="{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_month'] }}">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="admin-end-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 {% if (data['admin-error-no-location-end-date']) %}govuk-input--error{% endif %}" id="admin-end-year" name="admin-end-year" type="number" pattern="[0-9]*" value="{{ data['admin-end-year'] }}">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 {% if (data['admin-error-no-location-end-date']) %}govuk-input--error{% endif %}" id="admin-end-year" name="admin-end-year" type="number" pattern="[0-9]*" value="{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_year'] }}">
                       </div>
                     </div>
                   </div>
@@ -159,7 +159,7 @@
               </div>
 
               <div class="govuk-radios__item">
-                {% if data['admin-eligibility-location'] == "no" %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "no" %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-no" name="admin-eligibility-location" type="radio" value="no" data-aria-controls="conditional-eligibility-location-conditional-no" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-no" name="admin-eligibility-location" type="radio" value="no" data-aria-controls="conditional-eligibility-location-conditional-no">

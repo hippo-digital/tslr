@@ -622,7 +622,6 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
         req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] = req.session.data['admin-eligibility-teaching'];
         if (req.session.data['admin-eligibility-teaching'] == "yes") {
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] = req.session.data['teaching-proportion'];
-          req.session.data['teaching-proportion'] = "0";
         }
         req.session.data['admin-eligibility-teaching'] = "0";
         req.session.data['update-teaching'] = "null";
@@ -660,6 +659,25 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
 // router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-repayment-eligibility)/, function (req, res) {
 // })
+
+router.post(/([e])\/([0-9]*\/?)(admin-confirmation)/, function (req, res) {
+
+  // Set the claim to processed
+  var claim_id = req.session.data['claim-id'];
+  var array_ref = req.session.data['array-ref'];
+
+  req.session.data['admin-claims-data']['claims'][array_ref]['status'] = "closed";
+
+  // Updated muber of claims
+  var num_claims = req.session.data['admin-claims-data']['num_claims'];
+  num_claims.open--;
+  num_claims.closed++;
+  req.session.data['admin-claims-data']['num_claims'] = num_claims;
+
+  res.redirect('admin-confirmation');
+  next
+
+})
 
 // Eligibility checker
 // -------------------
