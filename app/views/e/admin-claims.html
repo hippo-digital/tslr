@@ -40,7 +40,7 @@
 
             <ul class="app-task-list">
               <li>
-                <h2 class="app-task-list__section">Open claims (X)</h2>
+                <h2 class="app-task-list__section">Open claims ({{ data['admin-claims-data']['num_claims']['open'] | string or "0" }})</h2>
                 <ul class="app-task-list__items">
                   {% for claim in data['admin-claims-data']['claims'] %}
                     {% if claim.status == "open" %}
@@ -55,7 +55,7 @@
                 </ul>
               </li>
               <li>
-                <h2 class="app-task-list__section">Completed claims (Y)</h2>
+                <h2 class="app-task-list__section">Completed claims ({{ data['admin-claims-data']['num_claims']['closed'] | string or "0" }})</h2>
                 <ul class="app-task-list__items">
                   {% for claim in data['admin-claims-data']['claims'] %}
                     {% if claim.status == "closed" %}
@@ -70,6 +70,18 @@
                 </ul>
               </li>
             </ul>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Back to email</a>
+      </p>
 
     </div>
 

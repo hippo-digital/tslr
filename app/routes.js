@@ -502,9 +502,25 @@ router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
     var fs = require("fs");
     var claims_file = fs.readFileSync("app/data/claims.json");
     var claims_data = JSON.parse(claims_file);
-    // Output JSON as session variable for easier debug
+    // Save JSON in session for use/manipulation
     req.session.data['admin-claims-data'] = claims_data;
   }
+
+  var num_claims = {};
+
+  num_claims.total = req.session.data['admin-claims-data']['claims'].length;
+
+  var claims_open = req.session.data['admin-claims-data']['claims'].filter(function (claim) {
+    return claim.status == "open";
+  });
+  num_claims.open = claims_open.length;
+
+  var claims_closed = claims_data.claims.filter(function (claim) {
+    return claim.status == "closed";
+  });
+  num_claims.closed = claims_closed.length;
+
+  req.session.data['admin-claims-data']['num_claims'] = num_claims;
 
   res.redirect('admin-claims');
   next
@@ -554,6 +570,8 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       req.session.data['error-message'] = "Select one of the options";
       res.redirect('admin-confirm-teaching-eligibility');
       next
+
+    } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
 
     } else if (req.session.data['update-loan'] == "update" && !req.session.data['admin-loan-amount']) {
 
