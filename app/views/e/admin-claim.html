@@ -16,8 +16,7 @@
 {% block beforeContent %}
 
   {% set claim_id = data['claim-id'] | int %}
-  {# Need to replace the below with proper JSON object access #}
-  {% set array_ref = claim_id - 1 %}
+  {% set array_ref = data['array-ref'] | int %}
 
   {% include "includes/phase-banner.html" %}
   <div class="govuk-breadcrumbs">
@@ -192,5 +191,14 @@
       </p>
 
     </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Back to email</a>
+      </p>
+
+    </div>
+
   </div>
 {% endblock %}

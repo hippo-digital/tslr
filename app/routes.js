@@ -585,7 +585,10 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       // Everything looks good so sync the latest data to the relevant JSON
       var claim_id = req.session.data['claim-id'];
-      var array_ref = claim_id - 1;
+      var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
+        return claim.id == claim_id
+      })
+      req.session.data['array-ref'] = array_ref;
 
       if (req.session.data['update-location'] == "update") {
         req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = req.session.data['admin-eligibility-location'];
