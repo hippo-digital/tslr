@@ -571,7 +571,13 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       res.redirect('admin-confirm-teaching-eligibility');
       next
 
-    } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
+    } else if (req.session.data['update-teaching'] == "update" && req.session.data['admin-eligibility-teaching'] == "yes" && !req.session.data['teaching-proportion']) {
+
+      // Error: Meant to update teaching with proportion
+      req.session.data['admin-error-no-teaching-proportion'] = true;
+      req.session.data['error-message'] = "Select what proportion they taught those subjects";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
 
     } else if (req.session.data['update-loan'] == "update" && !req.session.data['admin-loan-amount']) {
 
@@ -612,6 +618,16 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
         req.session.data['update-location'] = "null";
       }
 
+      if (req.session.data['update-teaching'] == "update") {
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] = req.session.data['admin-eligibility-teaching'];
+        if (req.session.data['admin-eligibility-teaching'] == "yes") {
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] = req.session.data['teaching-proportion'];
+          req.session.data['teaching-proportion'] = "0";
+        }
+        req.session.data['admin-eligibility-teaching'] = "0";
+        req.session.data['update-teaching'] = "null";
+      }
+
       if (req.session.data['update-loan'] == "update") {
         req.session.data['admin-claims-data']['claims'][array_ref]['loan-amount'] = req.session.data['admin-loan-amount'];
         req.session.data['admin-loan-amount'] = "0";
@@ -624,6 +640,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       req.session.data['admin-error-no-location-start-date'] = false;
       req.session.data['admin-error-no-location-end-date'] = false;
       req.session.data['admin-error-no-teaching'] = false;
+      req.session.data['admin-error-no-teaching-proportion'] = false;
       req.session.data['admin-error-no-loan'] = false;
 
     }

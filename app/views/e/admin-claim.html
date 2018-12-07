@@ -38,8 +38,8 @@
   {% set admin_start_date = true %}
   {% set admin_end_date = true %}
 
-  {% if not data['admin-eligibility-period'] or data['admin-eligibility-period'] == "tbc" %}
-  {{ "data.admin-eligibility-period is incomplete or tbc" | log }}
+  {% if not data['admin-eligibility-period'] %}
+  {{ "data.admin-eligibility-period is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
@@ -59,13 +59,13 @@
   {% endif %}
   {% endif %}
 
-  {% if not data['admin-eligibility-teaching'] or data['admin-eligibility-teaching'] == "tbc" %}
-  {{ "data.admin-eligibility-teaching is incomplete or tbc" | log }}
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] %}
+  {{ "claim.eligibility-teaching is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
-  {% if not data['admin-loan-amount'] or data['admin-loan-details'] == 'tbc' %}
-  {{ "data.admin-loan-amount is incomplete or data.admin-loan-details is tbc" | log }}
+  {% if not data['admin-loan-amount'] %}
+  {{ "data.admin-loan-amount is incomplete" | log }}
   {% set details_complete = false %}
   {% endif %}
 
@@ -150,9 +150,15 @@
 
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">Did they teach biology, chemistry, physics, computer science or languages (not English)?</dt>
-              {% if data['admin-eligibility-teaching'] == 'yes' %}
-              <dd class="app-check-your-answers__answer">Yes</dd>
-              {% elseif data['admin-eligibility-teaching'] == 'no' %}
+              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'yes' %}
+              <dd class="app-check-your-answers__answer">Yes,
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] == 'more' %}
+                more than 50% of their time
+                {% else %}
+                but less than 50% of their time
+                {% endif %}
+              </dd>
+              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>

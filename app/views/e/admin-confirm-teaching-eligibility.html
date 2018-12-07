@@ -40,13 +40,16 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['admin-error-no-teaching']) %}
+      {% if (data['admin-error-no-teaching'] or data['admin-error-no-teaching-proportion']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
             {% if (data['admin-error-no-teaching']) %}
             <li><a href="#admin-teaching-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+            {% if (data['admin-error-no-teaching-proportion']) %}
+            <li><a href="#admin-teaching-proportion-error">{{ data['error-message'] }}</a></li>
             {% endif %}
           </ul>
         </div>
@@ -74,27 +77,28 @@
               </ul>
             </div>
 
-            {% if (data['admin-error-no-teaching']) %}
-            <span id="admin-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
-            {% endif %}
-
             <div class="govuk-form-group">
+
+              {% if (data['admin-error-no-teaching']) %}
+              <span id="admin-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+              {% endif %}
 
               <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
                 <div class="govuk-radios__item">
-                  {% if data['admin-eligibility-teaching'] == "yes" %}
-                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y" checked>
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == "yes" %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y">
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="conditional-admin-eligibility-teaching-y">Yes, they taught one or more of these subjects</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes, they taught one or more of these subjects</label>
                 </div>
-
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-y">
-
-                  <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+                  <div class="govuk-form-group {% if (data['admin-error-no-teaching-proportion']) %}govuk-form-group--error{% endif %}">
+                    {% if (data['admin-error-no-teaching-proportion']) %}
+                    <span id="admin-teaching-proportion-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+                    {% endif %}
+                    <fieldset class="govuk-fieldset" aria-describedby="teaching-proportion-hint">
                       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
                           How much of their time at the school was spent teaching one or more of these subjects?
@@ -105,13 +109,21 @@
                       </span>
                       <div class="govuk-radios govuk-radios--inline">
                         <div class="govuk-radios__item">
+                          {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] == "more" %}
+                          <input class="govuk-radios__input" id="teaching-proportion-more" name="teaching-proportion" type="radio" value="more" checked>
+                          {% else %}
                           <input class="govuk-radios__input" id="teaching-proportion-more" name="teaching-proportion" type="radio" value="more">
+                          {% endif %}
                           <label class="govuk-label govuk-radios__label" for="teaching-proportion-more">
                             More than 50% of their time
                           </label>
                         </div>
                         <div class="govuk-radios__item">
+                          {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] == "less" %}
+                          <input class="govuk-radios__input" id="teaching-proportion-less" name="teaching-proportion" type="radio" value="less" checked>
+                          {% else %}
                           <input class="govuk-radios__input" id="teaching-proportion-less" name="teaching-proportion" type="radio" value="less">
+                          {% endif %}
                           <label class="govuk-label govuk-radios__label" for="teaching-proportion-less">
                             Less than 50% of their time
                           </label>
@@ -122,12 +134,12 @@
                 </div>
 
                 <div class="govuk-radios__item">
-                  {% if data['admin-eligibility-teaching'] == "no" %}
-                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n" checked>
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == "no" %}
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="conditional-admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n">
+                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="conditional-admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
                 </div>
 
               </div>
