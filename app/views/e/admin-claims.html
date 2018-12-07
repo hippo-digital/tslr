@@ -80,7 +80,11 @@
     <div class="govuk-grid-column-one-third">
 
       <p class="govuk-body">
-        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Back to email</a>
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Admin notification email</a>
+        {% if data['admin-claims-data']['num_claims']['open'] === 0 %}
+        <a href="admin-process-complete-email" role="button" draggable="false" class="govuk-button hidden-button">Admin confirmation email</a>
+        <a href="/" role="button" draggable="false" class="govuk-button hidden-button">Reset (Start over)</a>
+        {% endif %}
       </p>
 
     </div>

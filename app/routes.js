@@ -506,21 +506,25 @@ router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
     req.session.data['admin-claims-data'] = claims_data;
   }
 
-  var num_claims = {};
+  if (!req.session.data['admin-claims-data']['num_claims']) {
 
-  num_claims.total = req.session.data['admin-claims-data']['claims'].length;
+    var num_claims = {};
 
-  var claims_open = req.session.data['admin-claims-data']['claims'].filter(function (claim) {
-    return claim.status == "open";
-  });
-  num_claims.open = claims_open.length;
+    num_claims.total = req.session.data['admin-claims-data']['claims'].length;
 
-  var claims_closed = claims_data.claims.filter(function (claim) {
-    return claim.status == "closed";
-  });
-  num_claims.closed = claims_closed.length;
+    var claims_open = req.session.data['admin-claims-data']['claims'].filter(function (claim) {
+      return claim.status == "open";
+    });
+    num_claims.open = claims_open.length || 0;
 
-  req.session.data['admin-claims-data']['num_claims'] = num_claims;
+    var claims_closed = claims_data.claims.filter(function (claim) {
+      return claim.status == "closed";
+    });
+    num_claims.closed = claims_closed.length || 0;
+
+    req.session.data['admin-claims-data']['num_claims'] = num_claims;
+
+  }
 
   res.redirect('admin-claims');
   next

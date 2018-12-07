@@ -19,20 +19,16 @@
 
 {% block content %}
 
-  {% if data.applicant.full_name %}
-  {% set full_name = data.applicant.full_name %}
-  {% else %}
-  {% set full_name = globals.smd.teacher.full_name %}
-  {% endif %}
+{% set array_ref = data['array-ref'] | int %}
 
   <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">You’ve checked their details</h1>
-      <p class="govuk-body">Thank you for checking details for {{ full_name | title }}.</p>
+      <p class="govuk-body">Thank you for checking details for {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}.</p>
       <h2 class="govuk-heading-m">What happens next</h2>
-      <p class="govuk-body">We’ll contact {{ full_name | title }} within {xx} days to update them about their claim.</p>
+      <p class="govuk-body">We’ll contact {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} within {xx} days to update them about their claim.</p>
       <p class="govuk-body">
         <a href="admin-claims" role="button" draggable="false" class="govuk-button">Continue</a>
       </p>
