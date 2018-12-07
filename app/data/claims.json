@@ -1,0 +1,50 @@
+{
+  "school_name": "Moorside High School",
+  "claims": [
+    {
+      "id": 1,
+      "claim_code": "TSLR-124",
+      "status": "open",
+      "first_name": "Jane",
+      "last_name": "Jones",
+      "full_name": "Jane Jones",
+      "trn": "2316748",
+      "claim_date": "11 Nov 2018",
+      "expiry_date": "11 Dec 2018"
+    },
+    {
+      "id": 2,
+      "claim_code": "TSLR-149",
+      "status": "open",
+      "first_name": "Barbara",
+      "last_name": "Smith",
+      "full_name": "Barbara Smith",
+      "trn": "5478392",
+      "claim_date": "12 Nov 2018",
+      "expiry_date": "12 Dec 2018"
+    },
+    {
+      "id": 3,
+      "claim_code": "TSLR-203",
+      "status": "open",
+      "first_name": "David",
+      "last_name": "Powell",
+      "full_name": "David Powell",
+      "trn": "6472514",
+      "claim_date": "15 Nov 2018",
+      "expiry_date": "15 Dec 2018"
+    },
+    {
+      "id": 4,
+      "claim_code": "TSLR-089",
+      "status": "closed",
+      "first_name": "Joe",
+      "last_name": "Bloggs",
+      "full_name": "Joe Bloggs",
+      "trn": "1615144",
+      "claim_date": "20 Oct 2018",
+      "expiry_date": "20 Nov 2018",
+      "processed_date": "05 Dec 2018"
+    }
+  ]
+}

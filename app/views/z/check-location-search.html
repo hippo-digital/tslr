@@ -56,7 +56,16 @@
               {% if (data['check-error-no-school']) %}
               <span id="check-error-no-school" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['check-error-no-school']) %}govuk-input--error{% endif %}" id="check-school-name" name="check-school-name" type="text">
+              <input class="govuk-input {% if (data['check-error-no-school']) %}govuk-input--error{% endif %}" id="check-school-name" name="check-school-name" type="text" list="gias-lookup">
+              <datalist id="gias-lookup">
+                <option>Ada</option>
+                <option>Java</option>
+                <option>JavaScript</option>
+                <option>Brainfuck</option>
+                <option>LOLCODE</option>
+                <option>Node.js</option>
+                <option>Ruby on Rails</option>
+              </datalist>
             </div>
 
             <div class="govuk-form-group">

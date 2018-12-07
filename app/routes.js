@@ -415,7 +415,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-task-list)/, function (req, res) {
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -426,7 +426,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, functi
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -446,7 +446,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, functi
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req, res) {
 
   if (req.session.data['admin-check-send'] == "true") {
     req.session.data['admin-check-send'] = false;
@@ -478,6 +478,208 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
     req.session.data['admin-error-no-loan-details'] = false;
     res.redirect('admin-check-send');
   }
+
+})
+
+// router.all(/([e])\/([0-9]*\/?)(admin-claim-received-email)/, function (req, res) {
+//
+//   if (!req.session.data['admin-claims-data']) {
+//     var fs = require("fs");
+//     var claims_file = fs.readFileSync("app/data/claims.json");
+//     var claims_data = JSON.parse(claims_file);
+//     // Output JSON as session variable for easier debug
+//     req.session.data['admin-claims-data'] = claims_data;
+//   }
+//
+//   res.redirect('admin-claim-received-email');
+//   next
+//
+// })
+
+router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
+
+  if (!req.session.data['admin-claims-data']) {
+    var fs = require("fs");
+    var claims_file = fs.readFileSync("app/data/claims.json");
+    var claims_data = JSON.parse(claims_file);
+    // Save JSON in session for use/manipulation
+    req.session.data['admin-claims-data'] = claims_data;
+  }
+
+  if (!req.session.data['admin-claims-data']['num_claims']) {
+
+    var num_claims = {};
+
+    num_claims.total = req.session.data['admin-claims-data']['claims'].length;
+
+    var claims_open = req.session.data['admin-claims-data']['claims'].filter(function (claim) {
+      return claim.status == "open";
+    });
+    num_claims.open = claims_open.length || 0;
+
+    var claims_closed = claims_data.claims.filter(function (claim) {
+      return claim.status == "closed";
+    });
+    num_claims.closed = claims_closed.length || 0;
+
+    req.session.data['admin-claims-data']['num_claims'] = num_claims;
+
+  }
+
+  res.redirect('admin-claims');
+  next
+
+})
+
+router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
+
+  if (!req.session.data['admin-claims-data']) {
+
+    res.redirect('admin-dfe-signin');
+
+  } else {
+
+    if (req.session.data['update-location'] == "update" && !req.session.data['admin-eligibility-location']) {
+
+      // Error: Meant to update location
+      req.session.data['admin-error-no-location'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-location-eligibility');
+      next
+
+    } else if (req.session.data['update-location'] == "update" && req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
+
+      req.session.data['admin-error-no-location-period'] = true;
+      if (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year']) {
+        // Error: Meant to update location with start date
+        req.session.data['admin-error-no-location-start-date'] = true;
+        req.session.data['error-message'] = "Enter the start date";
+      } else {
+        req.session.data['admin-error-no-location-start-date'] = false;
+      }
+      if (!req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year']) {
+        // Error: Meant to update location with start date
+        req.session.data['admin-error-no-location-end-date'] = true;
+        req.session.data['error-message-b'] = "Enter the end date";
+      } else {
+        req.session.data['admin-error-no-location-end-date'] = false;
+      }
+      res.redirect('admin-confirm-location-eligibility');
+      next
+
+    } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-eligibility-teaching']) {
+
+      // Error: Meant to update teaching
+      req.session.data['admin-error-no-teaching'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
+
+    } else if (req.session.data['update-teaching'] == "update" && req.session.data['admin-eligibility-teaching'] == "yes" && !req.session.data['teaching-proportion']) {
+
+      // Error: Meant to update teaching with proportion
+      req.session.data['admin-error-no-teaching-proportion'] = true;
+      req.session.data['error-message'] = "Select what proportion they taught those subjects";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
+
+    } else if (req.session.data['update-loan'] == "update" && !req.session.data['admin-loan-amount']) {
+
+      // Error: Meant to update loan
+      req.session.data['admin-error-no-loan'] = true;
+      req.session.data['error-message'] = "Enter the loan amount";
+      res.redirect('admin-confirm-repayment-amount');
+      next
+
+    } else {
+
+      // Everything looks good so sync the latest data to the relevant JSON
+      var claim_id = req.session.data['claim-id'];
+      var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
+        return claim.id == claim_id
+      })
+      req.session.data['array-ref'] = array_ref;
+
+      if (req.session.data['update-location'] == "update") {
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = req.session.data['admin-eligibility-location'];
+        if (req.session.data['admin-eligibility-location'] == "yes-part") {
+          var eligiblity_period = {};
+          eligiblity_period.start_day = req.session.data['admin-start-day'];
+          eligiblity_period.start_month = req.session.data['admin-start-month'];
+          eligiblity_period.start_year = req.session.data['admin-start-year'];
+          eligiblity_period.end_day = req.session.data['admin-end-day'];
+          eligiblity_period.end_month = req.session.data['admin-end-month'];
+          eligiblity_period.end_year = req.session.data['admin-end-year'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location-period'] = eligiblity_period;
+          req.session.data['admin-start-day'] = "0";
+          req.session.data['admin-start-month'] = "0";
+          req.session.data['admin-start-year'] = "0";
+          req.session.data['admin-end-day'] = "0";
+          req.session.data['admin-end-month'] = "0";
+          req.session.data['admin-end-year'] = "0";
+        }
+        req.session.data['admin-eligibility-location'] = "0";
+        req.session.data['update-location'] = "null";
+      }
+
+      if (req.session.data['update-teaching'] == "update") {
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] = req.session.data['admin-eligibility-teaching'];
+        if (req.session.data['admin-eligibility-teaching'] == "yes") {
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] = req.session.data['teaching-proportion'];
+        }
+        req.session.data['admin-eligibility-teaching'] = "0";
+        req.session.data['update-teaching'] = "null";
+      }
+
+      if (req.session.data['update-loan'] == "update") {
+        req.session.data['admin-claims-data']['claims'][array_ref]['loan-amount'] = req.session.data['admin-loan-amount'];
+        req.session.data['admin-loan-amount'] = "0";
+        req.session.data['update-loan'] = "null";
+      }
+
+      // ..and then reset all the error variables
+      req.session.data['admin-error-no-location'] = false;
+      req.session.data['admin-error-no-location-period'] = false;
+      req.session.data['admin-error-no-location-start-date'] = false;
+      req.session.data['admin-error-no-location-end-date'] = false;
+      req.session.data['admin-error-no-teaching'] = false;
+      req.session.data['admin-error-no-teaching-proportion'] = false;
+      req.session.data['admin-error-no-loan'] = false;
+
+    }
+
+    res.redirect('admin-claim');
+    next
+
+  }
+
+})
+
+// router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-location-eligibility)/, function (req, res) {
+// })
+
+// router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-teaching-eligibility)/, function (req, res) {
+// })
+
+// router.post(/([abcde])\/([0-9]*\/?)(admin-confirm-repayment-eligibility)/, function (req, res) {
+// })
+
+router.post(/([e])\/([0-9]*\/?)(admin-confirmation)/, function (req, res) {
+
+  // Set the claim to processed
+  var claim_id = req.session.data['claim-id'];
+  var array_ref = req.session.data['array-ref'];
+
+  req.session.data['admin-claims-data']['claims'][array_ref]['status'] = "closed";
+
+  // Updated muber of claims
+  var num_claims = req.session.data['admin-claims-data']['num_claims'];
+  num_claims.open--;
+  num_claims.closed++;
+  req.session.data['admin-claims-data']['num_claims'] = num_claims;
+
+  res.redirect('admin-confirmation');
+  next
 
 })
 
@@ -560,12 +762,12 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   // GIAS data test (10 eligible schools only)
   // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
   // GIAS data (eligible schools e.g. 25 LAs)
-  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+  // var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
   // GIAS data (all schools)
-  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
-  // TBC
+  var gias_file = fs.readFileSync("app/data/gias_all.min.json");
   var gias_data = JSON.parse(gias_file);
-  req.session.data['check-gias-data'] = gias_data;
+  // Output JSON as session variable for easier debug
+  //req.session.data['check-gias-data'] = gias_data;
 
   var Fuse = require('fuse.js')
   var fuse_options = {
@@ -585,26 +787,51 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
   req.session.data['fuse-search-result'] = gias_result;
 
+  // Results are sorted by match accuracy so just use first school for prototype
   if (Array.isArray(gias_result) && gias_result.length > 0) {
+    // There are match[es]
+
     var school = {
       name: gias_result[0].item.est_name,
       la_code: gias_result[0].item.la_code,
       est_type_code: gias_result[0].item.est_type_code,
       phase_code: gias_result[0].item.phase_code
     }
+
     if (gias_result[0].score < 0.2) {
       school.matched = true;
       school.eligible = true;
+      school.location = false;
+      school.phase = false;
+      school.type = false;
+    }
+
+    var local_auths = [873, 380, 806, 928, 340, 935, 371, 867, 353, 830, 370, 929, 926, 831, 890, 355, 815, 821, 874, 812, 876, 851, 861, 343, 342];
+    var secondary_phases = [4, 5];
+    var school_types = [7, 8, 12, 14, 32, 33, 36, 43, 44];
+
+    if (local_auths.includes(school.la_code)) {
       school.location = true;
+    }
+
+    if (secondary_phases.includes(school.phase_code)) {
+      school.phase = true;
+    }
+
+    if (school_types.includes(school.est_type_code)) {
       school.type = true;
     }
+
   } else {
+    // No match
+
     var school = {
       name: school_search,
       search_term: school_search,
       matched: false,
       eligible: false,
       location: false,
+      phase: false,
       type: false
     }
   }
@@ -616,10 +843,17 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   req.session.data['check-num-schools'] = num_schools;
 
   if (!school.location) {
+    // Not in eligible LA
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-location";
     res.redirect('check-ineligible');
+  } else if (!school.phase && !school.type) {
+    // Not a secondary
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "school-phase";
+    res.redirect('check-ineligible');
   } else if (!school.type) {
+    // Not a SEN
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-type";
     res.redirect('check-ineligible');
