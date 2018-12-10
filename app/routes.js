@@ -459,6 +459,20 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
 
 })
 
+router.post(/([e])\/([0-9]*\/?)(teacher-confirmation)/, function (req, res) {
+
+  var trn  = req.session.data['teacher-trn'];
+  var rand_num = Math.ceil((new Date().getTime())/1000000000);
+
+  var code = trn + "-" + rand_num;
+
+  req.session.data['claim-code'] = code;
+
+  res.redirect('teacher-confirmation');
+  next
+
+})
+
 router.post(/([abcde])\/([0-9]*\/?)(admin-task-list)/, function (req, res) {
 
   req.session.data['admin-task-list'] = true;
