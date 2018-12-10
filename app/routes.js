@@ -705,6 +705,24 @@ router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
     req.session.data['check-ineligible-reason'] = "qts";
     res.redirect('check-ineligible');
   } else {
+
+    var fs = require("fs");
+    // GIAS data test (10 eligible schools only)
+    // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+    // GIAS data (eligible schools e.g. 25 LAs)
+    var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+    // GIAS data (all schools)
+    // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+    var gias_data = JSON.parse(gias_file);
+    // Output JSON as session variable for easier debug
+    req.session.data['check-gias-data'] = gias_data;
+
+    var school_names = gias_data.map(function(gias_school){
+      return gias_school.est_name;
+    });
+    req.session.data['school-names'] = school_names;
+    // res.locals.school_names = school_names;
+
     req.session.data['check-error-no-qts'] = false;
     res.redirect('check-location-search');
   }
@@ -730,44 +748,7 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
   var school_search = req.session.data['check-school-name'];
 
-  /* Eligible Local Authorities
-  873	Cambridgeshire
-  380	Bradford
-  806	Middlesbrough
-  928	Northamptonshire
-  340	Knowsley
-  935	Suffolk
-  371	Doncaster
-  867	Bracknell Forest
-  353	Oldham
-  830	Derbyshire
-  370	Barnsley
-  929	Northumberland
-  926	Norfolk
-  831	Derby
-  890	Blackpool
-  355	Salford
-  815	North Yorkshire
-  821	Luton
-  874	Peterborough
-  812	North East Lincolnshire
-  876	Halton
-  851	Portsmouth
-  861	Stoke-on-Trent
-  343	Sefton
-  342	St. Helens
-  */
-
-  var fs = require("fs");
-  // GIAS data test (10 eligible schools only)
-  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
-  // GIAS data (eligible schools e.g. 25 LAs)
-  // var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
-  // GIAS data (all schools)
-  var gias_file = fs.readFileSync("app/data/gias_all.min.json");
-  var gias_data = JSON.parse(gias_file);
-  // Output JSON as session variable for easier debug
-  //req.session.data['check-gias-data'] = gias_data;
+  var gias_data = req.session.data['check-gias-data'];
 
   var Fuse = require('fuse.js')
   var fuse_options = {
@@ -800,7 +781,6 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
     if (gias_result[0].score < 0.2) {
       school.matched = true;
-      school.eligible = true;
       school.location = false;
       school.phase = false;
       school.type = false;
@@ -829,7 +809,6 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
       name: school_search,
       search_term: school_search,
       matched: false,
-      eligible: false,
       location: false,
       phase: false,
       type: false
@@ -842,17 +821,20 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
   req.session.data['check-schools'] = schools;
   req.session.data['check-num-schools'] = num_schools;
 
-  if (!school.location) {
+  if ((school.location && school.phase) || (school.location && school.type)) {
+    req.session.data['check-error-no-school'] = false;
+    res.redirect('check-loan');
+  } else if (!school.location) {
     // Not in eligible LA
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-location";
     res.redirect('check-ineligible');
-  } else if (!school.phase && !school.type) {
+  } else if (school.location && !school.phase) {
     // Not a secondary
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-phase";
     res.redirect('check-ineligible');
-  } else if (!school.type) {
+  } else if (school.location && !school.type) {
     // Not a SEN
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "school-type";
@@ -879,7 +861,11 @@ router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
     res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-loan'] = false;
-    res.redirect('check-teaching');
+    if (req.session.data['check-schools'][0]['type']) {
+      res.redirect('check-still-teaching');
+    } else {
+      res.redirect('check-teaching');
+    }
   }
 
 })

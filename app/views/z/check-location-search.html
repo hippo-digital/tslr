@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
+{% block head %}
+  {% include "includes/head-awesomplete.html" %}
+  {% include "includes/head.html" %}
+{% endblock %}
+
 {% block pageTitle %}
   Teachers' Student Loan Reimbursement
 {% endblock %}
@@ -56,16 +61,19 @@
               {% if (data['check-error-no-school']) %}
               <span id="check-error-no-school" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['check-error-no-school']) %}govuk-input--error{% endif %}" id="check-school-name" name="check-school-name" type="text" list="gias-lookup">
-              <datalist id="gias-lookup">
-                <option>Ada</option>
-                <option>Java</option>
-                <option>JavaScript</option>
-                <option>Brainfuck</option>
-                <option>LOLCODE</option>
-                <option>Node.js</option>
-                <option>Ruby on Rails</option>
-              </datalist>
+              <input class="awesomplete govuk-input govuk-!-width-full {% if (data['check-error-no-school']) %}govuk-input--error{% endif %}" id="check-school-name" name="check-school-name" type="text" list="gias-lookup">
+              <script>
+                var input = document.getElementById("check-school-name");
+                var awesomplete = new Awesomplete(input,{
+                  minChars: 3
+                });
+                var school_names = "{{data['school-names']}}";
+                // awesomplete.list = req.session.data['school-names'];
+                awesomplete.list = school_names;
+                // console.log(school_names);
+                // awesomplete.list = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
+                // awesomplete.list = [["Belarus", "BY"],["China", "CN"],["United States", "US"]];
+              </script>
             </div>
 
             <div class="govuk-form-group">
