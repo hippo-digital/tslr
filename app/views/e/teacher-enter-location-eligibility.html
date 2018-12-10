@@ -1,13 +1,16 @@
 {% extends "layout.html" %}
 
+{% block head %}
+  {% include "includes/head-awesomplete.html" %}
+  {% include "includes/head.html" %}
+{% endblock %}
+
 {% block pageTitle %}
   Teachers' Student Loan Reimbursement
 {% endblock %}
 
 {% block beforeContent %}
-
   {% include "includes/phase-banner.html" %}
-
 {% endblock %}
 
 {% block content %}
@@ -47,7 +50,7 @@
                   <span class="govuk-details__summary-text">You taught at more than one school</span>
                 </summary>
                 <div class="govuk-details__text">
-                  <p class="govuk-body">Add one of the schools you taught at. You can add more later.</p>
+                  <p class="govuk-body">For now, enter one of the schools you've taught at. You can check another school when you've finished.</p>
                 </div>
               </details>
             </span>
@@ -59,6 +62,14 @@
               <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
               <input class="govuk-input {% if (data['teacher-error-no-school']) %}govuk-input--error{% endif %}" id="teacher-school-name" name="teacher-school-name" type="text">
+              <script>
+                var input = document.getElementById("teacher-school-name");
+                var awesomplete = new Awesomplete(input,{
+                  minChars: 3
+                });
+                var school_names = "{{data['school-names']}}";
+                awesomplete.list = school_names;
+              </script>
             </div>
 
             <div class="govuk-form-group">
@@ -69,6 +80,16 @@
         </div>
 
       </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        {% if not data['teacher-check-send'] %}
+        <a href="teacher-enter-trn" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
+        {% endif %}
+      </p>
 
     </div>
 
