@@ -241,3 +241,27 @@ p {
   }
 
 }
+
+/* Awesomplete */
+div.awesomplete {
+  width: 100%;
+
+  > ul {
+    border-radius: 0;
+  }
+
+  ul[role=listbox] {
+    &:before { content: none; }
+    li {
+      padding-top: 8px; padding-bottom: 8px;
+      font-family: "nta", Arial, sans-serif;
+      font-size: 16px;
+      &:nth-child(even) { background-color: #ececec; }
+      &:hover {
+        background-color: #005ea5;
+        color: white;
+      }
+    }
+  }
+
+}
