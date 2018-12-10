@@ -5,9 +5,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-
   {% include "includes/phase-banner.html" %}
-
 {% endblock %}
 
 {% block content %}
@@ -31,7 +29,7 @@
       </div>
       {% endif %}
 
-      <form action="teacher-consent" method="POST" role="form">
+      <form action="teacher-payment-method" method="POST" role="form">
         <div class="govuk-form-group {% if (data['teacher-error-no-loan-amount']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 

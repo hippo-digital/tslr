@@ -185,6 +185,30 @@ router.get(/admin-confirm-location-eligibility_(name)_([a-z-]+)/, function (req,
 // req.params[1] = Optional archive sub-directory with trailing slash e.g. YYMMDD/
 // req.params[2] = page-name
 
+router.post(/([e])\/([0-9]*\/?)(teacher-enter-location-eligibility)/, function (req, res) {
+
+  var fs = require("fs");
+  // GIAS data test (10 eligible schools only)
+  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+  // GIAS data (eligible schools e.g. 25 LAs)
+  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+  // GIAS data (all schools)
+  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+  var gias_data = JSON.parse(gias_file);
+  // Output JSON as session variable for easier debug
+  req.session.data['check-gias-data'] = gias_data;
+
+  var school_names = gias_data.map(function(gias_school){
+    return gias_school.est_name;
+  });
+  req.session.data['school-names'] = school_names;
+
+  req.session.data['single-school-claim'] = true;
+  req.session.data['check-error-no-qts'] = false;
+  res.redirect('teacher-enter-location-eligibility');
+
+})
+
 router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (req, res) {
 
   if (req.params[0] == "d" || req.params[0] == "e") {
@@ -205,9 +229,14 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
 
   var setup = req.session.data['teacher-schools-setup'];
 
+  var single_school_claim = req.session.data['single-school-claim'];
+
   if (setup) {
     var schools = [];
     num_schools = 0;
+    if (single_school_claim) {
+      var option = 'single-school-claim';
+    }
   } else {
     var option = req.session.data['teacher-school-confirm'];
     var schools = req.session.data['teacher-schools'];
@@ -238,7 +267,9 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n')) {
+  if (req.session.data['skip-verify'] == 'yes') {
+    res.redirect('teacher-enter-trn');
+  } else if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n' || option == 'single-school-claim')) {
     if (req.params[0] == "d" && req.params[1] == "181121/") {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
       next
@@ -297,9 +328,9 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
-  if (req.params[0] == "d" || req.params[0] == "e") {
+  if (req.params[0] == "d") {
 
     // Error: No NI Number provided
     if (!req.session.data['teacher-loan-amount']) {
@@ -312,6 +343,27 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
       res.redirect('teacher-consent');
     }
 
+  }
+
+})
+
+// router.post(/([e])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+//
+//   req.session.data['teacher-error-no-loan-amount'] = false;
+//   res.redirect('teacher-consent');
+//
+// })
+
+router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
+
+  if (!req.session.data['teacher-loan-amount']) {
+    req.session.data['teacher-error-no-loan-amount'] = true;
+    req.session.data['error-message'] = "Enter your loan repayment amount";
+    res.redirect('teacher-enter-repayment-amount');
+    next
+  } else {
+    req.session.data['teacher-error-no-loan-amount'] = false;
+    res.redirect('teacher-payment-method');
   }
 
 })
@@ -404,6 +456,20 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
     }
 
   }
+
+})
+
+router.post(/([e])\/([0-9]*\/?)(teacher-confirmation)/, function (req, res) {
+
+  var trn  = req.session.data['teacher-trn'];
+  var rand_num = Math.ceil((new Date().getTime())/1000000000);
+
+  var code = trn + "-" + rand_num;
+
+  req.session.data['claim-code'] = code;
+
+  res.redirect('teacher-confirmation');
+  next
 
 })
 

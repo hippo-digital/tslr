@@ -13,7 +13,7 @@
     <div class="govuk-grid-column-two-thirds email-bg">
 
       <h2 class="govuk-heading-s">Subject</h2>
-      <p class="govuk-body">We've got your application to claim back student loan payments</p>
+      <p class="govuk-body">Ref {{ data['claim-code'] or "1234567-1234" }}: We've got your application to claim back student loan payments</p>
       <h2 class="govuk-heading-s">Body</h2>
       <p class="govuk-body">Dear {name}</p>
       <p class="govuk-body">We've got your application to claim back your student loan payments.</p>
@@ -23,7 +23,7 @@
       <p class="govuk-body"><strong>Save your application</strong></p>
       <p class="govuk-body">You can <a href="#">save your application as a PDF</a>.</p>
       <p class="govuk-body"><strong>Contact us</strong></p>
-      <p class="govuk-body">If you need to get in touch about your application <a href="#">contact us</a>.</p> 
+      <p class="govuk-body">If you need to get in touch about your application <a href="#">contact us</a> with your reference number {{ data['claim-code'] }}.</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Signatory}</p>
 
