@@ -13,11 +13,11 @@
     <div class="govuk-grid-column-two-thirds email-bg">
 
       <h2 class="govuk-heading-s">Subject</h2>
-      <p class="govuk-body">Your application to claim back student loan payments has been successful</p>
+      <p class="govuk-body">Ref {{ data['claim-code'] or "1234567-1234" }}: Your application to claim back student loan payments has been successful</p>
       <h2 class="govuk-heading-s">Body</h2>
-      <p class="govuk-body">Dear {{ data['applicant']['first_name'] | title }}</p>
+      <p class="govuk-body">Dear {{ data['applicant']['first_name'] | title or "{first_name}" }}</p>
       <p class="govuk-body">Your application to claim back your student loan payments has been successful.</p>
-      <p class="govuk-body">Your payment has been made and will take 3 to 5 working days to show in your account.</p>
+      <p class="govuk-body">The payment of £{{ data['teacher-loan-amount'] or "654" }}.00 has been made and will take 3 to 5 working days to show in your account.</p>
       <p class="govuk-body">If you have any problems getting the payment, call us on 0800 123123.</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Signatory}</p>
