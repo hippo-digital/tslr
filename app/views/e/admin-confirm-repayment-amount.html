@@ -63,7 +63,7 @@
               </h1>
             </legend>
 
-            <p>How much student loan did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> pay back through their wages while they were at {{ data['admin-claims-data']['school_name'] }}?</p>
+            <p>How much student loan did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> pay back through their wages while they were at {{ data['admin-claims-data']['school_name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
 
             {% if (data['admin-error-no-loan']) %}
             <span id="admin-loan-error" class="govuk-error-message">{{ data['error-message'] }}</span>

@@ -67,12 +67,12 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">Since {{ globals.tax_year.start_date }}, has <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> taught any of these subjects at {{ data['admin-claims-data']['school_name'] }}:</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, has <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> taught any of these subjects at {{ data['admin-claims-data']['school_name'] }}:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>
                 <li>computer science</li>
-                <li>languages (not including english)</li>
+                <li>languages (not including English)</li>
                 <li>physics</li>
               </ul>
             </div>
@@ -101,7 +101,7 @@
                     <fieldset class="govuk-fieldset" aria-describedby="teaching-proportion-hint">
                       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
-                          How much of their time at the school was spent teaching one or more of these subjects?
+                          Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, how much of their time at the school was spent teaching one or more of these subjects?
                         </h2>
                       </legend>
                       <span id="teaching-proportion-hint" class="govuk-hint">
