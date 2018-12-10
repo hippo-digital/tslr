@@ -861,7 +861,11 @@ router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
     res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-loan'] = false;
-    res.redirect('check-teaching');
+    if (req.session.data['check-schools'][0]['type']) {
+      res.redirect('check-still-teaching');
+    } else {
+      res.redirect('check-teaching');
+    }
   }
 
 })
