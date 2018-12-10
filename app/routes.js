@@ -730,41 +730,13 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
   var school_search = req.session.data['check-school-name'];
 
-  /* Eligible Local Authorities
-  873	Cambridgeshire
-  380	Bradford
-  806	Middlesbrough
-  928	Northamptonshire
-  340	Knowsley
-  935	Suffolk
-  371	Doncaster
-  867	Bracknell Forest
-  353	Oldham
-  830	Derbyshire
-  370	Barnsley
-  929	Northumberland
-  926	Norfolk
-  831	Derby
-  890	Blackpool
-  355	Salford
-  815	North Yorkshire
-  821	Luton
-  874	Peterborough
-  812	North East Lincolnshire
-  876	Halton
-  851	Portsmouth
-  861	Stoke-on-Trent
-  343	Sefton
-  342	St. Helens
-  */
-
   var fs = require("fs");
   // GIAS data test (10 eligible schools only)
-  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+  var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
   // GIAS data (eligible schools e.g. 25 LAs)
   // var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
   // GIAS data (all schools)
-  var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
   var gias_data = JSON.parse(gias_file);
   // Output JSON as session variable for easier debug
   //req.session.data['check-gias-data'] = gias_data;
