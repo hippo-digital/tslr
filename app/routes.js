@@ -267,7 +267,9 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n' || option == 'single-school-claim')) {
+  if (req.session.data['skip-verify'] == 'yes') {
+    res.redirect('teacher-enter-trn');
+  } else if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n' || option == 'single-school-claim')) {
     if (req.params[0] == "d" && req.params[1] == "181121/") {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
       next
@@ -326,9 +328,9 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (
 
 })
 
-router.post(/([abcde])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
-  if (req.params[0] == "d" || req.params[0] == "e") {
+  if (req.params[0] == "d") {
 
     // Error: No NI Number provided
     if (!req.session.data['teacher-loan-amount']) {
@@ -341,6 +343,27 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
       res.redirect('teacher-consent');
     }
 
+  }
+
+})
+
+// router.post(/([e])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
+//
+//   req.session.data['teacher-error-no-loan-amount'] = false;
+//   res.redirect('teacher-consent');
+//
+// })
+
+router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
+
+  if (!req.session.data['teacher-loan-amount']) {
+    req.session.data['teacher-error-no-loan-amount'] = true;
+    req.session.data['error-message'] = "Enter your loan repayment amount";
+    res.redirect('teacher-enter-repayment-amount');
+    next
+  } else {
+    req.session.data['teacher-error-no-loan-amount'] = false;
+    res.redirect('teacher-payment-method');
   }
 
 })

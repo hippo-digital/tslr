@@ -17,24 +17,24 @@
 
   <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-two-thirds">
+    <form action="teacher-enter-location-confirm" method="POST" role="form">
+      <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
-      {% if (data['teacher-error-no-school']) %}
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            <li>
-              <a href="#enter-school-error">{{ data['error-message'] }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      {% endif %}
+          <div class="govuk-grid-column-two-thirds">
 
-      <form action="teacher-enter-location-confirm" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
-          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+            {% if (data['teacher-error-no-school']) %}
+            <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+              <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  <li>
+                    <a href="#enter-school-error">{{ data['error-message'] }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {% endif %}
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
@@ -76,22 +76,18 @@
               <button type="submit" class="govuk-button">Continue</button>
             </div>
 
-          </fieldset>
-        </div>
+          </div>
 
-      </form>
+          <div class="govuk-grid-column-one-third">
 
-    </div>
+            <button type="submit" name="skip-verify" value="yes" class="govuk-button hidden-button">Skip Verify</button>
 
-    <div class="govuk-grid-column-one-third">
+          </div>
 
-      <p class="govuk-body">
-        {% if not data['teacher-check-send'] %}
-        <a href="teacher-enter-trn" role="button" draggable="false" class="govuk-button govuk-button hidden-button">Skip Verify</a>
-        {% endif %}
-      </p>
+        </fieldset>
+      </div>
 
-    </div>
+    </form>
 
   </div>
 
