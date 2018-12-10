@@ -101,7 +101,7 @@
                     <fieldset class="govuk-fieldset" aria-describedby="teaching-proportion-hint">
                       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
-                          Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, how much of their time at the school was spent teaching one or more of these subjects?
+                          Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, how much of their teaching time was spent teaching one or more of these subjects?
                         </h2>
                       </legend>
                       <span id="teaching-proportion-hint" class="govuk-hint">
@@ -115,7 +115,7 @@
                           <input class="govuk-radios__input" id="teaching-proportion-more" name="teaching-proportion" type="radio" value="more">
                           {% endif %}
                           <label class="govuk-label govuk-radios__label" for="teaching-proportion-more">
-                            More than 50% of their time
+                            More than half of their teaching time
                           </label>
                         </div>
                         <div class="govuk-radios__item">
@@ -125,7 +125,7 @@
                           <input class="govuk-radios__input" id="teaching-proportion-less" name="teaching-proportion" type="radio" value="less">
                           {% endif %}
                           <label class="govuk-label govuk-radios__label" for="teaching-proportion-less">
-                            Less than 50% of their time
+                            Less than half of their teaching time
                           </label>
                         </div>
                       </div>
