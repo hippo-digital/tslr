@@ -8,7 +8,7 @@
   {% include "includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
-    serviceName: "Confirm teachers' student loan reimbursement claims",
+    serviceName: "Check teachers' claims for student loan repayments",
     containerClasses: "govuk-width-container govuk-tslr-header"
   }) }}
 {% endblock %}
@@ -62,7 +62,7 @@
               </h1>
             </legend>
 
-            <p>How much student loan did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> pay back through their wages while they were at {{ data['admin-claims-data']['school_name'] }}?</p>
+            <p>How much student loan did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> pay back through their wages while they were at {{ data['admin-claims-data']['school_name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
 
             {% if (data['admin-error-no-loan']) %}
             <span id="admin-loan-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -77,7 +77,7 @@
             <div class="govuk-form-group">
               <button type="submit" class="govuk-button" name="update-loan" value="update">Update</button>
               <p class="govuk-body">
-                <button type="submit" class="button-as-link" name="update-location" value="cancel">Cancel without updating</button>
+                <button type="submit" class="button-as-link" name="update-location" value="cancel">Skip for now</button>
               </p>
             </div>
 

@@ -8,7 +8,7 @@
   {% include "includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
-    serviceName: "Confirm teachers' student loan reimbursement claims",
+    serviceName: "Check teachers' claims for student loan repayments",
     containerClasses: "govuk-width-container govuk-tslr-header"
   }) }}
 {% endblock %}
@@ -65,12 +65,12 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">While they worked at {{ data['admin-claims-data']['school_name'] }}, did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> teach any of these subjects:</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, has <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> taught any of these subjects at {{ data['admin-claims-data']['school_name'] }}:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>
                 <li>computer science</li>
-                <li>languages (not including english)</li>
+                <li>languages (not including English)</li>
                 <li>physics</li>
               </ul>
             </div>
@@ -89,7 +89,7 @@
                   {% else %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes, they taught one or more of these subjects</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes, they've taught one or more of these subjects</label>
                 </div>
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-y">
                   <div class="govuk-form-group {% if (data['admin-error-no-teaching-proportion']) %}govuk-form-group--error{% endif %}">
@@ -99,7 +99,7 @@
                     <fieldset class="govuk-fieldset" aria-describedby="teaching-proportion-hint">
                       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
-                          How much of their time at the school was spent teaching one or more of these subjects?
+                          Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, how much of their teaching time was spent teaching one or more of these subjects?
                         </h2>
                       </legend>
                       <span id="teaching-proportion-hint" class="govuk-hint">
@@ -113,7 +113,7 @@
                           <input class="govuk-radios__input" id="teaching-proportion-more" name="teaching-proportion" type="radio" value="more">
                           {% endif %}
                           <label class="govuk-label govuk-radios__label" for="teaching-proportion-more">
-                            More than 50% of their time
+                            More than half of their teaching time
                           </label>
                         </div>
                         <div class="govuk-radios__item">
@@ -123,7 +123,7 @@
                           <input class="govuk-radios__input" id="teaching-proportion-less" name="teaching-proportion" type="radio" value="less">
                           {% endif %}
                           <label class="govuk-label govuk-radios__label" for="teaching-proportion-less">
-                            Less than 50% of their time
+                            Less than half of their teaching time
                           </label>
                         </div>
                       </div>
@@ -137,7 +137,7 @@
                   {% else %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they did not teach any of these subjects</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No, they have not taught any of these subjects</label>
                 </div>
 
               </div>
@@ -147,7 +147,7 @@
             <div class="govuk-form-group">
               <button type="submit" class="govuk-button" name="update-teaching" value="update">Update</button>
               <p class="govuk-body">
-                <button type="submit" class="button-as-link" name="update-location" value="cancel">Cancel without updating</button>
+                <button type="submit" class="button-as-link" name="update-location" value="cancel">Skip for now</button>
               </p>
             </div>
 
