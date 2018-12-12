@@ -38,6 +38,11 @@
               <p class="govuk-body">You can only claim if your school is in an eligible area for this scheme.</p>
               <p class="govuk-body"><a href="guidance">Check what the eligible areas are</a></p>
 
+              {% elseif (data['check-ineligible-reason'] == "school-phase") %}
+
+              <p class="govuk-body">You can only claim if your school is a state-funded secondary or special school in England.</p>
+              <p class="govuk-body"><a href="guidance">Check what the eligible areas are</a></p>
+
               {% elseif (data['check-ineligible-reason'] == "school-type") %}
 
               <p class="govuk-body">You can only claim if your school is a state-funded secondary or special school in England.</p>
@@ -63,6 +68,11 @@
               {% elseif (data['check-ineligible-reason'] == "still-teaching") %}
 
               <p class="govuk-body">You must be currently teaching in a school in the UK.</p>
+              <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
+
+              {% elseif (data['check-ineligible-reason'] == "teaching-phase") %}
+
+              <p class="govuk-body">You must have spent most of your scheduled hours teaching people who are 11 to 16 years old.</p>
               <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
 
               {% endif %}
