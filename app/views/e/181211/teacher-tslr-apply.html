@@ -36,7 +36,8 @@
       <h2 class="govuk-heading-l">Make a claim</h2>
 
       <h3 class="govuk-heading-m">Before you start</h3>
-    <p class="govuk-body">You will need:</p>
+      <p class="govuk-body">If you've worked at more than one school since {{ globals.tax_year.start_date }}, check your eligiblity separately for each school.</p>
+      <p class="govuk-body">You will need:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>your teacher reference number – you can get this from your school, the certificate you got when you qualified as a teacher or from the <a href="https://www.gov.uk/guidance/individual-teacher-records-information-for-teachers#contact">teacher qualifications helpdesk</a></li>
         <li>your National Insurance number</li>
@@ -49,11 +50,8 @@
       <ul class="govuk-list govuk-list--bullet">
         <li>that you worked there in the last tax year</li>
         <li>how much student loan you paid back through your teaching wages during that time</li>
-        <li>that you spent most of your time teaching 11 to 16 year olds</li>
       </ul>
       <p>If you worked at a state-funded school or academy, we'll also check that you taught one of the qualifying subjects for more than half of your time there.</p>
-      <h3 class="govuk-heading-m">You've worked at more than one school</h3>
-      <p class="govuk-body">If you've worked at more than one school since {{ globals.tax_year.start_date }}, apply for each school separately.</p>
       <form action="teacher-consent" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group">

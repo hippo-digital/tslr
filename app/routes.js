@@ -215,7 +215,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
     // Error: No school name provided
     if (req.session.data['teacher-school-name'] == "") {
       req.session.data['teacher-error-no-school'] = true;
-      req.session.data['error-message'] = "Enter the school name or reference number";
+      req.session.data['error-message'] = "Enter the school name or postcode";
       res.redirect('teacher-enter-location-eligibility');
       next
     } else {
@@ -316,7 +316,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (
     // Error: No NI Number provided
     if (req.session.data['teacher-ni'] == "") {
       req.session.data['teacher-error-no-ni'] = true;
-      req.session.data['error-message'] = "Enter your NI Number";
+      req.session.data['error-message'] = "Enter your national insurance number";
       res.redirect('teacher-enter-ni-number');
       next
     } else {
@@ -335,7 +335,7 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
     // Error: No NI Number provided
     if (!req.session.data['teacher-loan-amount']) {
       req.session.data['teacher-error-no-loan-amount'] = true;
-      req.session.data['error-message'] = "Enter your loan repayment amount";
+      req.session.data['error-message'] = "Enter the amount of loan you repaid";
       res.redirect('teacher-enter-repayment-amount');
       next
     } else {
@@ -375,7 +375,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res
     // Error: No payment method provided
     if (!req.session.data['teacher-bank-account-name'] || !req.session.data['teacher-bank-account-number'] || !req.session.data['teacher-bank-sortcode-1'] || !req.session.data['teacher-bank-sortcode-2'] || !req.session.data['teacher-bank-sortcode-3']) {
       req.session.data['teacher-error-payment-details'] = true;
-      req.session.data['error-message'] = "Check you have entered all your bank details";
+      req.session.data['error-message'] = "Enter your bank details";
       if (!req.session.data['teacher-bank-account-name']) {
         req.session.data['teacher-error-payment-details-name'] = true;
         req.session.data['error-message-account-name'] = "Enter your account name";
@@ -390,19 +390,19 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res
       }
       if (!req.session.data['teacher-bank-sortcode-1']) {
         req.session.data['teacher-error-payment-details-sort1'] = true;
-        req.session.data['error-message-account-sortcode'] = "Enter your account sortcode";
+        req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
       } else {
         req.session.data['teacher-error-payment-details-sort1'] = false;
       }
       if (!req.session.data['teacher-bank-sortcode-2']) {
         req.session.data['teacher-error-payment-details-sort2'] = true;
-        req.session.data['error-message-account-sortcode'] = "Enter your account sortcode";
+        req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
       } else {
         req.session.data['teacher-error-payment-details-sort2'] = false;
       }
       if (!req.session.data['teacher-bank-sortcode-3']) {
         req.session.data['teacher-error-payment-details-sort3'] = true;
-        req.session.data['error-message-account-sortcode'] = "Enter your account sortcode";
+        req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
       } else {
         req.session.data['teacher-error-payment-details-sort3'] = false;
       }
@@ -429,7 +429,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
     // Error: No payment method provided
     if (!req.session.data['teacher-contact-method']) {
       req.session.data['teacher-error-no-contact'] = true;
-      req.session.data['error-message'] = "Select how you would like us to contact you";
+      req.session.data['error-message'] = "Select how you want to be contacted";
       req.session.data['teacher-error-no-email'] = false;
       req.session.data['teacher-error-no-mobile'] = false;
       res.redirect('teacher-contact-method');
@@ -645,7 +645,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       // Error: Meant to update teaching with proportion
       req.session.data['admin-error-no-teaching-proportion'] = true;
-      req.session.data['error-message'] = "Select what proportion they taught those subjects";
+      req.session.data['error-message'] = "Select how much they taught those subjects";
       res.redirect('admin-confirm-teaching-eligibility');
       next
 
@@ -655,6 +655,24 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       req.session.data['admin-error-no-loan'] = true;
       req.session.data['error-message'] = "Enter the loan amount";
       res.redirect('admin-confirm-repayment-amount');
+      next
+
+    } else if (req.session.data['update-location'] == "cancel" || req.session.data['update-teaching'] == "cancel" || req.session.data['update-loan'] == "cancel") {
+
+      // Skipped/cancelled updating, so reset...
+      req.session.data['admin-eligibility-location'] = "0";
+      req.session.data['admin-eligibility-teaching'] = "0";
+      req.session.data['admin-loan-amount'] = "0";
+      // ..and then reset all the error variables
+      req.session.data['admin-error-no-location'] = false;
+      req.session.data['admin-error-no-location-period'] = false;
+      req.session.data['admin-error-no-location-start-date'] = false;
+      req.session.data['admin-error-no-location-end-date'] = false;
+      req.session.data['admin-error-no-teaching'] = false;
+      req.session.data['admin-error-no-teaching-proportion'] = false;
+      req.session.data['admin-error-no-loan'] = false;
+
+      res.redirect('admin-claim');
       next
 
     } else {
