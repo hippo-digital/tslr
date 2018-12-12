@@ -84,7 +84,7 @@
               <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
                 <div class="govuk-radios__item">
-                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == "yes" %}
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == "yes" or data['admin-eligibility-teaching'] == "yes"%}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y" checked>
                   {% else %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" data-aria-controls="conditional-admin-eligibility-teaching-y">
@@ -147,7 +147,7 @@
             <div class="govuk-form-group">
               <button type="submit" class="govuk-button" name="update-teaching" value="update">Update</button>
               <p class="govuk-body">
-                <button type="submit" class="button-as-link" name="update-location" value="cancel">Skip for now</button>
+                <button type="submit" class="button-as-link" name="update-teaching" value="cancel">Skip for now</button>
               </p>
             </div>
 

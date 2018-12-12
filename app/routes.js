@@ -657,6 +657,24 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       res.redirect('admin-confirm-repayment-amount');
       next
 
+    } else if (req.session.data['update-location'] == "cancel" || req.session.data['update-teaching'] == "cancel" || req.session.data['update-loan'] == "cancel") {
+
+      // Skipped/cancelled updating, so reset...
+      req.session.data['admin-eligibility-location'] = "0";
+      req.session.data['admin-eligibility-teaching'] = "0";
+      req.session.data['admin-loan-amount'] = "0";
+      // ..and then reset all the error variables
+      req.session.data['admin-error-no-location'] = false;
+      req.session.data['admin-error-no-location-period'] = false;
+      req.session.data['admin-error-no-location-start-date'] = false;
+      req.session.data['admin-error-no-location-end-date'] = false;
+      req.session.data['admin-error-no-teaching'] = false;
+      req.session.data['admin-error-no-teaching-proportion'] = false;
+      req.session.data['admin-error-no-loan'] = false;
+
+      res.redirect('admin-claim');
+      next
+
     } else {
 
       // Everything looks good so sync the latest data to the relevant JSON
