@@ -773,10 +773,26 @@ router.post(/([e])\/([0-9]*\/?)(admin-confirmation)/, function (req, res) {
 // router.get(/([z])\/([0-9]*\/?)(check-intro)/, function (req, res) {
 // })
 
-// router.post(/([z])\/([0-9]*\/?)(check-qts)/, function (req, res) {
-// })
+router.post(/([z])\/([0-9]*\/?)(check-qts)/, function (req, res) {
+
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-qts", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
+
+  res.redirect('check-qts');
+  next
+
+})
 
 router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
+
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-location-search", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
 
   // Error: No qts year provided
   if (!req.session.data['check-qts']) {
@@ -814,6 +830,12 @@ router.post(/([z])\/([0-9]*\/?)(check-location-search)/, function (req, res) {
 })
 
 router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
+
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-loan", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
 
   // Error: No school name provided
   if (req.session.data['check-school-name'] == "") {
@@ -932,7 +954,13 @@ router.post(/([z])\/([0-9]*\/?)(check-loan)/, function (req, res) {
 
 router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
 
-  // Error: No qts year provided
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-teaching", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
+
+  // Error: No loan provided
   if (!req.session.data['check-loan']) {
     req.session.data['check-error-no-loan'] = true;
     req.session.data['error-message'] = "Select one of the options";
@@ -955,6 +983,12 @@ router.post(/([z])\/([0-9]*\/?)(check-teaching)/, function (req, res) {
 })
 
 router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
+
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-still-teaching", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
 
   // Error: No teaching info supplied
   if (!req.session.data['check-teaching']) {
@@ -995,7 +1029,13 @@ router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
 
 })
 
-router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+router.post(/([z])\/([0-9]*\/?)(check-phase)/, function (req, res) {
+
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-phase", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
 
   // Error: No still teaching provided
   if (!req.session.data['check-still-teaching']) {
@@ -1003,12 +1043,37 @@ router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
     req.session.data['error-message'] = "Select one of the options";
     res.redirect('check-still-teaching');
     next
-  } else if(req.session.data['check-still-teaching'] == "no") {
+  } else if (req.session.data['check-still-teaching'] == "no") {
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "still-teaching";
     res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-still-teaching'] = false;
+    res.redirect('check-phase');
+  }
+
+})
+
+router.post(/([z])\/([0-9]*\/?)(check-eligible)/, function (req, res) {
+
+  // Debug stuff
+  var debug = req.session.data['debug'] || [];
+  var route = { "name": "check-eligible", "visited": true };
+  debug.push(route);
+  req.session.data['debug'] = debug;
+
+  // Error: No teaching phase provided
+  if (!req.session.data['check-teaching-phase']) {
+    req.session.data['check-error-no-teaching-phase'] = true;
+    req.session.data['error-message'] = "Select one of the options";
+    res.redirect('check-phase');
+    next
+  } else if (req.session.data['check-teaching-phase'] == "no") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "teaching-phase";
+    res.redirect('check-ineligible');
+  } else {
+    req.session.data['check-error-no-teaching-phase'] = false;
     res.redirect('check-eligible');
   }
 

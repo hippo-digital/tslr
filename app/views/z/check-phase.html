@@ -16,31 +16,31 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['check-error-no-still-teaching']) %}
+      {% if (data['check-error-no-teaching-phase']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['check-error-no-still-teaching']) %}
-            <li><a href="#check-error-no-still-teaching">{{ data['error-message'] }}</a></li>
+            {% if (data['check-error-no-teaching-phase']) %}
+            <li><a href="#check-error-no-teaching-phase">{{ data['error-message'] }}</a></li>
             {% endif %}
           </ul>
         </div>
       </div>
       {% endif %}
 
-      <form action="check-phase" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['check-error-no-still-teaching']) %}govuk-form-group--error{% endif %}">
+      <form action="check-eligible" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['check-error-no-teaching-phase']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Are you still teaching at a school in the UK?
+                Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did you spend most of your scheduled hours teaching people who are 11 to 16 years old?
               </h1>
             </legend>
 
-            {% if (data['check-error-no-still-teaching']) %}
-            <span id="check-error-no-still-teaching" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% if (data['check-error-no-teaching-phase']) %}
+            <span id="check-error-no-teaching-phase" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
 
             <div class="govuk-form-group">
@@ -48,21 +48,21 @@
               <div class="govuk-radios">
 
                 <div class="govuk-radios__item">
-                  {% if data['check-still-teaching'] == "yes" %}
-                  <input class="govuk-radios__input" id="check-still-teaching-yes" name="check-still-teaching" type="radio" value="yes" checked>
+                  {% if data['check-teaching-phase'] == "yes" %}
+                  <input class="govuk-radios__input" id="check-teaching-phase-yes" name="check-teaching-phase" type="radio" value="yes" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="check-still-teaching-yes" name="check-still-teaching" type="radio" value="yes">
+                  <input class="govuk-radios__input" id="check-teaching-phase-yes" name="check-teaching-phase" type="radio" value="yes">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-still-teaching-yes">Yes</label>
+                  <label class="govuk-label govuk-radios__label" for="check-teaching-phase-yes">Yes</label>
                 </div>
 
                 <div class="govuk-radios__item">
-                  {% if data['check-still-teaching'] == "no" %}
-                  <input class="govuk-radios__input" id="check-still-teaching-no" name="check-still-teaching" type="radio" value="no" checked>
+                  {% if data['check-teaching-phase'] == "no" %}
+                  <input class="govuk-radios__input" id="check-teaching-phase-no" name="check-teaching-phase" type="radio" value="no" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="check-still-teaching-no" name="check-still-teaching" type="radio" value="no">
+                  <input class="govuk-radios__input" id="check-teaching-phase-no" name="check-teaching-phase" type="radio" value="no">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-still-teaching-no">No</label>
+                  <label class="govuk-label govuk-radios__label" for="check-teaching-phase-no">No</label>
                 </div>
 
               </div>
