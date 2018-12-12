@@ -592,6 +592,13 @@ router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
 
   }
 
+  if (!req.session.data['now']) {
+
+    var ts = require('moment');
+    req.session.data['time-now'] = ts().format("DD MMM YYYY");
+
+  }
+
   res.redirect('admin-claims');
   next
 
