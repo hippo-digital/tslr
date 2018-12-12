@@ -16,13 +16,19 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['check-error-no-teaching']) %}
+      {% if (data['check-error-no-teaching'] or data['check-error-no-teaching-other']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
             {% if (data['check-error-no-teaching']) %}
             <li><a href="#check-teaching-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+            {% if (data['check-error-no-teaching-other']) %}
+            <li><a href="#check-teaching-other-error">{{ data['error-message-other'] }}</a></li>
+            {% endif %}
+            {% if (data['check-error-no-teaching-time']) %}
+            <li><a href="#check-teaching-time-error">{{ data['error-message-time'] }}</a></li>
             {% endif %}
           </ul>
         </div>
@@ -35,58 +41,145 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                The subjects you've taught
+                Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, what were you employed to teach?
               </h1>
             </legend>
 
+            {% if (data['check-error-no-teaching']) %}
+            <span id="check-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
             <div class="govuk-form-group">
 
-              <p class="govuk-body">To be eligible, you must have taught one or more of these subjects:</p>
-              <ul class="govuk-list govuk-list--bullet">
-                <li>biology</li>
-                <li>chemistry</li>
-                <li>physics</li>
-                <li>computer science</li>
-                <li>languages (not including English)</li>
-              </ul>
-              <div class="govuk-form-group">
-                <p class="govuk-body">Since {{ globals.tax_year.start_date }}, have you taught one or more of these subjects at {{ data['check-schools'][0]['name'] }}?</p>
-              </div>
               <span id="check-teaching-hint" class="govuk-hint">
                 If you've been off on long-term leave or sick, include the time you were scheduled to teach these subjects.
               </span>
 
-              <div class="govuk-radios">
-
-                {% if (data['check-error-no-teaching']) %}
-                <span id="check-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
-                {% endif %}
+              <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
                 <div class="govuk-radios__item">
-                  {% if data['check-teaching'] == "eligible" %}
-                  <input class="govuk-radios__input" id="check-teaching-yes-more" name="check-teaching" type="radio" value="eligible" checked>
+                  {% if data['check-teaching'] == "science" %}
+                  <input class="govuk-radios__input" id="check-teaching-conditional-science" name="check-teaching" type="radio" value="science" data-aria-controls="conditional-check-teaching-conditional-science" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="check-teaching-yes-more" name="check-teaching" type="radio" value="eligible">
+                  <input class="govuk-radios__input" id="check-teaching-conditional-science" name="check-teaching" type="radio" value="science" data-aria-controls="conditional-check-teaching-conditional-science">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-teaching-yes-more">Yes, for <strong>more</strong> than 50% of your teaching time</label>
+                  <label class="govuk-label govuk-radios__label" for="check-teaching-conditional-science">
+                    Science (physics, chemistry or biology)
+                  </label>
                 </div>
 
                 <div class="govuk-radios__item">
-                  {% if data['check-teaching'] == "ineligible-less" %}
-                  <input class="govuk-radios__input" id="check-teaching-yes-less" name="check-teaching" type="radio" value="ineligible-less" checked>
+                  {% if data['check-teaching'] == "languages" %}
+                  <input class="govuk-radios__input" id="check-teaching-conditional-languages" name="check-teaching" type="radio" value="languages" data-aria-controls="conditional-check-teaching-conditional-languages" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="check-teaching-yes-less" name="check-teaching" type="radio" value="ineligible-less">
+                  <input class="govuk-radios__input" id="check-teaching-conditional-languages" name="check-teaching" type="radio" value="languages" data-aria-controls="conditional-check-teaching-conditional-languages">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-teaching-yes-less">Yes, for <strong>less</strong> than 50% of your teaching time</label>
+                  <label class="govuk-label govuk-radios__label" for="check-teaching-conditional-languages">
+                    Languages (not including English)
+                  </label>
                 </div>
 
                 <div class="govuk-radios__item">
-                  {% if data['check-teaching'] == "ineligible" %}
-                  <input class="govuk-radios__input" id="check-teaching-no" name="check-teaching" type="radio" value="ineligible" checked>
+                  {% if data['check-teaching'] == "compscience" %}
+                  <input class="govuk-radios__input" id="check-teaching-conditional-compscience" name="check-teaching" type="radio" value="compscience" data-aria-controls="conditional-check-teaching-conditional-compscience" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="check-teaching-no" name="check-teaching" type="radio" value="ineligible">
+                  <input class="govuk-radios__input" id="check-teaching-conditional-compscience" name="check-teaching" type="radio" value="compscience" data-aria-controls="conditional-check-teaching-conditional-compscience">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="check-teaching-no">No, you did not teach any of these subjects</label>
+                  <label class="govuk-label govuk-radios__label" for="check-teaching-conditional-compscience">
+                    Computer science
+                  </label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  {% if data['check-teaching'] == "other" %}
+                  <input class="govuk-radios__input" id="check-teaching-conditional-other" name="check-teaching" type="radio" value="other" data-aria-controls="conditional-check-teaching-conditional-other" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="check-teaching-conditional-other" name="check-teaching" type="radio" value="other" data-aria-controls="conditional-check-teaching-conditional-other">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="check-teaching-conditional-other">
+                    Other
+                  </label>
+                </div>
+
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-check-teaching-conditional-other">
+
+                  <div class="govuk-form-group {% if (data['check-error-no-teaching-other']) %}govuk-form-group--error{% endif %}">
+
+                    {% if (data['check-error-no-teaching-other']) %}
+                    <span id="check-teaching-other-error" class="govuk-error-message">{{ data['error-message-other'] }}</span>
+                    {% endif %}
+
+                    <label class="govuk-label" for="teaching-subject-other">
+                      Enter the subject or subjects you were employed to teach
+                    </label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" {% if data['teaching-subject-other'] %}value="{{data['teaching-subject-other']}}"{% endif %}>
+
+                  </div>
+
+                  <div class="govuk-form-group {% if (data['check-error-no-teaching-time']) %}govuk-form-group--error{% endif %}">
+
+                    <fieldset class="govuk-fieldset">
+
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                          Which subject did you spend most of your time teaching?
+                        </h2>
+                      </legend>
+
+                      {% if (data['check-error-no-teaching-time']) %}
+                      <span id="check-teaching-time-error" class="govuk-error-message">{{ data['error-message-time'] }}</span>
+                      {% endif %}
+
+                      <div class="govuk-radios">
+
+                        <div class="govuk-radios__item">
+                          {% if data['check-teaching-time'] == "science" %}
+                          <input class="govuk-radios__input" id="teaching-time-science" name="check-teaching-time" type="radio" value="science" checked>
+                          {% else %}
+                          <input class="govuk-radios__input" id="teaching-time-science" name="check-teaching-time" type="radio" value="science">
+                          {% endif %}
+                          <label class="govuk-label govuk-radios__label" for="teaching-time-science">
+                            Science (physics, chemistry or biology)
+                          </label>
+                        </div>
+
+                        <div class="govuk-radios__item">
+                          {% if data['check-teaching-time'] == "languages" %}
+                          <input class="govuk-radios__input" id="teaching-time-languages" name="check-teaching-time" type="radio" value="languages" checked>
+                          {% else %}
+                          <input class="govuk-radios__input" id="teaching-time-languages" name="check-teaching-time" type="radio" value="languages">
+                          {% endif %}
+                          <label class="govuk-label govuk-radios__label" for="teaching-time-languages">
+                            Languages (not including English)
+                          </label>
+                        </div>
+
+                        <div class="govuk-radios__item">
+                          {% if data['check-teaching-time'] == "compscience" %}
+                          <input class="govuk-radios__input" id="teaching-time-compscience" name="check-teaching-time" type="radio" value="compscience" checked>
+                          {% else %}
+                          <input class="govuk-radios__input" id="teaching-time-compscience" name="check-teaching-time" type="radio" value="compscience">
+                          {% endif %}
+                          <label class="govuk-label govuk-radios__label" for="teaching-time-compscience">
+                            Computer science
+                          </label>
+                        </div>
+
+                        <div class="govuk-radios__item">
+                          {% if data['check-teaching-time'] == "other" %}
+                          <input class="govuk-radios__input" id="teaching-time-other" name="check-teaching-time" type="radio" value="other" checked>
+                          {% else %}
+                          <input class="govuk-radios__input" id="teaching-time-other" name="check-teaching-time" type="radio" value="other">
+                          {% endif %}
+                          <label class="govuk-label govuk-radios__label" for="teaching-time-other">
+                            Other
+                          </label>
+                        </div>
+                      </div>
+
+                    </fieldset>
+                  </div>
+
                 </div>
 
               </div>

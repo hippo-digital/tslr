@@ -970,8 +970,26 @@ router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
     req.session.data['check-eligible'] = false;
     req.session.data['check-ineligible-reason'] = "teaching-less";
     res.redirect('check-ineligible');
+  } else if (req.session.data['check-teaching'] == "other" && (!req.session.data['teaching-subject-other'] || !req.session.data['check-teaching-time'])) {
+    if (!req.session.data['teaching-subject-other']) {
+      req.session.data['check-error-no-teaching-other'] = true;
+      req.session.data['error-message-other'] = "Enter the subject you taught";
+    } else {
+      req.session.data['check-error-no-teaching-other'] = false;
+    }
+    if (!req.session.data['check-teaching-time']) {
+      req.session.data['check-error-no-teaching-time'] = true;
+      req.session.data['error-message-time'] = "Select one of the options";
+    } else {
+      req.session.data['check-error-no-teaching-time'] = false;
+    }
+    req.session.data['check-error-no-teaching'] = false;
+    res.redirect('check-teaching');
+    next
   } else {
     req.session.data['check-error-no-teaching'] = false;
+    req.session.data['check-error-no-teaching-other'] = false;
+    req.session.data['check-error-no-teaching-time'] = false;
     res.redirect('check-still-teaching');
   }
 
