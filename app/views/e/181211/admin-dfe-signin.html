@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-one-half">
+
+      <h1 class="govuk-heading-xl">DfE Sign-in</h1>
+
+      <p class="govuk-body">DfE Sign-in is the new way to access some education sector services.</p>
+
+      <form action="admin-claims" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h2 class="govuk-fieldset__heading">Sign in</h2>
+            </legend>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="admin-dfe-username">Email address</label>
+              <input class="govuk-input govuk-!-width-full-width" id="admin-dfe-username" name="admin-dfe-username" type="email">
+            </div>
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="admin-dfe-password">Password</label>
+              <input class="govuk-input govuk-!-width-full-width" id="admin-dfe-password" name="admin-dfe-password" type="password">
+              <p class="govuk-body-s"><a href="#">I've forgotten my password</a></p>
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button">Sign in</button>
+            </div>
+
+            <div class="govuk-form-group">
+              <div class="govuk-inset-text">
+                <p>By continuing you accept the <a href="#">terms and conditions</a>.</p>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">Having problems?</span>
+                </summary>
+                <div class="govuk-details__text">
+                  <p>If you're having problems using the DfE Sign-in service, follow the link to read the <a href="#">frequently asked questions</a>. You will also be able to request further assistance if you need it.</p>
+                </div>
+              </details>
+            </div>
+
+          </fieldset>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}
