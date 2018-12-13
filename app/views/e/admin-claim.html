@@ -48,6 +48,11 @@
   {% set details_complete = false %}
   {% endif %}
 
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] %}
+  {{ "claim.eligibility-phase is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
   {% if not data['admin-claims-data']['claims'][array_ref]['loan-amount'] %}
   {{ "data.admin-loan-amount is incomplete" | log }}
   {% set details_complete = false %}
@@ -126,7 +131,7 @@
               <dd class="app-check-your-answers__answer">No</dd>
               {% set questions_disabled = true %}
               {% else %}
-              <dd class="app-check-your-answers__answer answer-incomplete">Action required</dd>
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% set questions_disabled = true %}
               {% endif %}
               <dd class="app-check-your-answers__change">
@@ -155,6 +160,22 @@
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-teaching-eligibility">Update<span class="govuk-visually-hidden"> teaching eligibility</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents {% if questions_disabled %} questions_disabled{% endif %}">
+              <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did they spend most of their scheduled hours teaching people who are 11 to 16 years old?</dt>
+              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] %}
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] | title }}</dd>
+              {% else %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
+                {% else %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+                {% endif %}
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-phase-eligibility">Update<span class="govuk-visually-hidden"> educational phase</span></button>
               </dd>
             </div>
 
