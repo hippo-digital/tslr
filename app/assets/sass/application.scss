@@ -162,6 +162,7 @@ nav.tslr-pagination {
 
     .app-check-your-answers__contents {
       &.questions_disabled {
+        display: none;
         color: grey;
         button.button-as-link {
           color: grey;
