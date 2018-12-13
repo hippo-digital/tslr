@@ -159,6 +159,24 @@ nav.tslr-pagination {
     dt {
       width: 60%;
     }
+
+    .app-check-your-answers__contents {
+      &.questions_disabled {
+        color: grey;
+        button.button-as-link {
+          color: grey;
+        }
+        dd.app-check-your-answers__answer {
+          &.answer-incomplete {
+            color: grey;
+          }
+        }
+        dd.app-check-your-answers__change {
+          pointer-events: none;
+          cursor: default;
+        }
+      }
+    }
   }
 
 }
