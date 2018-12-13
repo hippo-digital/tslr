@@ -65,7 +65,7 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, has <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> taught any of these subjects at {{ data['admin-claims-data']['school_name'] }}:</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} was {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} employed to teach {{ data['admin-claims-data']['claims'][array_ref]['subjects']['employed'] | title }} at {{ data['admin-claims-data']['school_name'] }}?</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>
