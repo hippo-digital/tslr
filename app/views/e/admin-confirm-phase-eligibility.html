@@ -57,10 +57,10 @@
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h1 class="govuk-fieldset__heading">Check education phase</h1>
+              <h1 class="govuk-fieldset__heading">Confirm the age range of the pupils</h1>
             </legend>
 
-            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> teach at {{ data['admin-claims-data']['school_name'] }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
+            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> spend most of their time teaching pupils who are 11 to 16 years old at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
 
             {% if (data['admin-error-no-phase']) %}
             <span id="admin-phase-error" class="govuk-error-message">{{ data['error-message'] }}</span>
