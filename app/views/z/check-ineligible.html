@@ -53,7 +53,7 @@
               <p class="govuk-body">You can only claim if student loan payments were taken from your teaching wages while you were at {{ data['check-ineligible-school-name'] }}.</p>
               <p class="govuk-body"><a href="guidance">Go to gov.uk homepage</a></p>
 
-              {% elseif (data['check-ineligible-reason'] == "teaching" or data['check-ineligible-reason'] == "teaching-less") %}
+              {% elseif (data['check-ineligible-reason'] == "teaching" or data['check-ineligible-reason'] == "teaching-less" or data['check-ineligible-reason'] == "teaching-other") %}
 
               <p class="govuk-body">You must have taught one of these subjects, or a combination of subjects, for at leas 50% of your teaching hours since {{ globals.tax_year.start_date }}. </p>
               <ul class="govuk-list govuk-list--bullet">

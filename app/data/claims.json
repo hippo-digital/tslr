@@ -11,7 +11,10 @@
       "trn": "2316748",
       "claim_date": "11 Nov 2018",
       "expiry_date": "11 Dec 2018",
-      "processed_date": "12 Dec 2018"
+      "subjects": {
+        "employed-given": "Science",
+        "actual-given": ""
+      }
     },
     {
       "id": 2,
@@ -23,7 +26,10 @@
       "trn": "5478392",
       "claim_date": "12 Nov 2018",
       "expiry_date": "12 Dec 2018",
-      "processed_date": "12 Dec 2018"
+      "subjects": {
+        "employed-given": "Modern Foreign Languages",
+        "actual-given": ""
+      }
     },
     {
       "id": 3,
@@ -35,7 +41,10 @@
       "trn": "6472514",
       "claim_date": "15 Nov 2018",
       "expiry_date": "15 Dec 2018",
-      "processed_date": "12 Dec 2018"
+      "subjects": {
+        "employed-given": "P.E.",
+        "actual-given": "Computer Science"
+      }
     },
     {
       "id": 4,
@@ -47,7 +56,11 @@
       "trn": "1615144",
       "claim_date": "20 Oct 2018",
       "expiry_date": "20 Nov 2018",
-      "processed_date": "05 Dec 2018"
+      "processed_date": "05 Dec 2018",
+      "subjects": {
+        "employed-given": "Computer Science",
+        "actual-given": ""
+      }
     }
   ]
 }
