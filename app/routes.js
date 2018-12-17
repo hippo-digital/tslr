@@ -723,8 +723,8 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       if (req.session.data['update-teaching'] == "update") {
         req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] = req.session.data['admin-eligibility-teaching'];
-        if (req.session.data['admin-eligibility-teaching'] == "yes") {
-          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] = req.session.data['teaching-proportion'];
+        if (req.session.data['admin-eligibility-teaching'] == "no") {
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-subject-other'] = req.session.data['teaching-subject-other'];
         }
         req.session.data['admin-eligibility-teaching'] = "0";
         req.session.data['update-teaching'] = "null";

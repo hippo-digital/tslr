@@ -103,7 +103,13 @@
                       <label class="govuk-label" for="teaching-subject-other">
                         What subject or subjects were they employed to teach?
                       </label>
-                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" {% if data['teaching-subject-other'] %}value="{{data['teaching-subject-other']}}"{% endif %}>
+                      {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-subject-other'] %}
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-subject-other']}}">
+                      {% elif data['teaching-subject-other'] %}
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['teaching-subject-other']}}">
+                      {% else %}
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other">
+                      {% endif %}
                     </div>
 
                     <div class="govuk-form-group">
