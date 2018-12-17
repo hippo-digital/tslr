@@ -362,7 +362,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
     res.redirect('teacher-enter-repayment-amount');
     next
   } else {
-    req.session.data['teacher-error-no-loan-amount'] = false;
+    delete req.session.data['teacher-error-no-loan-amount'];
     res.redirect('teacher-payment-method');
   }
 
@@ -380,41 +380,41 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res
         req.session.data['teacher-error-payment-details-name'] = true;
         req.session.data['error-message-account-name'] = "Enter your account name";
       } else {
-        req.session.data['teacher-error-payment-details-name'] = false;
+        delete req.session.data['teacher-error-payment-details-name'];
       }
       if (!req.session.data['teacher-bank-account-number']) {
         req.session.data['teacher-error-payment-details-number'] = true;
         req.session.data['error-message-account-number'] = "Enter your account number";
       } else {
-        req.session.data['teacher-error-payment-details-number'] = false;
+        delete req.session.data['teacher-error-payment-details-number'];
       }
       if (!req.session.data['teacher-bank-sortcode-1']) {
         req.session.data['teacher-error-payment-details-sort1'] = true;
         req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
       } else {
-        req.session.data['teacher-error-payment-details-sort1'] = false;
+        delete req.session.data['teacher-error-payment-details-sort1'];
       }
       if (!req.session.data['teacher-bank-sortcode-2']) {
         req.session.data['teacher-error-payment-details-sort2'] = true;
         req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
       } else {
-        req.session.data['teacher-error-payment-details-sort2'] = false;
+        delete req.session.data['teacher-error-payment-details-sort2'];
       }
       if (!req.session.data['teacher-bank-sortcode-3']) {
         req.session.data['teacher-error-payment-details-sort3'] = true;
         req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
       } else {
-        req.session.data['teacher-error-payment-details-sort3'] = false;
+        delete req.session.data['teacher-error-payment-details-sort3'];
       }
       res.redirect('teacher-payment-method');
       next
     } else {
-      req.session.data['teacher-error-payment-details'] = false;
-      req.session.data['teacher-error-payment-details-name'] = false;
-      req.session.data['teacher-error-payment-details-number'] = false;
-      req.session.data['teacher-error-payment-details-sort1'] = false;
-      req.session.data['teacher-error-payment-details-sort2'] = false;
-      req.session.data['teacher-error-payment-details-sort3'] = false;
+      delete req.session.data['teacher-error-payment-details'];
+      delete req.session.data['teacher-error-payment-details-name'];
+      delete req.session.data['teacher-error-payment-details-number'];
+      delete req.session.data['teacher-error-payment-details-sort1'];
+      delete req.session.data['teacher-error-payment-details-sort2'];
+      delete req.session.data['teacher-error-payment-details-sort3'];
       res.redirect('teacher-contact-method');
     }
 
@@ -430,28 +430,28 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
     if (!req.session.data['teacher-contact-method']) {
       req.session.data['teacher-error-no-contact'] = true;
       req.session.data['error-message'] = "Select how you want to be contacted";
-      req.session.data['teacher-error-no-email'] = false;
-      req.session.data['teacher-error-no-mobile'] = false;
+      delete req.session.data['teacher-error-no-email'];
+      delete req.session.data['teacher-error-no-mobile'];
       res.redirect('teacher-contact-method');
       next
     } else if (req.session.data['teacher-contact-method'] == "email" && !req.session.data['teacher-email-address']) {
       req.session.data['teacher-error-no-email'] = true;
       req.session.data['error-message-email'] = "Enter your email address";
-      req.session.data['teacher-error-no-contact'] = false;
-      req.session.data['teacher-error-no-mobile'] = false;
+      delete req.session.data['teacher-error-no-contact'];
+      delete req.session.data['teacher-error-no-mobile'];
       res.redirect('teacher-contact-method');
       next
     } else if (req.session.data['teacher-contact-method'] == "mobile" && !req.session.data['teacher-mobile-number']) {
       req.session.data['teacher-error-no-mobile'] = true;
       req.session.data['error-message-mobile'] = "Enter your mobile number";
-      req.session.data['teacher-error-no-contact'] = false;
-      req.session.data['teacher-error-no-email'] = false;
+      delete req.session.data['teacher-error-no-contact'];
+      delete req.session.data['teacher-error-no-email'];
       res.redirect('teacher-contact-method');
       next
     } else {
-      req.session.data['teacher-error-no-contact'] = false;
-      req.session.data['teacher-error-no-email'] = false;
-      req.session.data['teacher-error-no-mobile'] = false;
+      delete req.session.data['teacher-error-no-contact'];
+      delete req.session.data['teacher-error-no-email'];
+      delete req.session.data['teacher-error-no-mobile'];
       res.redirect('teacher-check-send');
     }
 
@@ -526,7 +526,7 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req
     res.redirect('admin-confirm-teaching-eligibility');
     next
   } else {
-    req.session.data['admin-error-no-eligibility-teaching'] = false;
+    delete req.session.data['admin-error-no-eligibility-teaching'];
     res.redirect('admin-enter-repayment-amount');
   }
 
@@ -541,7 +541,7 @@ router.post(/([abcde])\/([0-9]*\/?)(admin-check-send)/, function (req, res) {
     res.redirect('admin-enter-repayment-amount');
     next
   } else {
-    req.session.data['admin-error-no-loan-details'] = false;
+    delete req.session.data['admin-error-no-loan-details'];
     res.redirect('admin-check-send');
   }
 
@@ -628,14 +628,14 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
         req.session.data['admin-error-no-location-start-date'] = true;
         req.session.data['error-message'] = "Enter the start date";
       } else {
-        req.session.data['admin-error-no-location-start-date'] = false;
+        delete req.session.data['admin-error-no-location-start-date'];
       }
       if (!req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year']) {
         // Error: Meant to update location with end date
         req.session.data['admin-error-no-location-end-date'] = true;
         req.session.data['error-message-b'] = "Enter the end date";
       } else {
-        req.session.data['admin-error-no-location-end-date'] = false;
+        delete req.session.data['admin-error-no-location-end-date'];
       }
       res.redirect('admin-confirm-location-eligibility');
       next
@@ -698,6 +698,11 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
         return claim.id == claim_id
       })
       req.session.data['array-ref'] = array_ref;
+      req.session.data['questions-enabled'] = true;
+
+      if (req.session.data['admin-eligibility-location'] == "no" || req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "no") {
+        req.session.data['questions-enabled'] = false;
+      }
 
       if (req.session.data['update-location'] == "update") {
         req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = req.session.data['admin-eligibility-location'];
