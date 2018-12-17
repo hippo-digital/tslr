@@ -43,6 +43,11 @@
   {% set details_complete = false %}
   {% endif %}
 
+  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "no" %}
+  {{ "data.admin-eligibility-location is no" | log }}
+  {% set questions_disabled = true %}
+  {% endif %}
+
   {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] %}
   {{ "claim.eligibility-teaching is incomplete" | log }}
   {% set details_complete = false %}
