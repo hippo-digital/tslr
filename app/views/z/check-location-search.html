@@ -9,6 +9,12 @@
   Teachers' Student Loan Reimbursement
 {% endblock %}
 
+{% block header %}
+  {{ govukHeader({
+    serviceName: "Check if you can claim back student loan payments"
+  }) }}
+{% endblock %}
+
 {% block beforeContent %}
   {% include "includes/phase-banner.html" %}
 {% endblock %}
