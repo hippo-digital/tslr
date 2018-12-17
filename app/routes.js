@@ -1042,6 +1042,10 @@ router.post(/([z])\/([0-9]*\/?)(check-still-teaching)/, function (req, res) {
     req.session.data['check-error-no-teaching'] = false;
     res.redirect('check-teaching');
     next
+  } else if (req.session.data['check-teaching'] == "other" && req.session.data['check-teaching-time'] == "other") {
+    req.session.data['check-eligible'] = false;
+    req.session.data['check-ineligible-reason'] = "teaching-other";
+    res.redirect('check-ineligible');
   } else {
     req.session.data['check-error-no-teaching'] = false;
     req.session.data['check-error-no-teaching-other'] = false;
