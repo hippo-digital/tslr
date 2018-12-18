@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+
+  {% set details_complete = true %}
+  {% set teacher_email = true %}
+  {% set teacher_mobile = true %}
+
+  {% if not data['teacher-loan-amount'] %}
+  {{ "data.teacher-loan-amount is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if not data['teacher-contact-method'] %}
+  {{ "data.teacher-contact-method is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if data['teacher-contact-method'] == "email" and not data['teacher-email-address'] %}
+  {{ "data.teacher-email-address is incomplete" | log }}
+  {% set details_complete = false %}
+  {% set teacher_email = false %}
+  {% endif %}
+
+  {% if data['teacher-contact-method'] == "mobile" and not data['teacher-mobile-number'] %}
+  {{ "data.teacher-mobile-number is incomplete" | log }}
+  {% set details_complete = false %}
+  {% set teacher_mobile = false %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Check your answers</h1>
+
+      <form action="teacher-check-send" method="POST" role="form">
+        <div class="govuk-form-group">
+
+          <input id="teacher-check-send" name="teacher-check-send" type="hidden" value="true">
+
+          <!-- use additional modifier class to change column widths for multiple groups of questions and answers: -->
+          <!--   * `app-check-your-answers--short` for short questions -->
+          <!--   * `app-check-your-answers__questions-long` for long questions -->
+          <!--   * none for single group of q&a -->
+          <dl class="app-check-your-answers app-check-your-answers--short">
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">School</dt>
+              <dd class="app-check-your-answers__answer">
+                <ul class="govuk-list">
+                {% for school in data['teacher-schools'] %}
+                  <li>{{ school.name or "{School name}" }}</li>
+                {% endfor %}
+                </ul>
+              </dd>
+              <dd class="app-check-your-answers__change">
+                <input type="hidden" id="teacher-school-confirm" name="teacher-school-confirm" value="">
+                <button type="submit" class="button-as-link" formaction="teacher-enter-location-confirm">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Student loan amount</dt>
+              {% if data['teacher-loan-amount'] %}
+              <dd class="app-check-your-answers__answer">£{{ data['teacher-loan-amount'] }}</dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="teacher-enter-repayment-amount">Change<span class="govuk-visually-hidden"> student loan amount</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">We'll contact you by:</dt>
+              {% if data['teacher-contact-method'] == "email" %}
+              <dd class="app-check-your-answers__answer">By email:<br/>
+                {% if not teacher_email %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-email-address'] or "Incomplete" }}
+                {% if not teacher_email %}
+                </span>
+                {% endif %}
+              </dd>
+              {% elseif data['teacher-contact-method'] == "mobile" %}
+              <dd class="app-check-your-answers__answer">By text message:<br/>
+                {% if not teacher_mobile %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['teacher-mobile-number'] or "Incomplete" }}
+                {% if not teacher_mobile %}
+                </span>
+                {% endif %}
+              </dd>
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="teacher-contact-method">Change<span class="govuk-visually-hidden"> contact method</span></button>
+              </dd>
+            </div>
+
+          </dl>
+
+        </div>
+
+      </form>
+
+      <h2 class="govuk-heading-m">Confirm your claim</h2>
+      <p>By submitting this claim you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+      <form action="teacher-enter-location-confirm" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+          {% if details_complete %}
+            <button type="submit" class="govuk-button" formaction="teacher-confirmation">Confirm and send</button>
+          {% else %}
+            <button type="submit" class="govuk-button disabled-button">Confirm and send</button>
+          {% endif %}
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

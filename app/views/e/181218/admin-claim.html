@@ -1,0 +1,225 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Check teachers' claims for student loan repayments",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% set claim_id = data['claim-id'] | int %}
+  {% set array_ref = data['array-ref'] | int %}
+
+  {% include "includes/phase-banner.html" %}
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="admin-claims">All claims: {{ data['admin-claims-data']['school_name'] }}</a></li>
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</li>
+    </ol>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+
+  {% set claim_id = data['claim-id'] | int %}
+  {% set array_ref = data['array-ref'] | int %}
+  {% set questions_enabled = data['questions-enabled'] %}
+
+  {% set details_complete = true %}
+  {% set admin_start_date = true %}
+  {% set admin_end_date = true %}
+
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-location'] %}
+  {{ "data.admin-eligibility-period is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] %}
+  {{ "claim.eligibility-teaching is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if not data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] %}
+  {{ "claim.eligibility-phase is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  {% if not data['admin-claims-data']['claims'][array_ref]['loan-amount'] %}
+  {{ "data.admin-loan-amount is incomplete" | log }}
+  {% set details_complete = false %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Claim details</h1>
+
+      <form action="admin-confirmation" method="POST" role="form">
+        <div class="govuk-form-group">
+
+          <input id="admin-claim" name="admin-claim" type="hidden" value="true">
+
+          <!-- only add a heading for a list if there is more than one list -->
+          <h2 class="govuk-heading-m">Teacher details</h2>
+
+          <!-- use additional modifier class to change column widths for multiple groups of questions and answers: -->
+          <!--   * `app-check-your-answers--short` for short questions -->
+          <!--   * `app-check-your-answers__questions-long` for long questions -->
+          <!--   * none for single group of q&a -->
+          <dl class="app-check-your-answers app-check-your-answers--short">
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Teacher name</dt>
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</dd>
+              <dd class="app-check-your-answers__change">&nbsp;</dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Teacher reference number (TRN)</dt>
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['trn'] }}</dd>
+              <dd class="app-check-your-answers__change">&nbsp;</dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">School</dt>
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['school_name'] }}</dd>
+              <dd class="app-check-your-answers__change">&nbsp;</dd>
+            </div>
+
+          </dl>
+
+        </div>
+
+        <div class="govuk-form-group">
+
+          <h2 class="govuk-heading-m">Claim details for {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</h2>
+
+          <dl class="app-check-your-answers wider-titles app-check-your-answers--short">
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Did they work at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
+              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes' %}
+              <dd class="app-check-your-answers__answer">Yes</dd>
+              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes-part' %}
+              <dd class="app-check-your-answers__answer">Yes, for part of the year<br/>
+                {% if not admin_start_date %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_year'] or "yyyy" }}
+                {% if not admin_start_date %}
+                </span>
+                {% endif %}
+                -
+                {% if not admin_end_date %}
+                <span class="answer-incomplete">
+                {% endif %}
+                {{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_year'] or "yyyy" }}
+                {% if not admin_end_date %}
+                </span>
+                {% endif %}
+              </dd>
+              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
+              <dd class="app-check-your-answers__answer">No</dd>
+              {% set questions_disabled = true %}
+              {% else %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+              {% set questions_disabled = true %}
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-location-eligibility">Update<span class="govuk-visually-hidden"> school eligibility</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents {% if not questions_enabled %} questions_disabled{% endif %}">
+              <dt class="app-check-your-answers__question">Did they teach biology, chemistry, physics, computer science or languages (not English)?</dt>
+              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'yes' %}
+              <dd class="app-check-your-answers__answer">Yes,
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] == 'more' %}
+                more than 50% of their time
+                {% else %}
+                but less than 50% of their time
+                {% endif %}
+              </dd>
+              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'no' %}
+              <dd class="app-check-your-answers__answer">No</dd>
+              {% else %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
+                {% else %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+                {% endif %}
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-teaching-eligibility">Update<span class="govuk-visually-hidden"> teaching eligibility</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents {% if not questions_enabled %} questions_disabled{% endif %}">
+              <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did they spend most of their scheduled hours teaching people who are 11 to 16 years old?</dt>
+              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] %}
+              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] | title }}</dd>
+              {% else %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
+                {% else %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+                {% endif %}
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-phase-eligibility">Update<span class="govuk-visually-hidden"> educational phase</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents {% if not questions_enabled %} questions_disabled{% endif %}">
+              <dt class="app-check-your-answers__question">How much student loan did they repay between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
+              {% if data['admin-claims-data']['claims'][array_ref]['loan-amount'] %}
+              <dd class="app-check-your-answers__answer">£{{ data['admin-claims-data']['claims'][array_ref]['loan-amount'] }}</dd>
+              {% else %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
+                {% else %}
+                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
+                {% endif %}
+              {% endif %}
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" formaction="admin-confirm-repayment-amount">Update<span class="govuk-visually-hidden"> student loan amount</span></button>
+              </dd>
+            </div>
+
+          </dl>
+
+        </div>
+
+        <h2 class="govuk-heading-m">Confirm the claim</h2>
+        <p>By submitting this form you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+        <p class="govuk-body">
+          {% if details_complete or not questions_enabled %}
+          <button type="submit" class="govuk-button" name="update-claim" value="update">Confirm and send</button>
+          {% else %}
+          <button type="submit" class="govuk-button disabled-button" name="update-claim" value="update">Confirm and send</button>
+          {% endif %}
+        </p>
+
+      </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Admin notification email</a>
+      </p>
+
+    </div>
+
+  </div>
+{% endblock %}

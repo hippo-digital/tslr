@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Check teachers' claims for student loan repayments",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% set claim_id = data['claim-id'] | int %}
+  {% set array_ref = data['array-ref'] | int %}
+
+  {% include "includes/phase-banner.html" %}
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="admin-claims">All claims: {{ data['admin-claims-data']['school_name'] }}</a></li>
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="admin-claim">{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</a></li>
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">Confirm education phase</li>
+    </ol>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+
+  {% set claim_id = data['claim-id'] | int %}
+  {# Need to replace the below with proper JSON object access #}
+  {% set array_ref = claim_id - 1 %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if (data['admin-error-no-phase']) %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if (data['admin-error-no-phase']) %}
+            <li><a href="#admin-phase-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <form action="admin-claim" method="POST" role="form">
+        <div class="govuk-form-group {% if (data['admin-error-no-phase']) %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">Confirm the age range of the pupils</h1>
+            </legend>
+
+            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> spend most of their time teaching pupils who are 11 to 16 years old at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+
+            {% if (data['admin-error-no-phase']) %}
+            <span id="admin-phase-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
+            <div class="govuk-form-group">
+
+              <div class="govuk-radios" data-module="radios">
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] == "yes" %}
+                  <input class="govuk-radios__input" id="eligibility-phase-conditional-yes" name="admin-eligibility-phase" type="radio" value="yes" data-aria-controls="conditional-eligibility-phase-conditional-yes" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="eligibility-phase-conditional-yes" name="admin-eligibility-phase" type="radio" value="yes" data-aria-controls="conditional-eligibility-phase-conditional-yes">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="eligibility-phase-conditional-yes">Yes</label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] == "no" %}
+                  <input class="govuk-radios__input" id="eligibility-phase-conditional-no" name="admin-eligibility-phase" type="radio" value="no" data-aria-controls="conditional-eligibility-phase-conditional-no" checked>
+                  {% else %}
+                  <input class="govuk-radios__input" id="eligibility-phase-conditional-no" name="admin-eligibility-phase" type="radio" value="no" data-aria-controls="conditional-eligibility-phase-conditional-no">
+                  {% endif %}
+                  <label class="govuk-label govuk-radios__label" for="eligibility-phase-conditional-no">No</label>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="govuk-form-group">
+              <button type="submit" class="govuk-button" name="update-phase" value="update">Update</button>
+              <p class="govuk-body">
+                <button type="submit" class="button-as-link" name="update-phase" value="cancel">Skip for now</button>
+              </p>
+            </div>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Admin notification email</a>
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
