@@ -622,6 +622,13 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
     } else if (req.session.data['update-location'] == "update" && req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
 
+      // Update the elgibility-teaching value incase it's changed
+      var claim_id = req.session.data['claim-id'];
+      var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
+        return claim.id == claim_id
+      })
+      req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = "yes-part";
+
       req.session.data['admin-error-no-location-period'] = true;
       if (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year']) {
         // Error: Meant to update location with start date
@@ -648,7 +655,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       res.redirect('admin-confirm-teaching-eligibility');
       next
 
-    } else if (req.session.data['update-teaching'] == "update" && req.session.data['admin-eligibility-teaching'] == "yes" && !req.session.data['teaching-subject-other']) {
+    } else if (req.session.data['update-teaching'] == "update" && req.session.data['admin-eligibility-teaching'] == "no" && !req.session.data['teaching-subject-other']) {
 
       // Error: Meant to update teaching with other subject
       req.session.data['admin-error-no-teaching-subject-other'] = true;
@@ -698,14 +705,11 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
         return claim.id == claim_id
       })
       req.session.data['array-ref'] = array_ref;
-      req.session.data['questions-enabled'] = true;
-
-      if (req.session.data['admin-eligibility-location'] == "no" || req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "no") {
-        req.session.data['questions-enabled'] = false;
-      }
 
       if (req.session.data['update-location'] == "update") {
         req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = req.session.data['admin-eligibility-location'];
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
         if (req.session.data['admin-eligibility-location'] == "yes-part") {
           var eligiblity_period = {};
           eligiblity_period.start_day = req.session.data['admin-start-day'];
@@ -721,15 +725,25 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
           delete req.session.data['admin-end-day'];
           delete req.session.data['admin-end-month'];
           delete req.session.data['admin-end-year'];
+        } else if (req.session.data['admin-eligibility-location'] == "no") {
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "location";
         }
         delete req.session.data['admin-eligibility-location'];
         delete req.session.data['update-location'];
       }
 
       if (req.session.data['update-teaching'] == "update") {
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] = req.session.data['admin-eligibility-teaching'];
+        if (req.session.data['admin-eligibility-teaching'] == "yes") {
+          req.session.data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['employed'] = req.session.data['admin-claims-data']['claims'][array_ref]['subjects']['declared']['employed'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
+        }
         if (req.session.data['admin-eligibility-teaching'] == "no") {
-          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-subject-other'] = req.session.data['teaching-subject-other'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['actual'] = req.session.data['teaching-subject-other'];
+          // @todo
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching";
         }
         delete req.session.data['admin-eligibility-teaching'];
         delete req.session.data['update-teaching'];
@@ -737,12 +751,18 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       if (req.session.data['update-phase'] == "update") {
         req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] = req.session.data['admin-eligibility-phase'];
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
+        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
+        if (req.session.data['admin-eligibility-phase'] == "no") {
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "phase";
+        }
         delete req.session.data['admin-eligibility-phase'];
         delete req.session.data['update-phase'];
       }
 
       if (req.session.data['update-loan'] == "update") {
-        req.session.data['admin-claims-data']['claims'][array_ref]['loan-amount'] = req.session.data['admin-loan-amount'];
+        req.session.data['admin-claims-data']['claims'][array_ref]['loan']['verified'] = req.session.data['admin-loan-amount'];
         delete req.session.data['admin-loan-amount'];
         delete req.session.data['update-loan'];
       }
@@ -777,10 +797,13 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
 router.post(/([e])\/([0-9]*\/?)(admin-confirmation)/, function (req, res) {
 
-  // Set the claim to processed
+  // Check which claim is being handled
   var claim_id = req.session.data['claim-id'];
   var array_ref = req.session.data['array-ref'];
 
+  // Get out of here if processing not complete
+
+  // Set the claim to processed
   req.session.data['admin-claims-data']['claims'][array_ref]['status'] = "closed";
 
   // Updated muber of claims

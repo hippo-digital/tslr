@@ -105,7 +105,14 @@
 
           <dl class="app-check-your-answers wider-titles app-check-your-answers--short">
 
+            {% if not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] and data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] == 'location' %}
             <div class="app-check-your-answers__contents">
+            {% elif not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] %}
+            <div class="app-check-your-answers__contents questions_disabled">
+            {% else %}
+            <div class="app-check-your-answers__contents">
+            {% endif %}
+
               <dt class="app-check-your-answers__question">Did they work at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
@@ -137,62 +144,67 @@
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-location-eligibility">Update<span class="govuk-visually-hidden"> school eligibility</span></button>
               </dd>
+
             </div>
 
-            <div class="app-check-your-answers__contents {% if not questions_enabled %} questions_disabled{% endif %}">
+            {% if not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] and data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] == 'teaching' %}
+            <div class="app-check-your-answers__contents">
+            {% elif not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] %}
+            <div class="app-check-your-answers__contents questions_disabled">
+            {% else %}
+            <div class="app-check-your-answers__contents">
+            {% endif %}
+
               <dt class="app-check-your-answers__question">Did they teach biology, chemistry, physics, computer science or languages (not English)?</dt>
-              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'yes' %}
-              <dd class="app-check-your-answers__answer">Yes,
-                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-teaching-proportion'] == 'more' %}
-                more than 50% of their time
-                {% else %}
-                but less than 50% of their time
-                {% endif %}
-              </dd>
+              {% if data['admin-claims-data']['claims'][array_ref]['subjects']['declared']['employed'] == data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['employed'] %}
+              <dd class="app-check-your-answers__answer">Yes</dd>
               {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
-                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
-                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
-                {% else %}
-                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
-                {% endif %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-teaching-eligibility">Update<span class="govuk-visually-hidden"> teaching eligibility</span></button>
               </dd>
+
             </div>
 
-            <div class="app-check-your-answers__contents {% if not questions_enabled %} questions_disabled{% endif %}">
+            {% if not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] and data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] == 'phase' %}
+            <div class="app-check-your-answers__contents">
+            {% elif not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] %}
+            <div class="app-check-your-answers__contents questions_disabled">
+            {% else %}
+            <div class="app-check-your-answers__contents">
+            {% endif %}
+
               <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did they spend most of their scheduled hours teaching people who are 11 to 16 years old?</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] %}
               <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] | title }}</dd>
               {% else %}
-                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
-                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
-                {% else %}
-                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
-                {% endif %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-phase-eligibility">Update<span class="govuk-visually-hidden"> educational phase</span></button>
               </dd>
+
             </div>
 
-            <div class="app-check-your-answers__contents {% if not questions_enabled %} questions_disabled{% endif %}">
+            {% if not data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] %}
+            <div class="app-check-your-answers__contents questions_disabled">
+            {% else %}
+            <div class="app-check-your-answers__contents">
+            {% endif %}
+
               <dt class="app-check-your-answers__question">How much student loan did they repay between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
-              {% if data['admin-claims-data']['claims'][array_ref]['loan-amount'] %}
-              <dd class="app-check-your-answers__answer">£{{ data['admin-claims-data']['claims'][array_ref]['loan-amount'] }}</dd>
+              {% if data['admin-claims-data']['claims'][array_ref]['loan']['verified'] %}
+              <dd class="app-check-your-answers__answer">£{{ data['admin-claims-data']['claims'][array_ref]['loan']['verified'] }}</dd>
               {% else %}
-                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
-                <dd class="app-check-your-answers__answer answer-incomplete">Not applicable</dd>
-                {% else %}
-                <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
-                {% endif %}
+              <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" formaction="admin-confirm-repayment-amount">Update<span class="govuk-visually-hidden"> student loan amount</span></button>
               </dd>
+
             </div>
 
           </dl>
@@ -202,11 +214,7 @@
         <h2 class="govuk-heading-m">Confirm the claim</h2>
         <p>By submitting this form you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
         <p class="govuk-body">
-          {% if details_complete or not questions_enabled %}
           <button type="submit" class="govuk-button" name="update-claim" value="update">Confirm and send</button>
-          {% else %}
-          <button type="submit" class="govuk-button disabled-button" name="update-claim" value="update">Confirm and send</button>
-          {% endif %}
         </p>
 
       </form>
