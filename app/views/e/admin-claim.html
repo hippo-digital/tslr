@@ -61,6 +61,19 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      {% if data['admin-error-no-complete'] %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if (data['admin-error-no-complete']) %}
+            <li><a href="#admin-complete-error">{{ data['error-message'] }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
       <h1 class="govuk-heading-xl">Claim details</h1>
 
       <form action="admin-confirmation" method="POST" role="form">
@@ -99,9 +112,13 @@
 
         </div>
 
-        <div class="govuk-form-group">
+        <div class="govuk-form-group {% if data['admin-error-no-complete'] %}govuk-form-group--error{% endif %}">
 
           <h2 class="govuk-heading-m">Claim details for {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</h2>
+
+          {% if (data['admin-error-no-complete']) %}
+          <span id="admin-complete-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+          {% endif %}
 
           <dl class="app-check-your-answers wider-titles app-check-your-answers--short">
 

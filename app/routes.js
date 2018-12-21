@@ -832,6 +832,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       if (req.session.data['update-loan'] == "update") {
 
         req.session.data['admin-claims-data']['claims'][array_ref]['loan']['verified'] = req.session.data['admin-loan-amount'];
+        req.session.data['admin-claims-data']['claims'][array_ref]['loan']['eligibility'] = true;
         delete req.session.data['admin-loan-amount'];
         delete req.session.data['update-loan'];
 
@@ -847,6 +848,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       delete req.session.data['admin-error-no-teaching-actual'];
       delete req.session.data['admin-error-no-phase'];
       delete req.session.data['admin-error-no-loan'];
+      delete req.session.data['admin-error-no-complete'];
 
     }
 
@@ -872,19 +874,38 @@ router.post(/([e])\/([0-9]*\/?)(admin-confirmation)/, function (req, res) {
   var claim_id = req.session.data['claim-id'];
   var array_ref = req.session.data['array-ref'];
 
-  // Get out of here if processing not complete
+  var eligibility_status = req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'];
+  var location_eligibility = req.session.data['admin-claims-data']['claims'][array_ref]['location']['eligibility'];
+  var teaching_eligibility = req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'];
+  var phase_eligibility = req.session.data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'];
+  var loan_eligibility = req.session.data['admin-claims-data']['claims'][array_ref]['loan']['eligibility'];
 
-  // Set the claim to processed
-  req.session.data['admin-claims-data']['claims'][array_ref]['status'] = "closed";
+  if (eligibility_status && (!location_eligibility || !teaching_eligibility || !phase_eligibility || !loan_eligibility)) {
 
-  // Updated muber of claims
-  var num_claims = req.session.data['admin-claims-data']['num_claims'];
-  num_claims.open--;
-  num_claims.closed++;
-  req.session.data['admin-claims-data']['num_claims'] = num_claims;
+    // Incomplete: If eligibility status is true but not all the eligibilities are yes
+    req.session.data['admin-error-no-complete'] = true;
+    req.session.data['error-message'] = "Complete the missing information";
+    res.redirect('admin-claim');
+    next
 
-  res.redirect('admin-confirmation');
-  next
+  } else {
+
+    // Complete: If the eligibility is false
+    // Complete: Else if eligibility status is true and all the eligibilities are yes
+
+    // Set the claim to processed
+    req.session.data['admin-claims-data']['claims'][array_ref]['status'] = "closed";
+
+    // Updated muber of claims
+    var num_claims = req.session.data['admin-claims-data']['num_claims'];
+    num_claims.open--;
+    num_claims.closed++;
+    req.session.data['admin-claims-data']['num_claims'] = num_claims;
+
+    res.redirect('admin-confirmation');
+    next
+
+  }
 
 })
 
