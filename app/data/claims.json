@@ -28,8 +28,9 @@
           "actual": ""
         },
         "verified": {
-          "employed": "",
-          "actual": ""
+          "employed": null,
+          "actual": null,
+          "other": ""
         }
       },
       "loan": {
@@ -68,8 +69,9 @@
           "actual": ""
         },
         "verified": {
-          "employed": "",
-          "actual": ""
+          "employed": null,
+          "actual": null,
+          "other": ""
         }
       },
       "loan": {
@@ -108,8 +110,9 @@
           "actual": "Computer Science"
         },
         "verified": {
-          "employed": "",
-          "actual": ""
+          "employed": null,
+          "actual": null,
+          "other": ""
         }
       },
       "loan": {
@@ -149,8 +152,9 @@
           "actual": ""
         },
         "verified": {
-          "employed": "",
-          "actual": ""
+          "employed": null,
+          "actual": null,
+          "other": ""
         }
       },
       "loan": {

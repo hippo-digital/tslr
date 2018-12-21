@@ -156,9 +156,9 @@
             {% endif %}
 
               <dt class="app-check-your-answers__question">Did they teach biology, chemistry, physics, computer science or languages (not English)?</dt>
-              {% if data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'] == data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] %}
+              {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "yes" %}
               <dd class="app-check-your-answers__answer">Yes</dd>
-              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-teaching'] == 'no' %}
+              {% elseif data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
