@@ -65,7 +65,7 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">Was {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} employed to teach {{ data['admin-claims-data']['claims'][array_ref]['subjects']['declared']['employed'] | title }} at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+              <p class="govuk-body">Was {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} employed to teach {{ data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'] | title }} at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
             </div>
 
             <div class="govuk-form-group">
@@ -77,7 +77,7 @@
               <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
                 <div class="govuk-radios__item">
-                  {% if data['admin-claims-data']['claims'][array_ref]['subjects']['declared']['employed'] == data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['employed'] %}
+                  {% if data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'] == data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" checked>
                   {% else %}
                   <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes">
@@ -103,8 +103,8 @@
                       <label class="govuk-label" for="teaching-subject-other">
                         What subject or subjects were they employed to teach?
                       </label>
-                      {% if data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['actual'] %}
-                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['actual']}}">
+                      {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] %}
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual']}}">
                       {% elif data['teaching-subject-other'] %}
                       <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['teaching-subject-other']}}">
                       {% else %}
@@ -118,7 +118,7 @@
 
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                           <h2 class="govuk-fieldset__heading">
-                            Did {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} actually spend most of their time teaching {{ data['admin-claims-data']['claims'][array_ref]['subjects']['declared']['employed'] | title }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
+                            Did {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} actually spend most of their time teaching {{ data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] or data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'] | title }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
                           </h2>
                         </legend>
 

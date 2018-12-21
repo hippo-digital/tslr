@@ -735,13 +735,16 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       if (req.session.data['update-teaching'] == "update") {
         if (req.session.data['admin-eligibility-teaching'] == "yes") {
-          req.session.data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['employed'] = req.session.data['admin-claims-data']['claims'][array_ref]['subjects']['declared']['employed'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] = req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'];
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
         }
         if (req.session.data['admin-eligibility-teaching'] == "no") {
-          req.session.data['admin-claims-data']['claims'][array_ref]['subjects']['verified']['actual'] = req.session.data['teaching-subject-other'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] = req.session.data['teaching-subject-other'];
           // @todo
+          if (req.session.data['admin-actual-teaching'] == "yes") {
+            req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] = req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] ? req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] : req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'];
+          }
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching";
         }
