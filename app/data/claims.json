@@ -1,5 +1,6 @@
 {
   "school_name": "Moorside High School",
+  "school_urn": 123,
   "claims": [
     {
       "id": 1,
@@ -15,7 +16,13 @@
       "trn": "2316748",
       "claim_date": "11 Nov 2018",
       "expiry_date": "11 Dec 2018",
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
       "teaching": {
+        "eligibility": null,
         "declared": {
           "employed": "Science",
           "actual": ""
@@ -26,12 +33,13 @@
         }
       },
       "loan": {
+        "eligibility": null,
         "declared": "450.76",
         "verified": ""
       },
-      "age_group": {
-        "declared": true,
-        "verified": null
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     },
     {
@@ -48,7 +56,13 @@
       "trn": "5478392",
       "claim_date": "12 Nov 2018",
       "expiry_date": "12 Dec 2018",
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
       "teaching": {
+        "eligibility": null,
         "declared": {
           "employed": "Modern Foreign Languages",
           "actual": ""
@@ -59,12 +73,13 @@
         }
       },
       "loan": {
+        "eligibility": null,
         "declared": "878.54",
         "verified": ""
       },
-      "age_group": {
-        "declared": true,
-        "verified": null
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     },
     {
@@ -81,7 +96,13 @@
       "trn": "6472514",
       "claim_date": "15 Nov 2018",
       "expiry_date": "15 Dec 2018",
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
       "teaching": {
+        "eligibility": null,
         "declared": {
           "employed": "P.E.",
           "actual": "Computer Science"
@@ -92,12 +113,13 @@
         }
       },
       "loan": {
+        "eligibility": null,
         "declared": "34.87",
         "verified": ""
       },
-      "age_group": {
-        "declared": true,
-        "verified": null
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     },
     {
@@ -115,7 +137,13 @@
       "claim_date": "20 Oct 2018",
       "expiry_date": "20 Nov 2018",
       "processed_date": "05 Dec 2018",
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
       "teaching": {
+        "eligibility": null,
         "declared": {
           "employed": "Computer Science",
           "actual": ""
@@ -126,12 +154,13 @@
         }
       },
       "loan": {
+        "eligibility": null,
         "declared": "443.33",
         "verified": ""
       },
-      "age_group": {
-        "declared": true,
-        "verified": null
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     }
   ]

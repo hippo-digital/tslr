@@ -627,7 +627,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
         return claim.id == claim_id
       })
-      req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = "yes-part";
+      req.session.data['admin-claims-data']['claims'][array_ref]['location']['verified'] = "yes-part";
 
       req.session.data['admin-error-no-location-period'] = true;
       if (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year']) {
@@ -707,10 +707,16 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       req.session.data['array-ref'] = array_ref;
 
       if (req.session.data['update-location'] == "update") {
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location'] = req.session.data['admin-eligibility-location'];
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
-        if (req.session.data['admin-eligibility-location'] == "yes-part") {
+
+        if (req.session.data['admin-eligibility-location'] == "yes") {
+
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['eligibility'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['verified'] = "yes";
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
+
+        } else if (req.session.data['admin-eligibility-location'] == "yes-part") {
+
           var eligiblity_period = {};
           eligiblity_period.start_day = req.session.data['admin-start-day'];
           eligiblity_period.start_month = req.session.data['admin-start-month'];
@@ -718,56 +724,87 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
           eligiblity_period.end_day = req.session.data['admin-end-day'];
           eligiblity_period.end_month = req.session.data['admin-end-month'];
           eligiblity_period.end_year = req.session.data['admin-end-year'];
-          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-location-period'] = eligiblity_period;
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period'] = eligiblity_period;
           delete req.session.data['admin-start-day'];
           delete req.session.data['admin-start-month'];
           delete req.session.data['admin-start-year'];
           delete req.session.data['admin-end-day'];
           delete req.session.data['admin-end-month'];
           delete req.session.data['admin-end-year'];
+
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['eligibility'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['verified'] = "yes-part";
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
+
         } else if (req.session.data['admin-eligibility-location'] == "no") {
+
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['eligibility'] = false;
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['verified'] = "no";
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "location";
+
         }
+
         delete req.session.data['admin-eligibility-location'];
         delete req.session.data['update-location'];
+
       }
 
       if (req.session.data['update-teaching'] == "update") {
+
         if (req.session.data['admin-eligibility-teaching'] == "yes") {
+
           req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] = req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'];
+          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'] = true;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
-        }
-        if (req.session.data['admin-eligibility-teaching'] == "no") {
+
+        } else if (req.session.data['admin-eligibility-teaching'] == "no") {
+
           req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] = req.session.data['teaching-subject-other'];
           // @todo
           if (req.session.data['admin-actual-teaching'] == "yes") {
             req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] = req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] ? req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] : req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'];
           }
+          req.session.data['admin-claims-data']['claims'][array_ref]['location']['eligibility'] = false;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching";
+
         }
+
         delete req.session.data['admin-eligibility-teaching'];
         delete req.session.data['update-teaching'];
+
       }
 
       if (req.session.data['update-phase'] == "update") {
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] = req.session.data['admin-eligibility-phase'];
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
-        req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
-        if (req.session.data['admin-eligibility-phase'] == "no") {
+
+        if (req.session.data['admin-eligibility-phase'] == "yes") {
+
+          req.session.data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
+
+        } else if (req.session.data['admin-eligibility-phase'] == "no") {
+
+          req.session.data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] = false;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "phase";
+
         }
+
         delete req.session.data['admin-eligibility-phase'];
         delete req.session.data['update-phase'];
+
       }
 
       if (req.session.data['update-loan'] == "update") {
+
         req.session.data['admin-claims-data']['claims'][array_ref]['loan']['verified'] = req.session.data['admin-loan-amount'];
         delete req.session.data['admin-loan-amount'];
         delete req.session.data['update-loan'];
+
       }
 
       // ..and then reset all the error variables

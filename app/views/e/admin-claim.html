@@ -114,14 +114,14 @@
             {% endif %}
 
               <dt class="app-check-your-answers__question">Did they work at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
-              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes' %}
+              {% if data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
-              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'yes-part' %}
+              {% elseif data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'yes-part' %}
               <dd class="app-check-your-answers__answer">Yes, for part of the year<br/>
                 {% if not admin_start_date %}
                 <span class="answer-incomplete">
                 {% endif %}
-                {{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['start_year'] or "yyyy" }}
+                {{ data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period']['start_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period']['start_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period']['start_year'] or "yyyy" }}
                 {% if not admin_start_date %}
                 </span>
                 {% endif %}
@@ -129,12 +129,12 @@
                 {% if not admin_end_date %}
                 <span class="answer-incomplete">
                 {% endif %}
-                {{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['eligibility-location-period']['end_year'] or "yyyy" }}
+                {{ data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period']['end_day'] or "dd" }}/{{ data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period']['end_month'] or "mm" }}/{{ data['admin-claims-data']['claims'][array_ref]['location']['eligibility-period']['end_year'] or "yyyy" }}
                 {% if not admin_end_date %}
                 </span>
                 {% endif %}
               </dd>
-              {% elseif data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == 'no' %}
+              {% elseif data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'no' %}
               <dd class="app-check-your-answers__answer">No</dd>
               {% set questions_disabled = true %}
               {% else %}
@@ -178,8 +178,10 @@
             {% endif %}
 
               <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did they spend most of their scheduled hours teaching people who are 11 to 16 years old?</dt>
-              {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] %}
-              <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] | title }}</dd>
+              {% if data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] %}
+              <dd class="app-check-your-answers__answer">Yes</dd>
+              {% elif data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] === false %}
+              <dd class="app-check-your-answers__answer">No</dd>
               {% else %}
               <dd class="app-check-your-answers__answer answer-incomplete">Incomplete</dd>
               {% endif %}
