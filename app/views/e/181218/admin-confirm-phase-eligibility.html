@@ -71,7 +71,7 @@
               <div class="govuk-radios" data-module="radios">
 
                 <div class="govuk-radios__item">
-                  {% if data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] %}
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] == "yes" %}
                   <input class="govuk-radios__input" id="eligibility-phase-conditional-yes" name="admin-eligibility-phase" type="radio" value="yes" data-aria-controls="conditional-eligibility-phase-conditional-yes" checked>
                   {% else %}
                   <input class="govuk-radios__input" id="eligibility-phase-conditional-yes" name="admin-eligibility-phase" type="radio" value="yes" data-aria-controls="conditional-eligibility-phase-conditional-yes">
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="govuk-radios__item">
-                  {% if data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] === false %}
+                  {% if data['admin-claims-data']['claims'][array_ref]['eligibility-phase'] == "no" %}
                   <input class="govuk-radios__input" id="eligibility-phase-conditional-no" name="admin-eligibility-phase" type="radio" value="no" data-aria-controls="conditional-eligibility-phase-conditional-no" checked>
                   {% else %}
                   <input class="govuk-radios__input" id="eligibility-phase-conditional-no" name="admin-eligibility-phase" type="radio" value="no" data-aria-controls="conditional-eligibility-phase-conditional-no">

@@ -59,7 +59,7 @@
 
               {% elseif (data['check-ineligible-reason'] == "teaching" or data['check-ineligible-reason'] == "teaching-less" or data['check-ineligible-reason'] == "teaching-other") %}
 
-              <p class="govuk-body">You must have taught one of these subjects, or a combination of subjects, for at least 50% of your teaching hours since {{ globals.tax_year.start_date }}. </p>
+              <p class="govuk-body">Since {{ globals.tax_year.start_date }} you must have taught one of these subjects, or a combination of subjects, for most of your teaching hours:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>biology</li>
                 <li>chemistry</li>

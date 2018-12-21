@@ -76,7 +76,7 @@
             <div class="govuk-radios govuk-radios--conditional" data-module="radios">
 
               <div class="govuk-radios__item">
-                {% if data['admin-claims-data']['claims'][array_ref]['location']['verified'] == "yes" %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "yes" %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes" name="admin-eligibility-location" type="radio" value="yes" data-aria-controls="conditional-eligibility-location-conditional-yes" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes" name="admin-eligibility-location" type="radio" value="yes" data-aria-controls="conditional-eligibility-location-conditional-yes">
@@ -85,7 +85,7 @@
               </div>
 
               <div class="govuk-radios__item">
-                {% if data['admin-claims-data']['claims'][array_ref]['location']['verified'] == "yes-part" %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "yes-part" %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes-part" name="admin-eligibility-location" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-location-conditional-yes-part" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-yes-part" name="admin-eligibility-location" type="radio" value="yes-part" data-aria-controls="conditional-eligibility-location-conditional-yes-part">
@@ -158,7 +158,7 @@
               </div>
 
               <div class="govuk-radios__item">
-                {% if data['admin-claims-data']['claims'][array_ref]['location']['verified'] == "no" %}
+                {% if data['admin-claims-data']['claims'][array_ref]['eligibility-location'] == "no" %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-no" name="admin-eligibility-location" type="radio" value="no" data-aria-controls="conditional-eligibility-location-conditional-no" checked>
                 {% else %}
                 <input class="govuk-radios__input" id="eligibility-location-conditional-no" name="admin-eligibility-location" type="radio" value="no" data-aria-controls="conditional-eligibility-location-conditional-no">

@@ -1,55 +1,138 @@
 {
   "school_name": "Moorside High School",
+  "school_urn": 123,
   "claims": [
     {
       "id": 1,
       "claim_code": "TSLR-124",
       "status": "open",
+      "eligibility": {
+        "status": true,
+        "reason": ""
+      },
       "first_name": "Jane",
       "last_name": "Jones",
       "full_name": "Jane Jones",
       "trn": "2316748",
       "claim_date": "11 Nov 2018",
       "expiry_date": "11 Dec 2018",
-      "subjects": {
-        "employed-given": "Science",
-        "actual-given": ""
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
+      "teaching": {
+        "eligibility": null,
+        "declared": {
+          "employed": "Science",
+          "actual": ""
+        },
+        "verified": {
+          "employed": null,
+          "actual": null,
+          "other": ""
+        }
+      },
+      "loan": {
+        "eligibility": null,
+        "declared": "450.76",
+        "verified": ""
+      },
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     },
     {
       "id": 2,
       "claim_code": "TSLR-149",
       "status": "open",
+      "eligibility": {
+        "status": true,
+        "reason": ""
+      },
       "first_name": "Barbara",
       "last_name": "Smith",
       "full_name": "Barbara Smith",
       "trn": "5478392",
       "claim_date": "12 Nov 2018",
       "expiry_date": "12 Dec 2018",
-      "subjects": {
-        "employed-given": "Modern Foreign Languages",
-        "actual-given": ""
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
+      "teaching": {
+        "eligibility": null,
+        "declared": {
+          "employed": "Modern Foreign Languages",
+          "actual": ""
+        },
+        "verified": {
+          "employed": null,
+          "actual": null,
+          "other": ""
+        }
+      },
+      "loan": {
+        "eligibility": null,
+        "declared": "878.54",
+        "verified": ""
+      },
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     },
     {
       "id": 3,
       "claim_code": "TSLR-203",
       "status": "open",
+      "eligibility": {
+        "status": true,
+        "reason": ""
+      },
       "first_name": "David",
       "last_name": "Powell",
       "full_name": "David Powell",
       "trn": "6472514",
       "claim_date": "15 Nov 2018",
       "expiry_date": "15 Dec 2018",
-      "subjects": {
-        "employed-given": "P.E.",
-        "actual-given": "Computer Science"
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
+      "teaching": {
+        "eligibility": null,
+        "declared": {
+          "employed": "P.E.",
+          "actual": "Computer Science"
+        },
+        "verified": {
+          "employed": null,
+          "actual": null,
+          "other": ""
+        }
+      },
+      "loan": {
+        "eligibility": null,
+        "declared": "34.87",
+        "verified": ""
+      },
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     },
     {
       "id": 4,
       "claim_code": "TSLR-089",
       "status": "closed",
+      "eligibility": {
+        "status": true,
+        "reason": ""
+      },
       "first_name": "Joe",
       "last_name": "Bloggs",
       "full_name": "Joe Bloggs",
@@ -57,9 +140,31 @@
       "claim_date": "20 Oct 2018",
       "expiry_date": "20 Nov 2018",
       "processed_date": "05 Dec 2018",
-      "subjects": {
-        "employed-given": "Computer Science",
-        "actual-given": ""
+      "location": {
+        "eligibility": null,
+        "declared": 123,
+        "verified": null
+      },
+      "teaching": {
+        "eligibility": null,
+        "declared": {
+          "employed": "Computer Science",
+          "actual": ""
+        },
+        "verified": {
+          "employed": null,
+          "actual": null,
+          "other": ""
+        }
+      },
+      "loan": {
+        "eligibility": null,
+        "declared": "443.33",
+        "verified": ""
+      },
+      "phase": {
+        "eligibility": null,
+        "declared": true
       }
     }
   ]
