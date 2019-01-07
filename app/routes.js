@@ -353,8 +353,39 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
 })
 
-// router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
-// })
+router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
+
+  // Error: No employed subject provided
+  if (!req.session.data['teacher-subject-employed']) {
+    req.session.data['teacher-error-no-subject-employed'] = true;
+    req.session.data['error-message-employed'] = "Choose a subject";
+    res.redirect('teacher-enter-subject');
+    next
+  } else {
+    req.session.data['teacher-error-no-subject-employed'] = false;
+  }
+
+  // Error: No actual subject provided
+  if (req.session.data['teacher-subject-employed'] == "other" && !req.session.data['teacher-subject-actual']) {
+    req.session.data['teacher-error-no-subject-actual'] = true;
+    req.session.data['error-message-actual'] = "Choose a subject";
+    res.redirect('teacher-enter-subject');
+    next
+  } else {
+    req.session.data['teacher-error-no-subject-actual'] = false;
+  }
+
+  var check_send = req.session.data['teacher-check-send'];
+
+  if (check_send) {
+    res.redirect('teacher-check-send');
+  } else if (req.session.data['skip-verify'] == 'yes') {
+    res.redirect('teacher-enter-trn');
+  } else {
+    res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
+  }
+
+})
 
 //router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-trn)/, function (req, res) {
 //})
