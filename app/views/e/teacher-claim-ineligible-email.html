@@ -13,13 +13,12 @@
     <div class="govuk-grid-column-two-thirds email-bg">
 
       <h2 class="govuk-heading-s">Subject</h2>
-      <p class="govuk-body">Your application to claim back student loan payments has been unsuccessful</p>
+      <p class="govuk-body">Ref {{ data['claim-code'] or "1234567-1234" }}: your claim to get student loan payments back was unsuccessful</p>
       <h2 class="govuk-heading-s">Body</h2>
       <p class="govuk-body">Dear {{ data['applicant']['first_name'] | title }}</p>
-      <p class="govuk-body">Your application to claim back your student loan payments was not successful. This is because you did not meet the following eligibility criteria:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>You have not taught in a school in one of the 25 areas that are taking part in the scheme.</li>
-      </ul>
+      <p class="govuk-body">Your claim to get student loan payments back was unsuccessful. This was because you did not meet the following eligibility criteria:</p>
+      <p class="govuk-body">You have not taught in a school in one of the 25 areas that are taking part in the scheme.</p>
+      <p class="govuk-body">The claim was for payments that were made through your wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} at {{ data['admin-claims-data']['school_name'] }}.</p>
       <p class="govuk-body"><a href="#">See the eligibility crieria on GOV.UK</a>. You can appeal this decision by [process].</p>
       <p class="govuk-body">Kind regards</p>
       <p class="govuk-body">{Signatory}</p>

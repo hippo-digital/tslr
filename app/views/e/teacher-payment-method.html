@@ -45,6 +45,9 @@
 
             <div class="govuk-form-group">
               <h2 class="govuk-heading-m">Enter your account details</h2>
+              <span id="account-detail-hint" class="govuk-hint">
+                This is the account that the money will be paid into if your claim is successful.
+              </span>
               <div class="govuk-form-group">
                 <label class="govuk-label" for="bank-account-name">Name of account holder</label>
                 {% if (data['teacher-error-payment-details-name']) %}
