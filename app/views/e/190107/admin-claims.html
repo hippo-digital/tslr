@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block header %}
+  {% include "includes/cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    serviceName: "Check teachers' claims for student loan repayments",
+    containerClasses: "govuk-width-container govuk-tslr-header"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% include "includes/phase-banner.html" %}
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">All claims: {{ data['admin-claims-data']['school_name'] }}</li>
+    </ol>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Check claims from teachers at {{ data['admin-claims-data']['school_name'] }}</h1>
+
+      <p class="govuk-body">These teachers have applied to claim back their student loan payments.</p>
+      <p class="govuk-body">To process the claims, we need you to check what the teacher has told us about:
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the subject they taught</li>
+          <li>how much of their time was spent teaching that subject</li>
+          <li>how much student loan they paid back through their wages</li>
+        </ul>
+      <p class="govuk-body">The teachers listed have given us permission to check these details with you.</p>
+      <form action="admin-claim" method="POST" role="form">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
+
+            <ul class="app-task-list">
+              <li>
+                <h2 class="app-task-list__section">To be completed ({{ data['admin-claims-data']['num_claims']['open'] | string or "0" }})</h2>
+                <ul class="app-task-list__items">
+                  {% for claim in data['admin-claims-data']['claims'] %}
+                    {% if claim.status == "open" %}
+                      <li class="app-task-list__item">
+                        <button type="submit" class="button-as-link" formaction="admin-claim" name="claim-id" value="{{ claim.id }}">{{ claim.first_name | title }} {{ claim.last_name | title }}<span class="date-applied">Due by {{ claim.expiry_date }}</span></button>
+                        <strong class="govuk-tag incomplete app-task-list__task-completed">To do</strong>
+                      </li>
+                    {% endif %}
+                  {% else %}
+                    <li class="app-task-list__item">All claims completed</li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li>
+                <h2 class="app-task-list__section">Completed claims ({{ data['admin-claims-data']['num_claims']['closed'] | string or "0" }})</h2>
+                <ul class="app-task-list__items">
+                  {% for claim in data['admin-claims-data']['claims'] %}
+                    {% if claim.status == "closed" %}
+                      <li class="app-task-list__item">
+                        ID: {{ claim.claim_code }} <span class="date-applied">Completed on {{ claim.processed_date or data['time-now'] or "10 Dec 2018" }}</span>
+                        <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                      </li>
+                    {% endif %}
+                  {% else %}
+                    <li class="app-task-list__item">No claims processed</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            </ul>
+
+          </fieldset>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <p class="govuk-body">
+        <a href="admin-claim-received-email" role="button" draggable="false" class="govuk-button hidden-button">Admin notification email</a>
+        {% if data['admin-claims-data']['num_claims']['open'] === 0 %}
+        <a href="admin-process-complete-email" role="button" draggable="false" class="govuk-button hidden-button">Admin confirmation email</a>
+        <a href="/" role="button" draggable="false" class="govuk-button hidden-button">Reset (Start over)</a>
+        {% endif %}
+      </p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
