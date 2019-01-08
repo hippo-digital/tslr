@@ -18,10 +18,11 @@
       <p class="govuk-body">Dear {{ data['applicant']['first_name'] | title }}</p>
       <p class="govuk-body">Your claim to get student loan payments back was unsuccessful. This was because you did not meet the following eligibility criteria:</p>
       <p class="govuk-body">You have not taught in a school in one of the 25 areas that are taking part in the scheme.</p>
-      <p class="govuk-body">The claim was for payments that were made through your wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} at {{ data['admin-claims-data']['school_name'] }}.</p>
-      <p class="govuk-body"><a href="#">See the eligibility crieria on GOV.UK</a>. You can appeal this decision by [process].</p>
+      <p class="govuk-body">The claim was for payments that were made through your wages at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}.</p>
+      <p class="govuk-body"><a href="#">See the eligibility crieria on GOV.UK</a>.
+      <p class="govuk-body">You can appeal this decision by [process].</p>
       <p class="govuk-body">Kind regards</p>
-      <p class="govuk-body">{Signatory}</p>
+      <p class="govuk-body">The Student Loan Repayment team</p>
 
     </div>
 

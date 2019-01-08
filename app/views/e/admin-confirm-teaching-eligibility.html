@@ -68,7 +68,7 @@
             </legend>
 
             <div class="govuk-form-group">
-              <p class="govuk-body">Was {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} employed to teach {{ data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'] | title }} at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+              <p class="govuk-body">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, was {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }} employed to teach {{ data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['employed'] | title }} at {{ data['admin-claims-data']['school_name'] }}?</p>
             </div>
 
             <div class="govuk-form-group">
@@ -96,6 +96,7 @@
                   {% endif %}
                   <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No</label>
                 </div>
+
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-n">
                   <div class="govuk-form-group {% if (data['admin-error-no-teaching-other'] or data['admin-error-no-teaching-actual']) %}govuk-form-group--error{% endif %}">
 
