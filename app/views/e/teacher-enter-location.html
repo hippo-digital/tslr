@@ -71,7 +71,11 @@
             </div>
 
             <div class="govuk-form-group">
+              {% if data['teacher-check-send'] %}
+              <button type="submit" class="govuk-button">Update</button>
+              {% else %}
               <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
             </div>
 
           </div>

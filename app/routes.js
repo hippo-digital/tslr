@@ -295,6 +295,8 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location-eligibility)/, function (
 // Final - for latest version of e
 router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
+  // @todo: Could load this data to session earlier on and only load once?
+
   var fs = require("fs");
   // GIAS data test (10 eligible schools only)
   // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
@@ -304,7 +306,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
   // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
   var gias_data = JSON.parse(gias_file);
   // Output JSON as session variable for easier debug
-  req.session.data['check-gias-data'] = gias_data;
+  // req.session.data['check-gias-data'] = gias_data;
 
   var school_names = gias_data.map(function(gias_school){
     return gias_school.est_name;
@@ -316,7 +318,21 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
   } else {
     var setup = false;
   }
-  var check_send = req.session.data['teacher-check-send'];
+  req.session.data['debug-setup-value'] = setup;
+
+  if (req.session.data['teacher-check-send'] == "true" || req.session.data['teacher-check-send'] === true) {
+    var check_send = true;
+  } else {
+    var check_send = false;
+  }
+  req.session.data['debug-check-send-value'] = check_send;
+
+  if (check_send && req.session.data['teacher-check-send-edit'] == "location") {
+    setup = true;
+    //delete req.session.data['teacher-school-name'];
+    req.session.data['teacher-school'] = null;
+    delete req.session.data['teacher-school'];
+  }
 
   // Error: No school name provided
   if (!setup && req.session.data['teacher-school-name'] == "") {
@@ -328,20 +344,25 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
     req.session.data['teacher-error-no-school'] = false;
   }
 
-  var schools = req.session.data['teacher-schools'];
-  var school_name = req.session.data['teacher-school-name'];
-  req.session.data['teacher-schools'] = schools;
+  if (!setup) {
 
-  var eligibility_calc = Math.floor((Math.random() * 2) + 1);
-  var school_eligible = eligibility_calc > 1 ? true : false;
+    var school_name = req.session.data['teacher-school-name'];
 
-  var school = {
-    name: school_name,
-    eligible: school_eligible
+    var eligibility_calc = Math.floor((Math.random() * 2) + 1);
+    var school_eligible = eligibility_calc > 1 ? true : false;
+
+    var school = {
+      name: school_name,
+      eligible: school_eligible
+    }
+
+    req.session.data['teacher-school'] = school;
+
   }
 
   if (setup) {
     req.session.data['teacher-schools-setup'] = false;
+    delete req.session.data['teacher-check-send-edit'];
     res.redirect('teacher-enter-location');
   } else {
     if (check_send) {
@@ -375,10 +396,15 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
     req.session.data['teacher-error-no-subject-actual'] = false;
   }
 
-  var check_send = req.session.data['teacher-check-send'];
+  if (req.session.data['teacher-check-send'] == "true" || req.session.data['teacher-check-send'] === true) {
+    var check_send = true;
+  } else {
+    var check_send = false;
+  }
+  req.session.data['debug-check-send-value'] = check_send;
 
   if (check_send) {
-    res.redirect('teacher-check-send');
+    res.redirect('teacher-enter-subject');
   } else if (req.session.data['skip-verify'] == 'yes') {
     res.redirect('teacher-enter-trn');
   } else {
@@ -549,6 +575,29 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-check-send)/, function (req, res) {
       res.redirect('teacher-contact-method');
       next
     } else {
+
+      // Prep the data
+      var subject_employed = req.session.data['teacher-subject-employed'] || null;
+      var subject_actual = req.session.data['teacher-subject-actual'] || null;
+
+      if (subject_employed == "compscience") {
+        subject_employed_nice = "Computer Science";
+      } else if (subject_employed == "languages") {
+        subject_employed_nice = "Languages (not English)";
+      } else {
+        subject_employed_nice = subject_employed;
+      }
+      req.session.data['teacher-subject-employed-nice'] = subject_employed_nice;
+
+      if (subject_actual == "compscience") {
+        subject_actual_nice = "Computer Science";
+      } else if (subject_actual == "languages") {
+        subject_actual_nice = "Languages (not English)";
+      } else {
+        subject_actual_nice = subject_actual;
+      }
+      req.session.data['teacher-subject-actual-nice'] = subject_actual_nice;
+
       delete req.session.data['teacher-error-no-contact'];
       delete req.session.data['teacher-error-no-email'];
       delete req.session.data['teacher-error-no-mobile'];
