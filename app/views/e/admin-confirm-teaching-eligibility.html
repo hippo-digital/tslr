@@ -38,19 +38,22 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['admin-error-no-teaching'] or data['admin-error-no-teaching-other'] or data['admin-error-no-teaching-actual']) %}
+      {% if (data['admin-error-no-teaching-employed'] or data['admin-error-no-teaching-employed-other'] or data['admin-error-no-teaching-actual'] or data['admin-error-no-teaching-actual-other']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['admin-error-no-teaching']) %}
-            <li><a href="#admin-teaching-error">{{ data['error-message'] }}</a></li>
+            {% if (data['admin-error-no-teaching-employed']) %}
+            <li><a href="#admin-teaching-employed-error">{{ data['error-message-employed'] }}</a></li>
             {% endif %}
-            {% if (data['admin-error-no-teaching-other']) %}
-            <li><a href="#admin-teaching-other-error">{{ data['error-message-other'] }}</a></li>
+            {% if (data['admin-error-no-teaching-employed-other']) %}
+            <li><a href="#admin-teaching-employed-other-error">{{ data['error-message-employed-other'] }}</a></li>
             {% endif %}
             {% if (data['admin-error-no-teaching-actual']) %}
             <li><a href="#admin-teaching-actual-error">{{ data['error-message-actual'] }}</a></li>
+            {% endif %}
+            {% if (data['admin-error-no-teaching-actual-other']) %}
+            <li><a href="#admin-teaching-actual-other-error">{{ data['error-message-actual-other'] }}</a></li>
             {% endif %}
           </ul>
         </div>
@@ -58,7 +61,7 @@
       {% endif %}
 
       <form action="admin-claim" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['admin-error-no-teaching']) %}govuk-form-group--error{% endif %}">
+        <div class="govuk-form-group {% if (data['admin-error-no-teaching-employed']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -81,38 +84,38 @@
 
                 <div class="govuk-radios__item">
                   {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "yes" %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes" checked>
+                  <input class="govuk-radios__input" id="admin-employed-teaching-y" name="admin-employed-teaching" type="radio" value="yes" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-y" name="admin-eligibility-teaching" type="radio" value="yes">
+                  <input class="govuk-radios__input" id="admin-employed-teaching-y" name="admin-employed-teaching" type="radio" value="yes">
                   {% endif %}
-                  <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-y">Yes</label>
+                  <label class="govuk-label govuk-radios__label" for="admin-employed-teaching-y">Yes</label>
                 </div>
 
                 <div class="govuk-radios__item">
                   {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "no" %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n" checked>
+                  <input class="govuk-radios__input" id="admin-employed-teaching-n" name="admin-employed-teaching" type="radio" value="no" data-aria-controls="conditional-admin-employed-teaching-n" checked>
                   {% else %}
-                  <input class="govuk-radios__input" id="admin-eligibility-teaching-n" name="admin-eligibility-teaching" type="radio" value="no" data-aria-controls="conditional-admin-eligibility-teaching-n">
+                  <input class="govuk-radios__input" id="admin-employed-teaching-n" name="admin-employed-teaching" type="radio" value="no" data-aria-controls="conditional-admin-employed-teaching-n">
                   {% endif %}
                   <label class="govuk-label govuk-radios__label" for="admin-eligibility-teaching-n">No</label>
                 </div>
 
-                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-eligibility-teaching-n">
-                  <div class="govuk-form-group {% if (data['admin-error-no-teaching-other'] or data['admin-error-no-teaching-actual']) %}govuk-form-group--error{% endif %}">
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-admin-employed-teaching-n">
+                  <div class="govuk-form-group {% if (data['admin-error-no-teaching-employed-other']) %}govuk-form-group--error{% endif %}">
 
                     <div class="govuk-form-group">
-                      {% if (data['admin-error-no-teaching-other']) %}
-                      <span id="admin-teaching-other-error" class="govuk-error-message">{{ data['error-message-other'] }}</span>
+                      {% if (data['admin-error-no-teaching-employed-other']) %}
+                      <span id="admin-teaching-employed-other-error" class="govuk-error-message">{{ data['error-message-employed-other'] }}</span>
                       {% endif %}
-                      <label class="govuk-label" for="teaching-subject-other">
+                      <label class="govuk-label" for="teaching-subject-employed-other">
                         What subject or subjects were they employed to teach?
                       </label>
                       {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other'] %}
-                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other']}}">
-                      {% elif data['teaching-subject-other'] %}
-                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['teaching-subject-other']}}">
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-employed-other" name="teaching-subject-employed-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other']}}">
+                      {% elif data['teaching-subject-employed-other'] %}
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-employed-other" name="teaching-subject-employed-other" value="{{data['teaching-subject-employed-other']}}">
                       {% else %}
-                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other">
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-employed-other" name="teaching-subject-employed-other">
                       {% endif %}
                     </div>
 
@@ -123,7 +126,7 @@
 
               {% if data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] %}
 
-              <div class="govuk-form-group">
+              <div class="govuk-form-group {% if (data['admin-error-no-teaching-actual']) %}govuk-form-group--error{% endif %}">
 
                 <hr class="govuk-section-break govuk-section-break--m">
 
