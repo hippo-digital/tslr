@@ -57,20 +57,15 @@
             <div class="app-check-your-answers__contents">
               <dt class="app-check-your-answers__question">School</dt>
               <dd class="app-check-your-answers__answer">
-                {{ data['teacher-school']['name'] }}
+                <ul class="govuk-list">
+                {% for school in data['teacher-schools'] %}
+                  <li>{{ school.name or "{School name}" }}</li>
+                {% endfor %}
+                </ul>
               </dd>
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" value="location" name="teacher-check-send-edit" formaction="teacher-enter-location">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
-              </dd>
-            </div>
-
-            <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Subject</dt>
-              <dd class="app-check-your-answers__answer">
-                {{ data['teacher-subject-employed-nice'] | title or data['teacher-subject-actual-nice'] | title }}
-              </dd>
-              <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject eligibility</span></button>
+                <input type="hidden" id="teacher-school-confirm" name="teacher-school-confirm" value="">
+                <button type="submit" class="button-as-link" formaction="teacher-enter-location-confirm">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
               </dd>
             </div>
 
@@ -87,7 +82,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">How we'll contact you</dt>
+              <dt class="app-check-your-answers__question">We'll contact you by:</dt>
               {% if data['teacher-contact-method'] == "email" %}
               <dd class="app-check-your-answers__answer">By email:<br/>
                 {% if not teacher_email %}

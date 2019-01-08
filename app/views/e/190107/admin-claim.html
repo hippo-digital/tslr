@@ -8,7 +8,7 @@
   {% include "includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
-    serviceName: "Check claims for student loan repayments",
+    serviceName: "Check teachers' claims for student loan repayments",
     containerClasses: "govuk-width-container govuk-tslr-header"
   }) }}
 {% endblock %}
@@ -130,7 +130,7 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              <dt class="app-check-your-answers__question">They worked at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</dt>
+              <dt class="app-check-your-answers__question">Did they work at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
               {% elseif data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'yes-part' %}
@@ -173,9 +173,9 @@
             {% endif %}
 
               {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "yes" %}
-              <dt class="app-check-your-answers__question">They taught science, computer science or languages (not English)</dt>
+              <dt class="app-check-your-answers__question">Did they teach biology, chemistry, physics, computer science or languages (not English)?</dt>
               {% else %}
-              <dt class="app-check-your-answers__question">They spent most of their time teaching science, computer science or languages (not English)</dt>
+              <dt class="app-check-your-answers__question">Did they actually teach biology, chemistry, physics, computer science or languages (not English)?</dt>
               {% endif %}
               {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "yes" or data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] == "yes" %}
               <dd class="app-check-your-answers__answer">Yes</dd>
@@ -198,7 +198,7 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, they spent most of their scheduled hours teaching people who are 11 to 16 years old</dt>
+              <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, did they spend most of their scheduled hours teaching people who are 11 to 16 years old?</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] %}
               <dd class="app-check-your-answers__answer">Yes</dd>
               {% elif data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] === false %}
@@ -218,7 +218,7 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              <dt class="app-check-your-answers__question">The amount of student loan they repaid through their wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</dt>
+              <dt class="app-check-your-answers__question">How much student loan did they repay between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['loan']['verified'] %}
               <dd class="app-check-your-answers__answer">£{{ data['admin-claims-data']['claims'][array_ref]['loan']['verified'] }}</dd>
               {% else %}
@@ -234,7 +234,7 @@
 
         </div>
 
-        <h2 class="govuk-heading-m">Confirm claim</h2>
+        <h2 class="govuk-heading-m">Confirm the claim</h2>
         <p>By submitting this form you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
         <p class="govuk-body">
           <button type="submit" class="govuk-button" name="update-claim" value="update">Confirm and send</button>

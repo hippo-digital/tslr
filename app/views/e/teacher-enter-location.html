@@ -17,7 +17,7 @@
 
   <div class="govuk-grid-row">
 
-    <form action="teacher-enter-location-confirm" method="POST" role="form">
+    <form action="teacher-enter-location" method="POST" role="form">
       <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
@@ -42,9 +42,7 @@
               </h1>
             </legend>
 
-            <input class="govuk-input" id="teacher-num-schools" name="teacher-num-schools" type="hidden" value="1">
-
-            <span id="trn-hint" class="govuk-hint">
+            <span id="location-hint" class="govuk-hint">
               <details class="govuk-details">
                 <summary class="govuk-details__summary">
                   <span class="govuk-details__summary-text">You taught at more than one school</span>
@@ -56,7 +54,7 @@
             </span>
 
             <div class="govuk-form-group">
-              <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="true">
+              <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="{{ data['teacher-schools-setup'] or 'false' }}">
               <label class="govuk-label" for="teacher-school-name">Enter the school name</label>
               {% if (data['teacher-error-no-school']) %}
               <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -73,14 +71,12 @@
             </div>
 
             <div class="govuk-form-group">
+              {% if data['teacher-check-send'] %}
+              <button type="submit" class="govuk-button">Update</button>
+              {% else %}
               <button type="submit" class="govuk-button">Continue</button>
+              {% endif %}
             </div>
-
-          </div>
-
-          <div class="govuk-grid-column-one-third">
-
-            <button type="submit" name="skip-verify" value="yes" class="govuk-button hidden-button">Skip Verify</button>
 
           </div>
 
