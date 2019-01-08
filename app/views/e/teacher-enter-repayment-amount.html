@@ -48,7 +48,7 @@
               {% if (data['teacher-error-no-loan-amount']) %}
               <span id="teacher-loan-details-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['teacher-error-no-loan-amount']) %}govuk-input--error{% endif %}" id="teacher-loan-amount" name="teacher-loan-amount" type="number" step="0.01" value="{{data['teacher-loan-amount']}}">
+              <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-no-loan-amount']) %}govuk-input--error{% endif %}" id="teacher-loan-amount" name="teacher-loan-amount" type="number" step="0.01" value="{{data['teacher-loan-amount']}}">
             </div>
 
             <div class="govuk-form-group">

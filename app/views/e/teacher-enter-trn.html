@@ -49,7 +49,7 @@
               {% if (data['teacher-error-no-trn']) %}
               <span id="enter-trn-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['teacher-error-no-trn']) %}govuk-input--error{% endif %}" id="teacher-trn" name="teacher-trn" type="text" value="{{data['teacher-trn']}}">
+              <input class="govuk-input govuk-input--width-10 {% if (data['teacher-error-no-trn']) %}govuk-input--error{% endif %}" id="teacher-trn" name="teacher-trn" type="number" value="{{data['teacher-trn']}}">
             </div>
 
             <div class="govuk-form-group">

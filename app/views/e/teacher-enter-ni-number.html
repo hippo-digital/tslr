@@ -44,7 +44,7 @@
               {% if (data['teacher-error-no-ni']) %}
               <span id="enter-ni-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" value="{{data['teacher-ni']}}">
+              <input class="govuk-input govuk-input--width-10 {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" value="{{data['teacher-ni']}}">
             </div>
 
             <div class="govuk-form-group">
