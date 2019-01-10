@@ -158,13 +158,13 @@
         "eligibility": null,
         "declared": {
           "employed": "compscience",
-          "employed-other": "Computer Science",
+          "employed-other": "",
           "actual": "",
           "actual-other": ""
         },
         "verified": {
           "employed": true,
-          "employed-other": "Computer Science",
+          "employed-other": "",
           "actual": null,
           "actual-other": ""
         }

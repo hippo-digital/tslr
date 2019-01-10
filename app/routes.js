@@ -379,7 +379,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
   // Error: No employed subject provided
   if (!req.session.data['teacher-subject-employed']) {
     req.session.data['teacher-error-no-subject-employed'] = true;
-    req.session.data['error-message-employed'] = "Choose a subject";
+    req.session.data['error-message-employed'] = "Select the subject you were employed to teach";
     res.redirect('teacher-enter-subject');
     next
   } else {
@@ -389,7 +389,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
   // Error: No actual subject provided
   if (req.session.data['teacher-subject-employed'] == "other" && !req.session.data['teacher-subject-actual']) {
     req.session.data['teacher-error-no-subject-actual'] = true;
-    req.session.data['error-message-actual'] = "Choose a subject";
+    req.session.data['error-message-actual'] = "Select the subject that you spent most of your time teaching";
     res.redirect('teacher-enter-subject');
     next
   } else {
@@ -798,11 +798,21 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       res.redirect('admin-confirm-location-eligibility');
       next
 
+    } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-employed-teaching'] && !req.session.data['admin-actual-teaching']) {
+
+      // Error: Meant to update teaching employed
+      req.session.data['admin-error-no-teaching-employed'] = true;
+      req.session.data['error-message-employed'] = "Select whether they were employed to teach the subject";
+      req.session.data['admin-error-no-teaching-actual'] = true;
+      req.session.data['error-message-actual'] = "Select whether they actually spent most of their time teaching another subject";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
+
     } else if (req.session.data['update-teaching'] == "update" && !req.session.data['admin-employed-teaching']) {
 
       // Error: Meant to update teaching employed
       req.session.data['admin-error-no-teaching-employed'] = true;
-      req.session.data['error-message-employed'] = "Select whether they were employed to teach the subject.";
+      req.session.data['error-message-employed'] = "Select whether they were employed to teach the subject";
       res.redirect('admin-confirm-teaching-eligibility');
       next
 
@@ -815,7 +825,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       // Error: Meant to update teaching actual
       req.session.data['admin-error-no-teaching-actual'] = true;
-      req.session.data['error-message-actual'] = "Select whether they spent their time teaching the subject.";
+      req.session.data['error-message-actual'] = "Select whether they spent most of their time teaching the subject";
       res.redirect('admin-confirm-teaching-eligibility');
       next
 
@@ -952,7 +962,11 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
         }
 
+        delete req.session.data['admin-employed-teaching'];
+        delete req.session.data['admin-actual-teaching'];
         delete req.session.data['admin-eligibility-teaching'];
+        delete req.session.data['teaching-subject-employed-other'];
+        delete req.session.data['teaching-subject-actual-other'];
         delete req.session.data['update-teaching'];
 
       }
@@ -999,6 +1013,9 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       delete req.session.data['admin-error-no-phase'];
       delete req.session.data['admin-error-no-loan'];
       delete req.session.data['admin-error-no-complete'];
+      delete req.session.data['error-message'];
+      delete req.session.data['error-message-employed'];
+      delete req.session.data['error-message-actual'];
 
     }
 
