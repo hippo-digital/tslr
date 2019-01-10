@@ -61,6 +61,7 @@
               {% endif %}
               <input class="govuk-input {% if (data['teacher-error-no-school']) %}govuk-input--error{% endif %}" id="teacher-school-name" name="teacher-school-name" type="text">
               <script>
+                // https://leaverou.github.io/awesomplete/
                 var input = document.getElementById("teacher-school-name");
                 var awesomplete = new Awesomplete(input,{
                   minChars: 3,
