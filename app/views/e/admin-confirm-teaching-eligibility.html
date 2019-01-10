@@ -104,14 +104,11 @@
                   <div class="govuk-form-group {% if (data['admin-error-no-teaching-employed-other']) %}govuk-form-group--error{% endif %}">
 
                     <div class="govuk-form-group">
-                      {% if (data['admin-error-no-teaching-employed-other']) %}
-                      <span id="admin-teaching-employed-other-error" class="govuk-error-message">{{ data['error-message-employed-other'] }}</span>
-                      {% endif %}
                       <label class="govuk-label" for="teaching-subject-employed-other">
                         What subject or subjects were they employed to teach?
                       </label>
-                      {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other'] %}
-                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-employed-other" name="teaching-subject-employed-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other']}}">
+                      {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed-other'] %}
+                      <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-employed-other" name="teaching-subject-employed-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed-other']}}">
                       {% elif data['teaching-subject-employed-other'] %}
                       <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-employed-other" name="teaching-subject-employed-other" value="{{data['teaching-subject-employed-other']}}">
                       {% else %}
@@ -162,18 +159,15 @@
                     <div class="govuk-form-group {% if (data['admin-error-no-teaching-other'] or data['admin-error-no-teaching-actual']) %}govuk-form-group--error{% endif %}">
 
                       <div class="govuk-form-group">
-                        {% if (data['admin-error-no-teaching-other']) %}
-                        <span id="admin-teaching-other-error" class="govuk-error-message">{{ data['error-message-other'] }}</span>
-                        {% endif %}
                         <label class="govuk-label" for="teaching-subject-other">
                           What subject or subjects did they actually teach?
                         </label>
-                        {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other'] %}
-                        <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other']}}">
-                        {% elif data['teaching-subject-other'] %}
-                        <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other" value="{{data['teaching-subject-other']}}">
+                        {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual-other'] %}
+                        <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-actual-other" value="{{data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual-other']}}">
+                        {% elif data['teaching-subject-actual-other'] %}
+                        <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-actual-other" value="{{data['teaching-subject-actual-other']}}">
                         {% else %}
-                        <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-other">
+                        <input class="govuk-input govuk-!-width-two-thirds" id="teaching-subject-other" name="teaching-subject-actual-other">
                         {% endif %}
                       </div>
 

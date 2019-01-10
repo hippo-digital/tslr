@@ -29,8 +29,9 @@
         },
         "verified": {
           "employed": null,
+          "employed-other": "",
           "actual": null,
-          "other": ""
+          "actual-other": ""
         }
       },
       "loan": {
@@ -70,8 +71,9 @@
         },
         "verified": {
           "employed": null,
+          "employed-other": "",
           "actual": null,
-          "other": ""
+          "actual-other": ""
         }
       },
       "loan": {
@@ -111,8 +113,9 @@
         },
         "verified": {
           "employed": null,
+          "employed-other": "",
           "actual": null,
-          "other": ""
+          "actual-other": ""
         }
       },
       "loan": {
@@ -149,7 +152,9 @@
         "eligibility": null,
         "declared": {
           "employed": "Computer Science",
-          "actual": ""
+          "employed-other": "",
+          "actual": "",
+          "actual-other": ""
         },
         "verified": {
           "employed": null,
