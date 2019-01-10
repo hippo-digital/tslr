@@ -192,7 +192,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
     // Error: No school name provided
     if (req.session.data['teacher-school-name'] == "") {
       req.session.data['teacher-error-no-school'] = true;
-      req.session.data['error-message'] = "Enter the school name or postcode";
+      req.session.data['error-message'] = "Enter a school name";
       res.redirect('teacher-enter-location-eligibility');
       next
     } else {
@@ -306,7 +306,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
   // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
   var gias_data = JSON.parse(gias_file);
   // Output JSON as session variable for easier debug
-  // req.session.data['check-gias-data'] = gias_data;
+  req.session.data['check-gias-data'] = gias_data;
 
   var school_names = gias_data.map(function(gias_school){
     return gias_school.est_name;
@@ -318,14 +318,12 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
   } else {
     var setup = false;
   }
-  req.session.data['debug-setup-value'] = setup;
 
   if (req.session.data['teacher-check-send'] == "true" || req.session.data['teacher-check-send'] === true) {
     var check_send = true;
   } else {
     var check_send = false;
   }
-  req.session.data['debug-check-send-value'] = check_send;
 
   if (check_send && req.session.data['teacher-check-send-edit'] == "location") {
     setup = true;
@@ -358,18 +356,45 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
     req.session.data['teacher-school'] = school;
 
+    if (!school.eligible) {
+      var eligibility = false;
+      req.session.data['teacher-eligible'] = eligibility;
+      req.session.data['teacher-ineligible-reason'] = "school-location";
+      if (check_send) {
+        req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
+      } else {
+        req.session.data['teacher-ineligible-continue-url'] = "teacher-enter-subject";
+      }
+    } else {
+      var eligibility = true;
+      delete req.session.data['teacher-ineligible-reason'];
+      req.session.data['teacher-eligible'] = eligibility;
+    }
+
   }
 
   if (setup) {
+
     req.session.data['teacher-schools-setup'] = false;
     delete req.session.data['teacher-check-send-edit'];
     res.redirect('teacher-enter-location');
+
   } else {
-    if (check_send) {
-      res.redirect('teacher-check-send');
+
+    if (!eligibility) {
+
+      res.redirect('teacher-claim-ineligible');
+
     } else {
-      res.redirect('teacher-enter-subject');
+
+      if (check_send) {
+        res.redirect('teacher-check-send');
+      } else {
+        res.redirect('teacher-enter-subject');
+      }
+
     }
+
   }
 
 })
@@ -389,7 +414,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
   // Error: No actual subject provided
   if (req.session.data['teacher-subject-employed'] == "other" && !req.session.data['teacher-subject-actual']) {
     req.session.data['teacher-error-no-subject-actual'] = true;
-    req.session.data['error-message-actual'] = "Select the subject that you spent most of your time teaching";
+    req.session.data['error-message-actual'] = "Select the subject that you actually spent most of your time teaching";
     res.redirect('teacher-enter-subject');
     next
   } else {
@@ -401,14 +426,36 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
   } else {
     var check_send = false;
   }
-  req.session.data['debug-check-send-value'] = check_send;
 
-  if (check_send) {
-    res.redirect('teacher-enter-subject');
-  } else if (req.session.data['skip-verify'] == 'yes') {
-    res.redirect('teacher-enter-trn');
+  if (req.session.data['teacher-subject-employed'] == "other" && req.session.data['teacher-subject-actual'] == "other") {
+    var eligibility = false;
+    req.session.data['teacher-eligible'] = eligibility;
+    req.session.data['teacher-ineligible-reason'] = "teacher-subject";
+    if (check_send) {
+      req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
+    } else {
+      req.session.data['teacher-ineligible-continue-url'] = "teacher-enter-trn";
+    }
   } else {
-    res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
+    var eligibility = true;
+    delete req.session.data['teacher-ineligible-reason'];
+    req.session.data['teacher-eligible'] = eligibility;
+  }
+
+  if (!eligibility) {
+
+    res.redirect('teacher-claim-ineligible');
+
+  } else {
+
+    if (check_send) {
+      res.redirect('teacher-enter-subject');
+    } else if (req.session.data['skip-verify'] == 'yes') {
+      res.redirect('teacher-enter-trn');
+    } else {
+      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
+    }
+
   }
 
 })
@@ -442,7 +489,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (
     // Error: No NI Number provided
     if (req.session.data['teacher-ni'] == "") {
       req.session.data['teacher-error-no-ni'] = true;
-      req.session.data['error-message'] = "Enter your national insurance number";
+      req.session.data['error-message'] = "Enter your National Insurance number";
       res.redirect('teacher-enter-ni-number');
       next
     } else {
@@ -483,13 +530,30 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
 
   if (!req.session.data['teacher-loan-amount']) {
+
     req.session.data['teacher-error-no-loan-amount'] = true;
     req.session.data['error-message'] = "Enter your loan repayment amount";
     res.redirect('teacher-enter-repayment-amount');
     next
+
+  } else if (req.session.data['teacher-loan-amount'] === "0" || req.session.data['teacher-loan-amount'] === "0.00") {
+
+    var eligibility = false;
+    req.session.data['teacher-eligible'] = eligibility;
+    req.session.data['teacher-ineligible-reason'] = "teacher-loan";
+    req.session.data['teacher-ineligible-continue-url'] = "teacher-payment-method";
+
+    res.redirect('teacher-claim-ineligible');
+
   } else {
+
+    var eligibility = true;
+    delete req.session.data['teacher-ineligible-reason'];
+    req.session.data['teacher-eligible'] = eligibility;
+
     delete req.session.data['teacher-error-no-loan-amount'];
     res.redirect('teacher-payment-method');
+
   }
 
 })
