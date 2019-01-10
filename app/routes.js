@@ -942,7 +942,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
           req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'] = false;
 
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
-          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching-actual";
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching";
 
         } else if (req.session.data['admin-employed-teaching'] == "yes") {
 
