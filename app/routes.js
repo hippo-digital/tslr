@@ -755,6 +755,12 @@ router.post(/([e])\/([0-9]*\/?)(admin-claims)/, function (req, res) {
 
 router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
+  var claim_id = req.session.data['claim-id'];
+  var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
+    return claim.id == claim_id
+  })
+  req.session.data['array-ref'] = array_ref;
+
   if (!req.session.data['admin-claims-data']) {
 
     res.redirect('admin-dfe-signin');
@@ -772,10 +778,6 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
     } else if (req.session.data['update-location'] == "update" && req.session.data['admin-eligibility-location'] == "yes-part" && (!req.session.data['admin-start-day'] || !req.session.data['admin-start-month'] || !req.session.data['admin-start-year'] || !req.session.data['admin-end-day'] || !req.session.data['admin-end-month'] || !req.session.data['admin-end-year'])) {
 
       // Update the location value incase it's changed
-      var claim_id = req.session.data['claim-id'];
-      var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
-        return claim.id == claim_id
-      })
       req.session.data['admin-claims-data']['claims'][array_ref]['location']['verified'] = "yes-part";
 
       req.session.data['admin-error-no-location-period'] = true;
@@ -804,15 +806,11 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
       res.redirect('admin-confirm-teaching-eligibility');
       next
 
-    } else if (req.session.data['update-teaching'] == "update" && req.session.data['admin-employed-teaching'] == "no" && !req.session.data['admin-actual-teaching']) {
+    } else if (req.session.data['update-teaching'] == "update" && req.session.data['admin-employed-teaching'] == "no" && !req.session.data['admin-actual-teaching'] && req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual']) {
 
       req.session.data['admin-error-no-teaching-employed'] = false;
 
       // Update the teaching value incase it's changed
-      var claim_id = req.session.data['claim-id'];
-      var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
-        return claim.id == claim_id
-      })
       req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] = "no";
 
       // Error: Meant to update teaching actual
@@ -861,12 +859,6 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
     } else {
 
       // Everything looks good so process and sync the latest data to JSON
-
-      var claim_id = req.session.data['claim-id'];
-      var array_ref = req.session.data['admin-claims-data']['claims'].findIndex(function(claim) {
-        return claim.id == claim_id
-      })
-      req.session.data['array-ref'] = array_ref;
 
       if (req.session.data['update-location'] == "update") {
 
@@ -951,34 +943,14 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
           req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
 
-        }
-
-        /*
-        if (req.session.data['admin-employed-teaching'] == "yes") {
-
-          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] = "yes";
-          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'] = true;
-          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
-          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
-
         } else if (req.session.data['admin-employed-teaching'] == "no") {
 
           req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] = "no";
-          // req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] = req.session.data['admin-actual-teaching'];
-          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['other'] = req.session.data['teaching-subject-employed-other'];
-
-          if (req.session.data['admin-actual-teaching'] == "no") {
-            req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'] = false;
-            req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
-            req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching";
-          } else {
-            req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'] = true;
-            req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = true;
-            req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "";
-          }
+          req.session.data['admin-claims-data']['claims'][array_ref]['teaching']['eligibility'] = false;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['status'] = false;
+          req.session.data['admin-claims-data']['claims'][array_ref]['eligibility']['inel_reason'] = "teaching";
 
         }
-        */
 
         delete req.session.data['admin-eligibility-teaching'];
         delete req.session.data['update-teaching'];

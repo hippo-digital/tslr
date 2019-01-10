@@ -24,8 +24,10 @@
       "teaching": {
         "eligibility": null,
         "declared": {
-          "employed": "Science",
-          "actual": ""
+          "employed": "science",
+          "employed-other": "",
+          "actual": "",
+          "actual-other": ""
         },
         "verified": {
           "employed": null,
@@ -66,8 +68,10 @@
       "teaching": {
         "eligibility": null,
         "declared": {
-          "employed": "Modern Foreign Languages",
-          "actual": ""
+          "employed": "languages",
+          "employed-other": "",
+          "actual": "",
+          "actual-other": ""
         },
         "verified": {
           "employed": null,
@@ -108,8 +112,10 @@
       "teaching": {
         "eligibility": null,
         "declared": {
-          "employed": "P.E.",
-          "actual": "Computer Science"
+          "employed": "other",
+          "employed-other": "P.E.",
+          "actual": "compscience",
+          "actual-other": ""
         },
         "verified": {
           "employed": null,
@@ -151,15 +157,16 @@
       "teaching": {
         "eligibility": null,
         "declared": {
-          "employed": "Computer Science",
-          "employed-other": "",
+          "employed": "compscience",
+          "employed-other": "Computer Science",
           "actual": "",
           "actual-other": ""
         },
         "verified": {
-          "employed": null,
+          "employed": true,
+          "employed-other": "Computer Science",
           "actual": null,
-          "other": ""
+          "actual-other": ""
         }
       },
       "loan": {

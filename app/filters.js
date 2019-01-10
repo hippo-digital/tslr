@@ -47,6 +47,18 @@ module.exports = function (env) {
     }
   }
 
+  filters.subjectLookup = function(subject) {
+    if (subject == 'science') {
+      return 'Science';
+    } else if (subject == 'compscience') {
+      return 'Computer Science';
+    } else if (subject == 'languages') {
+      return 'Modern Foreign Languages';
+    } else {
+      return subject;
+    }
+  }
+
   /* ------------------------------------------------------------------
     keep the following line to return your filters to the app
   ------------------------------------------------------------------ */
