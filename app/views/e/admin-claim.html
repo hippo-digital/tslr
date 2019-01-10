@@ -172,10 +172,10 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "yes" %}
-              <dt class="app-check-your-answers__question">They taught science, computer science or languages (not English)</dt>
-              {% else %}
+              {% if data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] and data['admin-claims-data']['claims'][array_ref]['teaching']['declared']['actual'] != "other" %}
               <dt class="app-check-your-answers__question">They spent most of their time teaching science, computer science or languages (not English)</dt>
+              {% else %}
+              <dt class="app-check-your-answers__question">They were employed to teach science, computer science or languages (not English)</dt>
               {% endif %}
               {% if data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['employed'] == "yes" or data['admin-claims-data']['claims'][array_ref]['teaching']['verified']['actual'] == "yes" %}
               <dd class="app-check-your-answers__answer">Yes</dd>

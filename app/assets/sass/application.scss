@@ -275,10 +275,16 @@ div.awesomplete {
       padding-top: 8px; padding-bottom: 8px;
       font-family: "nta", Arial, sans-serif;
       font-size: 16px;
+      span.school-address {
+        display: block;
+        font-size: 14px;
+        color: #666666;
+      }
       &:nth-child(even) { background-color: #ececec; }
       &:hover {
         background-color: #005ea5;
         color: white;
+        span.school-address { color: white; }
       }
     }
   }

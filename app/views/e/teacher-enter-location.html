@@ -63,7 +63,13 @@
               <script>
                 var input = document.getElementById("teacher-school-name");
                 var awesomplete = new Awesomplete(input,{
-                  minChars: 3
+                  minChars: 3,
+                  replace: function(text) {
+                    this.input.value = text.replace('<span class="school-address">Street name, Town/City, County, AB1 2CD</span>', '');
+                  },
+                  data: function (text, input) {
+                    return text + '<span class="school-address">Street name, Town/City, County, AB1 2CD</span>';
+                  }
                 });
                 var school_names = "{{data['school-names']}}";
                 awesomplete.list = school_names;
