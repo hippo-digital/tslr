@@ -14,27 +14,39 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['teacher-error-payment-details']) %}
+      {% if data['teacher-validation-errors-name'] or data['teacher-validation-errors-number'] or data['teacher-validation-errors-sortcode'] %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['teacher-error-payment-details-name']) %}
-            <li><a href="#enter-account-name-error">{{ data['error-message-account-name'] }}</a></li>
+            {% if data['teacher-error-account-name-missing'] %}
+            <li><a href="#account-name-error">{{ data['error-message-account-name'] }}</a></li>
             {% endif %}
-            {% if (data['teacher-error-payment-details-number']) %}
-            <li><a href="#enter-account-number-error">{{ data['error-message-account-number'] }}</a></li>
+            {% if data['teacher-error-account-number-missing'] %}
+            <li><a href="#account-number-error">{{ data['error-message-account-number'] }}</a></li>
             {% endif %}
-            {% if (data['teacher-error-payment-details-sort1'] or data['teacher-error-payment-details-sort2'] or data['teacher-error-payment-details-sort3']) %}
-            <li><a href="#enter-account-sortcode-error">{{ data['error-message-account-sortcode'] }}</a></li>
+            {% if data['teacher-error-account-number-format'] %}
+            <li><a href="#account-number-error">{{ data['error-message-account-number-format'] }}</a></li>
+            {% endif %}
+            {% if data['teacher-error-account-number-length'] %}
+            <li><a href="#account-number-error">{{ data['error-message-account-number-length'] }}</a></li>
+            {% endif %}
+            {% if data['teacher-error-sortcode1-missing'] or data['teacher-error-sortcode2-missing'] or data['teacher-error-sortcode3-missing'] %}
+            <li><a href="#account-sortcode-error">{{ data['error-message-sortcode-missing'] }}</a></li>
+            {% endif %}
+            {% if data['teacher-error-sortcode1-format'] or data['teacher-error-sortcode2-format'] or data['teacher-error-sortcode3-format'] %}
+            <li><a href="#account-sortcode-error">{{ data['error-message-sortcode-format'] }}</a></li>
+            {% endif %}
+            {% if data['teacher-error-sortcode1-length'] or data['teacher-error-sortcode2-length'] or data['teacher-error-sortcode3-length'] %}
+            <li><a href="#account-sortcode-error">{{ data['error-message-sortcode-length'] }}</a></li>
             {% endif %}
           </ul>
         </div>
       </div>
       {% endif %}
 
-      <form action="teacher-contact-method" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-payment-details']) %}govuk-form-group--error{% endif %}">
+      <form action="teacher-payment-method" method="POST" role="form">
+        <div class="govuk-form-group {% if data['teacher-validation-errors-name'] or data['teacher-validation-errors-number'] or data['teacher-validation-errors-sortcode'] %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -49,26 +61,38 @@
               </p>
               <div class="govuk-form-group">
                 <label class="govuk-label" for="bank-account-name">Name of account holder</label>
-                {% if (data['teacher-error-payment-details-name']) %}
-                <span id="enter-account-name-error" class="govuk-error-message">{{ data['error-message-account-name'] }}</span>
+                {% if data['teacher-error-account-name-missing'] %}
+                <span id="account-name-error" class="govuk-error-message">{{ data['error-message-account-name'] }}</span>
                 {% endif %}
-                <input class="govuk-input govuk-!-width-two-thirds {% if (data['teacher-error-payment-details-name']) %}govuk-input--error{% endif %}" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text" value="{{data['teacher-bank-account-name']}}">
+                <input class="govuk-input govuk-!-width-two-thirds {% if data['teacher-validation-errors-name'] %}govuk-input--error{% endif %}" id="teacher-bank-account-name" name="teacher-bank-account-name" type="text" value="{{data['teacher-bank-account-name']}}">
               </div>
               <div class="govuk-form-group">
                 <label class="govuk-label" for="bank-account-number">Account number</label>
-                {% if (data['teacher-error-payment-details-number']) %}
-                <span id="enter-account-number-error" class="govuk-error-message">{{ data['error-message-account-number'] }}</span>
+                {% if (data['teacher-error-account-number-missing']) %}
+                <span id="account-number-error" class="govuk-error-message">{{ data['error-message-account-number'] }}</span>
                 {% endif %}
-                <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-payment-details-number']) %}govuk-input--error{% endif %}" id="teacher-bank-account-number" name="teacher-bank-account-number" type="text" value="{{data['teacher-bank-account-number']}}">
+                {% if (data['teacher-error-account-number-format']) %}
+                <span id="account-number-error" class="govuk-error-message">{{ data['error-message-account-number-format'] }}</span>
+                {% endif %}
+                {% if (data['teacher-error-account-number-length']) %}
+                <span id="account-number-error" class="govuk-error-message">{{ data['error-message-account-number-length'] }}</span>
+                {% endif %}
+                <input class="govuk-input govuk-input--width-5 {% if data['teacher-validation-errors-number'] %}govuk-input--error{% endif %}" id="teacher-bank-account-number" name="teacher-bank-account-number" type="text" value="{{data['teacher-bank-account-number']}}">
               </div>
               <div class="govuk-form-group">
                 <label class="govuk-label" for="#">Sort code</label>
-                {% if (data['teacher-error-payment-details-sort1'] or data['teacher-error-payment-details-sort2'] or data['teacher-error-payment-details-sort3']) %}
-                <span id="enter-account-sortcode-error" class="govuk-error-message">{{ data['error-message-account-sortcode'] }}</span>
+                {% if data['teacher-error-sortcode1-missing'] or data['teacher-error-sortcode2-missing'] or data['teacher-error-sortcode3-missing'] %}
+                <span id="account-sortcode-error" class="govuk-error-message">{{ data['error-message-sortcode-missing'] }}</span>
                 {% endif %}
-                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort1']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-1" type="text" value="{{data['teacher-bank-sortcode-1']}}">
-                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort2']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-2" type="text" value="{{data['teacher-bank-sortcode-2']}}">
-                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort3']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-3" type="text" value="{{data['teacher-bank-sortcode-3']}}">
+                {% if data['teacher-error-sortcode1-format'] or data['teacher-error-sortcode2-format'] or data['teacher-error-sortcode3-format'] %}
+                <span id="account-sortcode-error" class="govuk-error-message">{{ data['error-message-sortcode-format'] }}</span>
+                {% endif %}
+                {% if data['teacher-error-sortcode1-length'] or data['teacher-error-sortcode2-length'] or data['teacher-error-sortcode3-length'] %}
+                <span id="account-sortcode-error" class="govuk-error-message">{{ data['error-message-sortcode-length'] }}</span>
+                {% endif %}
+                <input class="govuk-input govuk-input--width-2 {% if data['teacher-error-sortcode1-missing'] or data['teacher-error-sortcode1-format'] or data['teacher-error-sortcode1-length'] %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-1" type="text" value="{{data['teacher-bank-sortcode-1']}}">
+                <input class="govuk-input govuk-input--width-2 {% if data['teacher-error-sortcode2-missing'] or data['teacher-error-sortcode2-format'] or data['teacher-error-sortcode2-length'] %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-2" type="text" value="{{data['teacher-bank-sortcode-2']}}">
+                <input class="govuk-input govuk-input--width-2 {% if data['teacher-error-sortcode3-missing'] or data['teacher-error-sortcode3-format'] or data['teacher-error-sortcode3-length'] %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-3" type="text" value="{{data['teacher-bank-sortcode-3']}}">
               </div>
             </div>
 
