@@ -35,20 +35,19 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Enter student loan repayment amount
+                How much student loan did you repay while you were at {{ data['teacher-school']['name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
               </h1>
             </legend>
-            <p class="govuk-body">Enter the total amount of student loan repayments that were made through your wages while you were at {{ data['teacher-school']['name'] }} between 6 April 2018 and 5 April 2019.</p>
 
             <div class="govuk-form-group">
               <label class="govuk-label" for="teacher-loan-amount">Loan repayment amount</label>
               <span id="loan-amount-hint" class="govuk-hint">
-                You can find this on your payslips.
+                Only include repayments made through your teaching wages. You can find this information on your payslips.
               </span>
               {% if (data['teacher-error-no-loan-amount']) %}
               <span id="teacher-loan-details-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-no-loan-amount']) %}govuk-input--error{% endif %}" id="teacher-loan-amount" name="teacher-loan-amount" type="number" step="0.01" value="{{data['teacher-loan-amount']}}">
+              <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-no-loan-amount']) %}govuk-input--error{% endif %}" id="teacher-loan-amount" name="teacher-loan-amount" type="text" value="{{data['teacher-loan-amount']}}">
             </div>
 
             <div class="govuk-form-group">

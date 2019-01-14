@@ -295,18 +295,30 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location-eligibility)/, function (
 // Final - for latest version of e
 router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
-  // @todo: Could load this data to session earlier on and only load once?
+  var gias_dataset = 'full'; // min | eligible | full
 
   var fs = require("fs");
-  // GIAS data test (10 eligible schools only)
-  // var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
-  // GIAS data (eligible schools e.g. 25 LAs)
-  var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
-  // GIAS data (all schools)
-  // var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+
+  if (gias_dataset == 'min') {
+
+    // GIAS data test (10 eligible schools only)
+    var gias_file = fs.readFileSync("app/data/gias_eligible_subset.min.json");
+
+  } else if (gias_dataset == 'eligibile') {
+
+    // GIAS data (eligible schools e.g. 25 LAs)
+    var gias_file = fs.readFileSync("app/data/gias_eligible.min.json");
+
+  } else {
+
+    // GIAS data (all schools)
+    var gias_file = fs.readFileSync("app/data/gias_all.min.json");
+  }
+
   var gias_data = JSON.parse(gias_file);
+
   // Output JSON as session variable for easier debug
-  req.session.data['check-gias-data'] = gias_data;
+  // req.session.data['check-gias-data'] = gias_data;
 
   var school_names = gias_data.map(function(gias_school){
     return gias_school.est_name;
@@ -335,7 +347,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
   // Error: No school name provided
   if (!setup && req.session.data['teacher-school-name'] == "") {
     req.session.data['teacher-error-no-school'] = true;
-    req.session.data['error-message'] = "Enter the school name or postcode";
+    req.session.data['error-message'] = "Enter the school name";
     res.redirect('teacher-enter-location');
     next
   } else {
@@ -346,12 +358,70 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
     var school_name = req.session.data['teacher-school-name'];
 
-    var eligibility_calc = Math.floor((Math.random() * 2) + 1);
-    var school_eligible = eligibility_calc > 1 ? true : false;
+    var Fuse = require('fuse.js')
+    var fuse_options = {
+      shouldSort: true,
+      includeScore: true,
+      threshold: 0.2,
+      location: 0,
+      distance: 50,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        "est_name"
+      ]
+    };
+    var gias_search = new Fuse(gias_data, fuse_options); // "list" is the item array
+    var gias_result = gias_search.search(school_name);
+
+    req.session.data['fuse-search-result'] = gias_result;
 
     var school = {
-      name: school_name,
-      eligible: school_eligible
+      name: gias_result[0].item.est_name,
+      la_code: gias_result[0].item.la_code,
+      phase_code: gias_result[0].item.phase_code,
+      est_type_code: gias_result[0].item.est_type_code,
+      eligible: false,
+      location: false,
+      phase: false,
+      type: false
+    }
+
+    if (gias_dataset == 'min' || gias_dataset == 'eligible') {
+
+      var eligibility_calc = Math.floor((Math.random() * 2) + 1);
+      var school_eligible = eligibility_calc > 1 ? true : false;
+
+    } else {
+
+      // @todo: Move this to some JSON data?
+      var local_auths = [873, 380, 806, 928, 340, 935, 371, 867, 353, 830, 370, 929, 926, 831, 890, 355, 815, 821, 874, 812, 876, 851, 861, 343, 342];
+      var secondary_phases = [4, 5];
+      var sen_school_types = [7, 8, 12, 14, 32, 33, 36, 43, 44];
+
+      if (local_auths.includes(school.la_code)) {
+
+        school.location = true;
+        school.eligible = true;
+
+        if (secondary_phases.includes(school.phase_code)) {
+          school.phase = true;
+          school.eligible = true;
+        } else {
+          school.eligible = false;
+        }
+
+        if (sen_school_types.includes(school.est_type_code)) {
+          school.type = true;
+          school.eligible = true;
+        }
+
+      } else {
+
+        school.eligible = false;
+
+      }
+
     }
 
     req.session.data['teacher-school'] = school;
@@ -532,7 +602,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
   if (!req.session.data['teacher-loan-amount']) {
 
     req.session.data['teacher-error-no-loan-amount'] = true;
-    req.session.data['error-message'] = "Enter your loan repayment amount";
+    req.session.data['error-message'] = "Enter the amount you repaid";
     res.redirect('teacher-enter-repayment-amount');
     next
 
@@ -568,31 +638,31 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res
       req.session.data['error-message'] = "Enter your bank details";
       if (!req.session.data['teacher-bank-account-name']) {
         req.session.data['teacher-error-payment-details-name'] = true;
-        req.session.data['error-message-account-name'] = "Enter your account name";
+        req.session.data['error-message-account-name'] = "Enter the name of the account holder";
       } else {
         delete req.session.data['teacher-error-payment-details-name'];
       }
       if (!req.session.data['teacher-bank-account-number']) {
         req.session.data['teacher-error-payment-details-number'] = true;
-        req.session.data['error-message-account-number'] = "Enter your account number";
+        req.session.data['error-message-account-number'] = "Enter the account number";
       } else {
         delete req.session.data['teacher-error-payment-details-number'];
       }
       if (!req.session.data['teacher-bank-sortcode-1']) {
         req.session.data['teacher-error-payment-details-sort1'] = true;
-        req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
+        req.session.data['error-message-account-sortcode'] = "Enter the account sort code";
       } else {
         delete req.session.data['teacher-error-payment-details-sort1'];
       }
       if (!req.session.data['teacher-bank-sortcode-2']) {
         req.session.data['teacher-error-payment-details-sort2'] = true;
-        req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
+        req.session.data['error-message-account-sortcode'] = "Enter the account sort code";
       } else {
         delete req.session.data['teacher-error-payment-details-sort2'];
       }
       if (!req.session.data['teacher-bank-sortcode-3']) {
         req.session.data['teacher-error-payment-details-sort3'] = true;
-        req.session.data['error-message-account-sortcode'] = "Enter your account sort code";
+        req.session.data['error-message-account-sortcode'] = "Enter the account sort code";
       } else {
         delete req.session.data['teacher-error-payment-details-sort3'];
       }
@@ -905,7 +975,7 @@ router.post(/([e])\/([0-9]*\/?)(admin-claim)/, function (req, res) {
 
       // Error: Meant to update loan
       req.session.data['admin-error-no-loan'] = true;
-      req.session.data['error-message'] = "Enter the loan amount";
+      req.session.data['error-message'] = "Enter the loan repayment amount";
       res.redirect('admin-confirm-repayment-amount');
       next
 

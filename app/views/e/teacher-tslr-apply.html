@@ -14,7 +14,7 @@
 
     <div class="govuk-grid-column-full">
 
-      <h1 class="govuk-heading-xl">Teachers: claim back student loan payments</h1>
+      <h1 class="govuk-heading-xl">Teachers: claim back student loan repayments</h1>
 
     </div>
 
@@ -24,7 +24,7 @@
         <h2 class="govuk-heading-m">Contents</h2>
         <ul class="govuk-list">
           <li>&mdash; <a class="govuk-link" href="teacher-tslr">About this scheme</a></li>
-          <li>&mdash; <a class="govuk-link" href="teacher-tslr-eligibility">Check if you’re eligible</a></li>
+          <li>&mdash; <a class="govuk-link" href="teacher-tslr-eligibility">Eligibility</a></li>
           <li>&mdash; Make a claim</li>
         </ul>
       </nav>
@@ -48,7 +48,8 @@
           <li>your National Insurance number</li>
         </ul>
   <h3 class="govuk-heading-m">You've worked at more than one school</h3>
-      <p class="govuk-body">If you've worked at more than one school since {{ globals.tax_year.start_date }}, apply for each school separately.</p>
+      <p class="govuk-body">If you've worked at more than one school between {{globals.tax_year.start_date}} and {{globals.tax_year.end_date}}, use this online service to claim for each school separately. Or, claim by post.</p>
+
       <form action="teacher-consent" method="POST" role="form">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" role="group">
@@ -56,8 +57,8 @@
           </fieldset>
         </div>
       </form>
-      <h3 class="govuk-heading-m">Other ways to apply</h3>
-      <p class="govuk-body">If you cannot apply online, you can [apply by post]. The address to send your application to is at the end of the form.</p>
+      <h3 class="govuk-heading-m">Other ways to claim</h3>
+      <p class="govuk-body">If you cannot claim online, you can <a href="#">claim by post</a>. The address to send your application to is at the end of the form.</p>
       <nav class="tslr-pagination" role="navigation">
         <ul>
           <li class="prev">

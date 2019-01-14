@@ -39,15 +39,14 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Your account details
+                Bank account details
               </h1>
             </legend>
 
             <div class="govuk-form-group">
-              <h2 class="govuk-heading-m">Enter your account details</h2>
-              <span id="account-detail-hint" class="govuk-hint">
+              <p>
                 This is the account that the money will be paid into if your claim is successful.
-              </span>
+              </p>
               <div class="govuk-form-group">
                 <label class="govuk-label" for="bank-account-name">Name of account holder</label>
                 {% if (data['teacher-error-payment-details-name']) %}
@@ -60,16 +59,16 @@
                 {% if (data['teacher-error-payment-details-number']) %}
                 <span id="enter-account-number-error" class="govuk-error-message">{{ data['error-message-account-number'] }}</span>
                 {% endif %}
-                <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-payment-details-number']) %}govuk-input--error{% endif %}" id="teacher-bank-account-number" name="teacher-bank-account-number" type="number" value="{{data['teacher-bank-account-number']}}">
+                <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-payment-details-number']) %}govuk-input--error{% endif %}" id="teacher-bank-account-number" name="teacher-bank-account-number" type="text" value="{{data['teacher-bank-account-number']}}">
               </div>
               <div class="govuk-form-group">
                 <label class="govuk-label" for="#">Sort code</label>
                 {% if (data['teacher-error-payment-details-sort1'] or data['teacher-error-payment-details-sort2'] or data['teacher-error-payment-details-sort3']) %}
                 <span id="enter-account-sortcode-error" class="govuk-error-message">{{ data['error-message-account-sortcode'] }}</span>
                 {% endif %}
-                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort1']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-1" type="number" value="{{data['teacher-bank-sortcode-1']}}">
-                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort2']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-2" type="number" value="{{data['teacher-bank-sortcode-2']}}">
-                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort3']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-3" type="number" value="{{data['teacher-bank-sortcode-3']}}">
+                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort1']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-1" type="text" value="{{data['teacher-bank-sortcode-1']}}">
+                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort2']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-2" type="text" value="{{data['teacher-bank-sortcode-2']}}">
+                <input class="govuk-input govuk-input--width-2 {% if (data['teacher-error-payment-details-sort3']) %}govuk-input--error{% endif %}" id="#" name="teacher-bank-sortcode-3" type="text" value="{{data['teacher-bank-sortcode-3']}}">
               </div>
             </div>
 

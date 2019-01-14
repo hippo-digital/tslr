@@ -41,7 +41,7 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, what were you employed to teach at {{ data['teacher-school']['name'] }}?
+                What were you employed to teach at {{ data['teacher-school']['name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?
               </h1>
             </legend>
 
@@ -120,25 +120,41 @@
 
                         <div class="govuk-radios govuk-radios--conditional" data-module="radios">
                           <div class="govuk-radios__item">
+                            {% if data['teacher-subject-actual'] == "science" %}
+                            <input class="govuk-radios__input" id="teacher-subject-actual-conditional-science" name="teacher-subject-actual" type="radio" value="science" checked>
+                            {% else %}
                             <input class="govuk-radios__input" id="teacher-subject-actual-conditional-science" name="teacher-subject-actual" type="radio" value="science">
+                            {% endif %}
                             <label class="govuk-label govuk-radios__label" for="teacher-subject-actual-conditional-science">
                               Science
                             </label>
                           </div>
                           <div class="govuk-radios__item">
+                            {% if data['teacher-subject-actual'] == "compscience" %}
+                            <input class="govuk-radios__input" id="teacher-subject-actual-conditional-compscience" name="teacher-subject-actual" type="radio" value="compscience" checked>
+                            {% else %}
                             <input class="govuk-radios__input" id="teacher-subject-actual-conditional-compscience" name="teacher-subject-actual" type="radio" value="compscience">
+                            {% endif %}
                             <label class="govuk-label govuk-radios__label" for="teacher-subject-actual-conditional-compscience">
                               Computer Science
                             </label>
                           </div>
                           <div class="govuk-radios__item">
+                            {% if data['teacher-subject-actual'] == "languages" %}
+                            <input class="govuk-radios__input" id="teacher-subject-actual-conditional-languages" name="teacher-subject-actual" type="radio" value="languages" checked>
+                            {% else %}
                             <input class="govuk-radios__input" id="teacher-subject-actual-conditional-languages" name="teacher-subject-actual" type="radio" value="languages">
+                            {% endif %}
                             <label class="govuk-label govuk-radios__label" for="teacher-subject-actual-conditional-languages">
                               Languages (not including English)
                             </label>
                           </div>
                           <div class="govuk-radios__item">
+                            {% if data['teacher-subject-actual'] == "other" %}
+                            <input class="govuk-radios__input" id="teacher-subject-actual-conditional-other" name="teacher-subject-actual" type="radio" value="other" data-aria-controls="conditional-teacher-subject-actual-conditional-other" checked>
+                            {% else %}
                             <input class="govuk-radios__input" id="teacher-subject-actual-conditional-other" name="teacher-subject-actual" type="radio" value="other" data-aria-controls="conditional-teacher-subject-actual-conditional-other">
+                            {% endif %}
                             <label class="govuk-label govuk-radios__label" for="teacher-subject-actual-conditional-other">
                               Other
                             </label>

@@ -67,7 +67,7 @@
                 Check school information
               </h1>
             </legend>
-            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> teach at {{ data['admin-claims-data']['school_name'] }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
+            <p class="govuk-body">Was <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> employed to teach at {{ data['admin-claims-data']['school_name'] }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
 
             {% if (data['admin-error-no-location']) %}
             <span id="admin-location-error" class="govuk-error-message">{{ data['error-message'] }}</span>

@@ -48,19 +48,20 @@
                   <span class="govuk-details__summary-text">You taught at more than one school</span>
                 </summary>
                 <div class="govuk-details__text">
-                  <p class="govuk-body">For now, enter one of the schools you've taught at. You can check another school when you've finished.</p>
+                  <p class="govuk-body">Enter one of the schools you've taught at. You must claim for each school separately.</p>
                 </div>
               </details>
             </span>
 
             <div class="govuk-form-group">
               <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="{{ data['teacher-schools-setup'] or 'false' }}">
-              <label class="govuk-label" for="teacher-school-name">Enter the school name</label>
+              <label class="govuk-label" for="teacher-school-name">School name</label>
               {% if (data['teacher-error-no-school']) %}
               <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
               <input class="govuk-input {% if (data['teacher-error-no-school']) %}govuk-input--error{% endif %}" id="teacher-school-name" name="teacher-school-name" type="text">
               <script>
+                // https://leaverou.github.io/awesomplete/
                 var input = document.getElementById("teacher-school-name");
                 var awesomplete = new Awesomplete(input,{
                   minChars: 3,

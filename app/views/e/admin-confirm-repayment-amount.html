@@ -62,16 +62,16 @@
               </h1>
             </legend>
 
-            <p>How much student loan did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> pay back through their wages while they were at {{ data['admin-claims-data']['school_name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+            <p>Enter the total amount of student loan repayments that <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> made through their wages while they were at {{ data['admin-claims-data']['school_name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}.</p>
 
             {% if (data['admin-error-no-loan']) %}
             <span id="admin-loan-error" class="govuk-error-message">{{ data['error-message'] }}</span>
             {% endif %}
 
             <div class="govuk-form-group">
-              <label class="govuk-label" for="admin-loan-amount">Enter the amount</label>
+              <label class="govuk-label" for="admin-loan-amount">Loan repayment amount</label>
               <span id="loan-amount-hint" class="govuk-hint">You can find this information on their payslips or P60.</span>
-              <input class="govuk-input" id="admin-loan-amount" name="admin-loan-amount" type="number" step="0.01" value="{{data['admin-claims-data']['claims'][array_ref]['loan-amount']}}">
+              <input class="govuk-input govuk-input--width-5" id="admin-loan-amount" name="admin-loan-amount" type="text" value="{{data['admin-claims-data']['claims'][array_ref]['loan-amount']}}">
             </div>
 
             <div class="govuk-form-group">

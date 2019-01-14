@@ -18,23 +18,18 @@
 
       <div class="govuk-form-group">
         <h1 class="govuk-heading-xl">You’re not eligible to claim back student loan repayments</h1>
-        <p class="govuk-body">Based on your answers, we think you're not eligible to claim back your student loan repayments.</p>
+        <p class="govuk-body">Based on your answers, you're not eligible to claim back your student loan repayments.</p>
 
         {% if data['teacher-ineligible-reason'] == "school-location" %}
         <p class="govuk-body">You can only claim if your school is in an eligible area for this scheme.</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li><a href="teacher-tslr-eligibility">Check what the eligible areas are</a></li>
-        </ul>
         {% endif %}
 
         {% if data['teacher-ineligible-reason'] == "school-phase" %}
         <p class="govuk-body">You can only claim if your school is a state-funded secondary or special school in England.</p>
-        <p class="govuk-body"><a href="guidance">Check what the eligible areas are</a></p>
         {% endif %}
 
         {% if data['teacher-ineligible-reason'] == "school-type" %}
         <p class="govuk-body">You can only claim if your school is a state-funded secondary or special school in England.</p>
-        <p class="govuk-body"><a href="guidance">Check what the eligible areas are</a></p>
         {% endif %}
 
         {% if data['teacher-ineligible-reason'] == "teacher-subject" %}
