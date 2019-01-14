@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+
   <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-full">
@@ -13,10 +15,10 @@
     <div class="govuk-grid-column-two-thirds email-bg">
 
       <h2 class="govuk-heading-s">Subject</h2>
-      <p class="govuk-body">{{ globals.smd.teacher.full_name | title }}: claim for repayment of student loan</p>
+      <p class="govuk-body">{{ full_name | title }}: claim for repayment of student loan</p>
       <h2 class="govuk-heading-s">Body</h2>
-      <p class="govuk-body">Dear {name}</p>
-      <p class="govuk-body">{{ globals.smd.teacher.full_name | title }} has made a claim to get their student loan repayments back. The claim is for payments that were made through their wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} at {{ globals.smd.teacher.school_name }}.</p>
+      <p class="govuk-body">Dear [name]</p>
+      <p class="govuk-body">{{ full_name | title }} has made a claim to get their student loan payments back. The claim is for payments that were made through their wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} at {{ data['admin-claims-data']['school_name'] }}.</p>
       <p class="govuk-body">To process the claim, we need you to check what they've told us about:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>the subject they taught</li>
@@ -25,9 +27,9 @@
         <li>how much student loan they paid back through their wages</li>
       </ul>
       <p class="govuk-body">Check this information before {date}. If you cannot, {do something}.</p>
-      <p class="govuk-body"><a href="admin-dfe-signin">Sign in to DfE</a> to check {{ globals.smd.teacher.full_name | title }}’s details.</p>
+      <p class="govuk-body"><a href="admin-dfe-signin">Sign in to DfE</a> to check {{ full_name | title }}’s details.</p>
       <p class="govuk-body">Kind regards</p>
-      <p class="govuk-body">The Student Loan Repayment team</p>
+      <p class="govuk-body">Teachers' Student Loan Repayment team</p>
 
     </div>
 
