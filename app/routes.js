@@ -1,6 +1,29 @@
 const express = require('express')
 const router = express.Router()
 
+// Utilities
+// ---------
+
+// Check if a string contains only numbers
+// Handy for phone numbers, account number, sort code, teacher reference number, etc
+function isStringSpecificLength(string, length) {
+
+  if (string.trim().length === length) {
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+// Check if a string contains only numbers
+// Handy for phone numbers, account number, sort code, teacher reference number, etc
+function isStringNumbers(string) {
+
+  return /^\d+$/.test(string);
+
+}
+
 // Add your routes here - above the module.exports line
 // Using regex matching, routes should ideally work even for snapshots
 
@@ -244,7 +267,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  if (req.session.data['skip-verify'] == 'yes') {
+  if (req.session.data['skip-verify'] == "yes") {
     res.redirect('teacher-enter-trn');
   } else if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n' || option == 'single-school-claim')) {
     if (req.params[0] == "d" && req.params[1] == "181121/") {
@@ -520,7 +543,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
 
     if (check_send) {
       res.redirect('teacher-enter-subject');
-    } else if (req.session.data['skip-verify'] == 'yes') {
+    } else if (req.session.data['skip-verify'] == "yes") {
       res.redirect('teacher-enter-trn');
     } else {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
@@ -530,12 +553,35 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
 
 })
 
-//router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-trn)/, function (req, res) {
-//})
+router.post(/([e])\/([0-9]*\/?)(teacher-enter-trn)/, function (req, res) {
 
-router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+  // Error handling
+  if (req.session.data['teacher-trn'] == "") {
+    req.session.data['teacher-error-no-trn'] = true;
+    req.session.data['error-message'] = "Enter your teacher reference number";
+    res.redirect('teacher-enter-trn');
+    next
+  } else if (!isStringNumbers(req.session.data['teacher-trn'])) {
+    req.session.data['teacher-error-trn-format'] = true;
+    req.session.data['error-message'] = "Teacher reference number must only be numbers";
+    res.redirect('teacher-enter-trn');
+    next
+  } else if (!isStringSpecificLength(req.session.data['teacher-trn'], 7)) {
+    req.session.data['teacher-error-trn-length'] = true;
+    req.session.data['error-message'] = "Teacher reference number must be 7 numbers long";
+    res.redirect('teacher-enter-trn');
+    next
+  } else {
+    req.session.data['teacher-error-no-trn'] = false;
+    req.session.data['teacher-error-trn-format'] = false;
+    res.redirect('teacher-enter-ni-number');
+  }
 
-  if (req.params[0] == "d" || req.params[0] == "e") {
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+
+  if (req.params[0] == "d") {
 
     // Error: No TRN provided
     if (req.session.data['teacher-trn'] == "") {
@@ -548,6 +594,21 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, re
       res.redirect('teacher-enter-ni-number');
     }
 
+  }
+
+})
+
+router.post(/([e])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+
+  // Error: No TRN provided
+  if (req.session.data['teacher-trn'] == "") {
+    req.session.data['teacher-error-no-trn'] = true;
+    req.session.data['error-message'] = "Enter your teacher reference number";
+    res.redirect('teacher-enter-trn');
+    next
+  } else {
+    req.session.data['teacher-error-no-trn'] = false;
+    res.redirect('teacher-enter-ni-number');
   }
 
 })
@@ -591,10 +652,6 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 })
 
 // router.post(/([e])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
-//
-//   req.session.data['teacher-error-no-loan-amount'] = false;
-//   res.redirect('teacher-consent');
-//
 // })
 
 router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
