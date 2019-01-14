@@ -31,6 +31,14 @@ function isValidNINO(input) {
 
 }
 
+// Check if is a number formatted as a currency
+// £ optional; commas optional; decimal optional.
+function isValidCurrency(input) {
+
+  return /(?=.*?\d)^\£?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$/.test(input);
+
+}
+
 // Add your routes here - above the module.exports line
 // Using regex matching, routes should ideally work even for snapshots
 
@@ -628,9 +636,9 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
 
 router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (req, res) {
 
-  if (req.params[0] == "d" || req.params[0] == "e") {
+  // Error handling
+  if (req.params[0] == "d") {
 
-    // Error: No NI Number provided
     if (req.session.data['teacher-ni'] == "") {
       req.session.data['teacher-error-no-ni'] = true;
       req.session.data['error-message'] = "Enter your National Insurance number";
@@ -641,7 +649,26 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (
       res.redirect('teacher-enter-repayment-amount');
     }
 
+  } else if (req.params[0] == "e") {
+
+    if (!req.session.data['teacher-loan-amount']) {
+      req.session.data['teacher-error-no-loan-amount'] = true;
+      req.session.data['error-message'] = "Enter the amount of loan you repaid";
+      res.redirect('teacher-enter-repayment-amount');
+      next
+    } else if (!isValidCurrency(req.session.data['teacher-loan-amount'])) {
+      req.session.data['teacher-error-loan-amount-format'] = true;
+      req.session.data['error-message'] = "Enter the loan amount as a currency, like £100.00 or 100";
+      res.redirect('teacher-enter-repayment-amount');
+      next
+    } else {
+      delete req.session.data['teacher-error-no-loan-amount'];
+      delete req.session.data['teacher-error-loan-amount-format'];
+      res.redirect('teacher-payment-method');
+    }
+
   }
+
 
 })
 

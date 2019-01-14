@@ -16,21 +16,19 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['teacher-error-no-loan-amount']) %}
+      {% if data['teacher-error-no-loan-amount'] or data['teacher-error-loan-amount-format'] %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
-            {% if (data['teacher-error-no-loan-amount']) %}
             <li><a href="#teacher-loan-details-error">{{ data['error-message'] }}</a></li>
-            {% endif %}
           </ul>
         </div>
       </div>
       {% endif %}
 
-      <form action="teacher-payment-method" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-no-loan-amount']) %}govuk-form-group--error{% endif %}">
+      <form action="teacher-enter-repayment-amount" method="POST" role="form">
+        <div class="govuk-form-group {% if data['teacher-error-no-loan-amount'] or data['teacher-error-loan-amount-format'] %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="tbc">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -44,10 +42,10 @@
               <span id="loan-amount-hint" class="govuk-hint">
                 Only include repayments made through your teaching wages. You can find this information on your payslips.
               </span>
-              {% if (data['teacher-error-no-loan-amount']) %}
+              {% if data['teacher-error-no-loan-amount'] or data['teacher-error-loan-amount-format'] %}
               <span id="teacher-loan-details-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input govuk-input--width-5 {% if (data['teacher-error-no-loan-amount']) %}govuk-input--error{% endif %}" id="teacher-loan-amount" name="teacher-loan-amount" type="text" value="{{data['teacher-loan-amount']}}">
+              <input class="govuk-input govuk-input--width-5 {% if data['teacher-error-no-loan-amount'] or data['teacher-error-loan-amount-format'] %}govuk-input--error{% endif %}" id="teacher-loan-amount" name="teacher-loan-amount" type="text" value="{{data['teacher-loan-amount']}}">
             </div>
 
             <div class="govuk-form-group">
