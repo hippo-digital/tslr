@@ -16,7 +16,7 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-      {% if (data['teacher-error-no-ni']) %}
+      {% if data['teacher-error-no-ni'] or data['teacher-error-ni-format'] %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
         <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
@@ -29,8 +29,8 @@
       </div>
       {% endif %}
 
-      <form action="teacher-enter-repayment-amount" method="POST" role="form">
-        <div class="govuk-form-group {% if (data['teacher-error-no-ni']) %}govuk-form-group--error{% endif %}">
+      <form action="teacher-enter-ni-number" method="POST" role="form">
+        <div class="govuk-form-group {% if data['teacher-error-no-ni'] or data['teacher-error-ni-format'] %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -41,10 +41,10 @@
 
             <div class="govuk-form-group">
               <label class="govuk-label" for="teacher-ni">National Insurance number</label>
-              {% if (data['teacher-error-no-ni']) %}
+              {% if data['teacher-error-no-ni'] or data['teacher-error-ni-format'] %}
               <span id="enter-ni-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}
-              <input class="govuk-input govuk-input--width-10 {% if (data['teacher-error-no-ni']) %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" value="{{data['teacher-ni']}}">
+              <input class="govuk-input govuk-input--width-10 {% if data['teacher-error-no-ni'] or data['teacher-error-ni-format'] %}govuk-input--error{% endif %}" id="teacher-ni" name="teacher-ni" type="text" value="{{data['teacher-ni']}}">
             </div>
 
             <div class="govuk-form-group">

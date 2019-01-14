@@ -6,9 +6,9 @@ const router = express.Router()
 
 // Check if a string contains only numbers
 // Handy for phone numbers, account number, sort code, teacher reference number, etc
-function isStringSpecificLength(string, length) {
+function isStringSpecificLength(input, chars) {
 
-  if (string.trim().length === length) {
+  if (input.trim().length === chars) {
     return true;
   } else {
     return false;
@@ -18,9 +18,16 @@ function isStringSpecificLength(string, length) {
 
 // Check if a string contains only numbers
 // Handy for phone numbers, account number, sort code, teacher reference number, etc
-function isStringNumbers(string) {
+function isStringNumbers(input) {
 
-  return /^\d+$/.test(string);
+  return /^\d+$/.test(input);
+
+}
+
+// Check if NI Nimber is correct format
+function isValidNINO(input) {
+
+  return /^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$/.test(input);
 
 }
 
@@ -572,8 +579,8 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-trn)/, function (req, res) {
     res.redirect('teacher-enter-trn');
     next
   } else {
-    req.session.data['teacher-error-no-trn'] = false;
-    req.session.data['teacher-error-trn-format'] = false;
+    delete req.session.data['teacher-error-no-trn'];
+    delete req.session.data['teacher-error-trn-format'];
     res.redirect('teacher-enter-ni-number');
   }
 
@@ -600,15 +607,21 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res
 
 router.post(/([e])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
 
-  // Error: No TRN provided
-  if (req.session.data['teacher-trn'] == "") {
-    req.session.data['teacher-error-no-trn'] = true;
-    req.session.data['error-message'] = "Enter your teacher reference number";
-    res.redirect('teacher-enter-trn');
+  // Error handling
+  if (req.session.data['teacher-ni'] == "") {
+    req.session.data['teacher-error-no-ni'] = true;
+    req.session.data['error-message'] = "Enter your National Insurance number";
+    res.redirect('teacher-enter-ni-number');
+    next
+  } else if (!isValidNINO(req.session.data['teacher-ni'])) {
+    req.session.data['teacher-error-ni-format'] = true;
+    req.session.data['error-message'] = "Enter a National Insurance number that is 2 letters, 6 numbers, then A, B, C or D, like QQ123456C";
+    res.redirect('teacher-enter-ni-number');
     next
   } else {
-    req.session.data['teacher-error-no-trn'] = false;
-    res.redirect('teacher-enter-ni-number');
+    delete req.session.data['teacher-error-no-ni'];
+    delete req.session.data['teacher-error-ni-format'];
+    res.redirect('teacher-enter-repayment-amount');
   }
 
 })
