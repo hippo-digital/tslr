@@ -60,7 +60,18 @@
               <h1 class="govuk-fieldset__heading">Confirm the age range of the pupils</h1>
             </legend>
 
-            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> spend most of their time teaching pupils who are 11 to 16 years old at {{ data['admin-claims-data']['school_name'] }}, between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+            <p class="govuk-body">Did <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> spend most of their time teaching <strong>11 to 16 year olds</strong> at {{ data['admin-claims-data']['school_name'] }} between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}?</p>
+
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  The teacher was on leave or off sick
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                If they did not actually teach, because of sickness or leave, select whether they they were employed to teach 11 to 16 year olds.
+              </div>
+            </details>
 
             {% if (data['admin-error-no-phase']) %}
             <span id="admin-phase-error" class="govuk-error-message">{{ data['error-message'] }}</span>

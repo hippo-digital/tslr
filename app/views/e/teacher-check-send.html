@@ -65,17 +65,29 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Subject</dt>
+              <dt class="app-check-your-answers__question">Subject employed to teach</dt>
               <dd class="app-check-your-answers__answer">
-                {{ data['teacher-subject-employed-nice'] | title or data['teacher-subject-actual-nice'] | title }}
+                {{ data['teacher-subject-employed-nice'] | title }}{% if data['teacher-subject-employed-other'] %}:<br/>{{ data['teacher-subject-employed-other'] }}{% endif %}
               </dd>
               <dd class="app-check-your-answers__change">
                 <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject eligibility</span></button>
               </dd>
             </div>
 
+            {% if data['teacher-subject-employed'] == 'other' %}
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Student loan amount</dt>
+              <dt class="app-check-your-answers__question">Subject mostly taught</dt>
+              <dd class="app-check-your-answers__answer">
+                {{ data['teacher-subject-actual-nice'] | title }}{% if data['teacher-subject-actual-other'] %}:<br/>{{ data['teacher-subject-actual-other'] }}{% endif %}
+              </dd>
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject eligibility</span></button>
+              </dd>
+            </div>
+            {% endif %}
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Student loan amount repaid</dt>
               {% if data['teacher-loan-amount'] %}
               <dd class="app-check-your-answers__answer">£{{ data['teacher-loan-amount'] }}</dd>
               {% else %}
@@ -123,7 +135,11 @@
       </form>
 
       <h2 class="govuk-heading-m">Confirm your claim</h2>
-      <p>By submitting this claim you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+      <p>By submitting this claim you are confirming that:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the information you've given is complete and correct as far as you know</li>
+        <li>you'll pay back any money you've been overpaid if you're asked to</li>
+      </ul>
       <form action="teacher-enter-location-confirm" method="POST" role="form">
         <div class="govuk-form-group {% if (data['teacher-error-no-school']) %}govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">

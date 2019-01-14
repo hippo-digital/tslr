@@ -55,7 +55,7 @@
 
             <div class="govuk-form-group">
               <input class="govuk-input" id="teacher-schools-setup" name="teacher-schools-setup" type="hidden" value="{{ data['teacher-schools-setup'] or 'false' }}">
-              <label class="govuk-label" for="teacher-school-name">Enter the school name</label>
+              <label class="govuk-label" for="teacher-school-name">School name</label>
               {% if (data['teacher-error-no-school']) %}
               <span id="enter-school-error" class="govuk-error-message">{{ data['error-message'] }}</span>
               {% endif %}

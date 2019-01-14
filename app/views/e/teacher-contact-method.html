@@ -39,7 +39,7 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                How do you want us to contact you?
+                How do you want to be contacted?
               </h1>
             </legend>
             <span id="changed-name-hint" class="govuk-hint">
@@ -63,11 +63,11 @@
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-email">
                 <div class="govuk-form-group">
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="teacher-email-address">Enter email address</label>
+                    <label class="govuk-label" for="teacher-email-address">Email address</label>
                     {% if (data['teacher-error-no-email']) %}
                     <span id="enter-email-error" class="govuk-error-message">{{ data['error-message-email'] }}</span>
                     {% endif %}
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="email" value="{{data['teacher-email-address']}}">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-email-address" name="teacher-email-address" type="text" value="{{data['teacher-email-address']}}">
                   </div>
                 </div>
               </div>
@@ -83,11 +83,11 @@
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-method-conditional-mobile">
                 <div class="govuk-form-group">
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="teacher-mobile-number">Enter mobile number</label>
+                    <label class="govuk-label" for="teacher-mobile-number">Mobile number</label>
                     {% if (data['teacher-error-no-mobile']) %}
                     <span id="enter-mobile-error" class="govuk-error-message">{{ data['error-message-mobile'] }}</span>
                     {% endif %}
-                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="number" value="{{data['teacher-mobile-number']}}">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="teacher-mobile-number" name="teacher-mobile-number" type="text" value="{{data['teacher-mobile-number']}}">
                   </div>
                 </div>
               </div>

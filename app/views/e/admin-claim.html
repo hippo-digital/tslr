@@ -97,7 +97,7 @@
             </div>
 
             <div class="app-check-your-answers__contents">
-              <dt class="app-check-your-answers__question">Teacher reference number (TRN)</dt>
+              <dt class="app-check-your-answers__question">Teacher reference number</dt>
               <dd class="app-check-your-answers__answer">{{ data['admin-claims-data']['claims'][array_ref]['trn'] }}</dd>
               <dd class="app-check-your-answers__change">&nbsp;</dd>
             </div>
@@ -115,6 +115,7 @@
         <div class="govuk-form-group {% if data['admin-error-no-complete'] %}govuk-form-group--error{% endif %}">
 
           <h2 class="govuk-heading-m">Claim details for {{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</h2>
+          <p>Check these details for the period between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}.</p>
 
           {% if (data['admin-error-no-complete']) %}
           <span id="admin-complete-error" class="govuk-error-message">{{ data['error-message'] }}</span>
@@ -130,7 +131,7 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              <dt class="app-check-your-answers__question">They worked at the school between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</dt>
+              <dt class="app-check-your-answers__question">They were employed to teach at {{ data['admin-claims-data']['school_name'] }}</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'yes' %}
               <dd class="app-check-your-answers__answer">Yes</dd>
               {% elseif data['admin-claims-data']['claims'][array_ref]['location']['verified'] == 'yes-part' %}
@@ -198,7 +199,7 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              <dt class="app-check-your-answers__question">Between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}, they spent most of their scheduled hours teaching people who are 11 to 16 years old</dt>
+              <dt class="app-check-your-answers__question">They spent most of their time teaching 11 to 16 year olds</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] %}
               <dd class="app-check-your-answers__answer">Yes</dd>
               {% elif data['admin-claims-data']['claims'][array_ref]['phase']['eligibility'] === false %}
@@ -218,7 +219,7 @@
             <div class="app-check-your-answers__contents">
             {% endif %}
 
-              <dt class="app-check-your-answers__question">The amount of student loan they repaid through their wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }}</dt>
+              <dt class="app-check-your-answers__question">The amount of student loan they repaid through their wages</dt>
               {% if data['admin-claims-data']['claims'][array_ref]['loan']['verified'] %}
               <dd class="app-check-your-answers__answer">£{{ data['admin-claims-data']['claims'][array_ref]['loan']['verified'] }}</dd>
               {% else %}
