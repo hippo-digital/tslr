@@ -1,6 +1,44 @@
 const express = require('express')
 const router = express.Router()
 
+// Utilities
+// ---------
+
+// Check if a string contains only numbers
+// Handy for phone numbers, account number, sort code, teacher reference number, etc
+function isStringSpecificLength(input, chars) {
+
+  if (input.trim().length === chars) {
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+// Check if a string contains only numbers
+// Handy for phone numbers, account number, sort code, teacher reference number, etc
+function isStringNumbers(input) {
+
+  return /^\d+$/.test(input);
+
+}
+
+// Check if NI Nimber is correct format
+function isValidNINO(input) {
+
+  return /^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$/.test(input);
+
+}
+
+// Check if is a number formatted as a currency
+// £ optional; commas optional; decimal optional.
+function isValidCurrency(input) {
+
+  return /(?=.*?\d)^\£?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$/.test(input);
+
+}
+
 // Add your routes here - above the module.exports line
 // Using regex matching, routes should ideally work even for snapshots
 
@@ -244,7 +282,7 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
   req.session.data['teacher-schools-setup'] = false;
 
   // Need to branch differently depending whether answer was yes, yes more or no
-  if (req.session.data['skip-verify'] == 'yes') {
+  if (req.session.data['skip-verify'] == "yes") {
     res.redirect('teacher-enter-trn');
   } else if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n' || option == 'single-school-claim')) {
     if (req.params[0] == "d" && req.params[1] == "181121/") {
@@ -520,7 +558,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
 
     if (check_send) {
       res.redirect('teacher-enter-subject');
-    } else if (req.session.data['skip-verify'] == 'yes') {
+    } else if (req.session.data['skip-verify'] == "yes") {
       res.redirect('teacher-enter-trn');
     } else {
       res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
@@ -530,12 +568,32 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
 
 })
 
-//router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-trn)/, function (req, res) {
-//})
+router.post(/([e])\/([0-9]*\/?)(teacher-enter-trn)/, function (req, res) {
 
-router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+  // Error handling
+  if (req.session.data['teacher-trn'] == "") {
+    req.session.data['teacher-error-no-trn'] = true;
+    req.session.data['error-message'] = "Enter your teacher reference number";
+    res.redirect('teacher-enter-trn');
+  } else if (!isStringNumbers(req.session.data['teacher-trn'])) {
+    req.session.data['teacher-error-trn-format'] = true;
+    req.session.data['error-message'] = "Teacher reference number must only be numbers";
+    res.redirect('teacher-enter-trn');
+  } else if (!isStringSpecificLength(req.session.data['teacher-trn'], 7)) {
+    req.session.data['teacher-error-trn-length'] = true;
+    req.session.data['error-message'] = "Teacher reference number must be 7 numbers long";
+    res.redirect('teacher-enter-trn');
+  } else {
+    delete req.session.data['teacher-error-no-trn'];
+    delete req.session.data['teacher-error-trn-format'];
+    res.redirect('teacher-enter-ni-number');
+  }
 
-  if (req.params[0] == "d" || req.params[0] == "e") {
+})
+
+router.post(/([abcd])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+
+  if (req.params[0] == "d") {
 
     // Error: No TRN provided
     if (req.session.data['teacher-trn'] == "") {
@@ -552,11 +610,30 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, re
 
 })
 
+router.post(/([e])\/([0-9]*\/?)(teacher-enter-ni-number)/, function (req, res) {
+
+  // Error handling
+  if (req.session.data['teacher-ni'] == "") {
+    req.session.data['teacher-error-no-ni'] = true;
+    req.session.data['error-message'] = "Enter your National Insurance number";
+    res.redirect('teacher-enter-ni-number');
+  } else if (!isValidNINO(req.session.data['teacher-ni'])) {
+    req.session.data['teacher-error-ni-format'] = true;
+    req.session.data['error-message'] = "Enter a National Insurance number that is 2 letters, 6 numbers, then A, B, C or D, like QQ123456C";
+    res.redirect('teacher-enter-ni-number');
+  } else {
+    delete req.session.data['teacher-error-no-ni'];
+    delete req.session.data['teacher-error-ni-format'];
+    res.redirect('teacher-enter-repayment-amount');
+  }
+
+})
+
 router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (req, res) {
 
-  if (req.params[0] == "d" || req.params[0] == "e") {
+  // Error handling
+  if (req.params[0] == "d") {
 
-    // Error: No NI Number provided
     if (req.session.data['teacher-ni'] == "") {
       req.session.data['teacher-error-no-ni'] = true;
       req.session.data['error-message'] = "Enter your National Insurance number";
@@ -567,7 +644,24 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-repayment-amount)/, function (
       res.redirect('teacher-enter-repayment-amount');
     }
 
+  } else if (req.params[0] == "e") {
+
+    if (!req.session.data['teacher-loan-amount']) {
+      req.session.data['teacher-error-no-loan-amount'] = true;
+      req.session.data['error-message'] = "Enter the amount of loan you repaid";
+      res.redirect('teacher-enter-repayment-amount');
+    } else if (!isValidCurrency(req.session.data['teacher-loan-amount'])) {
+      req.session.data['teacher-error-loan-amount-format'] = true;
+      req.session.data['error-message'] = "Enter the loan amount as a currency, like £100.00 or 100";
+      res.redirect('teacher-enter-repayment-amount');
+    } else {
+      delete req.session.data['teacher-error-no-loan-amount'];
+      delete req.session.data['teacher-error-loan-amount-format'];
+      res.redirect('teacher-payment-method');
+    }
+
   }
+
 
 })
 
@@ -591,14 +685,177 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 })
 
 // router.post(/([e])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
-//
-//   req.session.data['teacher-error-no-loan-amount'] = false;
-//   res.redirect('teacher-consent');
-//
 // })
 
 router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
 
+  // Error handling
+
+  // Validate account name
+  var name = req.session.data['teacher-bank-account-name'];
+  var validation_errors_name = false;
+
+  if (!name) {
+    req.session.data['teacher-error-account-name-missing'] = true;
+    req.session.data['error-message-account-name'] = "Enter the name of the account holder";
+    validation_errors_name = true;
+  } else {
+    delete req.session.data['teacher-error-account-name-missing'];
+    delete req.session.data['error-message-account-name'];
+    validation_errors_name = false;
+  }
+
+  // Validate account number
+  var number = req.session.data['teacher-bank-account-number'];
+  var validation_errors_number = false;
+
+  if (!number || !isStringNumbers(number) || !isStringSpecificLength(number, 8)) {
+
+    if (!number) {
+      req.session.data['teacher-error-account-number-missing'] = true;
+      req.session.data['error-message-account-number'] = "Enter the account number";
+      validation_errors_number = true;
+    } else if (!isStringNumbers(number) || !isStringSpecificLength(number, 8)) {
+      if (!isStringNumbers(number)) {
+        req.session.data['teacher-error-account-number-format'] = true;
+        req.session.data['error-message-account-number-format'] = "Account number must only be numbers";
+        validation_errors_number = true;
+      }
+      if (!isStringSpecificLength(number, 8)) {
+        req.session.data['teacher-error-account-number-length'] = true;
+        req.session.data['error-message-account-number-length'] = "Account number must be 8 numbers long";
+        validation_errors_number = true;
+      }
+      delete req.session.data['teacher-error-account-number-missing'];
+      delete req.session.data['error-message-account-number'];
+    } else {
+      delete req.session.data['teacher-error-account-number-missing'];
+      delete req.session.data['teacher-error-account-number-format'];
+      delete req.session.data['teacher-error-account-number-length'];
+      delete req.session.data['error-message-account-number'];
+      delete req.session.data['error-message-account-number-format'];
+      delete req.session.data['error-message-account-number-length'];
+      validation_errors_number = false;
+    }
+
+  } else {
+    delete req.session.data['teacher-error-account-number-missing'];
+    delete req.session.data['teacher-error-account-number-format'];
+    delete req.session.data['teacher-error-account-number-length'];
+    delete req.session.data['error-message-account-number'];
+    delete req.session.data['error-message-account-number-format'];
+    delete req.session.data['error-message-account-number-length'];
+    validation_errors_number = false;
+  }
+
+  // Validate account sortcode
+  var sort1 = req.session.data['teacher-bank-sortcode-1'];
+  var sort2 = req.session.data['teacher-bank-sortcode-2'];
+  var sort3 = req.session.data['teacher-bank-sortcode-3'];
+  var validation_errors_sortcode = false;
+
+  if (!sort1 || !sort2 || !sort3 || !isStringNumbers(sort1) || !isStringNumbers(sort2) || !isStringNumbers(sort3) || !isStringSpecificLength(sort1, 2) || !isStringSpecificLength(sort2, 2) || !isStringSpecificLength(sort3, 2)) {
+
+    if (!sort1 || !sort2 || !sort3) {
+
+      if (!sort1) {
+        req.session.data['teacher-error-sortcode1-missing'] = true;
+        validation_errors_sortcode = true;
+      }
+      if (!sort2) {
+        req.session.data['teacher-error-sortcode2-missing'] = true;
+        validation_errors_sortcode = true;
+      }
+      if (!sort3) {
+        req.session.data['teacher-error-sortcode3-missing'] = true;
+        validation_errors_sortcode = true;
+      }
+      req.session.data['error-message-sortcode-missing'] = "Complete the account sortcode";
+
+    } else if (!isStringNumbers(sort1) || !isStringNumbers(sort2) || !isStringNumbers(sort3) || !isStringSpecificLength(sort1, 2) || !isStringSpecificLength(sort2, 2) || !isStringSpecificLength(sort3, 2)) {
+
+      if (!isStringNumbers(sort1)) {
+        req.session.data['teacher-error-sortcode1-format'] = true;
+        validation_errors_sortcode = true;
+      }
+      if (!isStringNumbers(sort2)) {
+        req.session.data['teacher-error-sortcode2-format'] = true;
+        validation_errors_sortcode = true;
+      }
+      if (!isStringNumbers(sort3)) {
+        req.session.data['teacher-error-sortcode3-format'] = true;
+        validation_errors_sortcode = true;
+      }
+      req.session.data['error-message-sortcode-format'] = "Sortcode must only be numbers, like 12 34 56";
+
+      if (!isStringSpecificLength(sort1, 2)) {
+        req.session.data['teacher-error-sortcode1-length'] = true;
+        validation_errors_sortcode = true;
+      }
+      if (!isStringSpecificLength(sort2, 2)) {
+        req.session.data['teacher-error-sortcode2-length'] = true;
+        validation_errors_sortcode = true;
+      }
+      if (!isStringSpecificLength(sort3, 2)) {
+        req.session.data['teacher-error-sortcode3-length'] = true;
+        validation_errors_sortcode = true;
+      }
+      req.session.data['error-message-sortcode-length'] = "Sortcode must be 3 sets of 2 numbers, like 12 34 56";
+
+      delete req.session.data['error-message-sortcode-missing'];
+      delete req.session.data['teacher-error-sortcode1-missing'];
+      delete req.session.data['teacher-error-sortcode2-missing'];
+      delete req.session.data['teacher-error-sortcode3-missing'];
+
+    } else {
+
+      delete req.session.data['error-message-sortcode-missing'];
+      delete req.session.data['error-message-sortcode-format'];
+      delete req.session.data['error-message-sortcode-length'];
+      delete req.session.data['teacher-error-sortcode1-missing'];
+      delete req.session.data['teacher-error-sortcode2-missing'];
+      delete req.session.data['teacher-error-sortcode3-missing'];
+      delete req.session.data['teacher-error-sortcode1-format'];
+      delete req.session.data['teacher-error-sortcode2-format'];
+      delete req.session.data['teacher-error-sortcode3-format'];
+      delete req.session.data['teacher-error-sortcode1-length'];
+      delete req.session.data['teacher-error-sortcode2-length'];
+      delete req.session.data['teacher-error-sortcode3-length'];
+      validation_errors_sortcode = false;
+
+    }
+
+  } else {
+
+    delete req.session.data['error-message-sortcode-missing'];
+    delete req.session.data['error-message-sortcode-format'];
+    delete req.session.data['error-message-sortcode-length'];
+    delete req.session.data['teacher-error-sortcode1-missing'];
+    delete req.session.data['teacher-error-sortcode2-missing'];
+    delete req.session.data['teacher-error-sortcode3-missing'];
+    delete req.session.data['teacher-error-sortcode1-format'];
+    delete req.session.data['teacher-error-sortcode2-format'];
+    delete req.session.data['teacher-error-sortcode3-format'];
+    delete req.session.data['teacher-error-sortcode1-length'];
+    delete req.session.data['teacher-error-sortcode2-length'];
+    delete req.session.data['teacher-error-sortcode3-length'];
+    validation_errors_sortcode = false;
+
+  }
+
+  if (validation_errors_name || validation_errors_number || validation_errors_sortcode) {
+    req.session.data['teacher-validation-errors-name'] = validation_errors_name;
+    req.session.data['teacher-validation-errors-number'] = validation_errors_number;
+    req.session.data['teacher-validation-errors-sortcode'] = validation_errors_sortcode;
+    res.redirect('teacher-payment-method');
+  } else {
+    delete req.session.data['teacher-validation-errors-name'];
+    delete req.session.data['teacher-validation-errors-number'];
+    delete req.session.data['teacher-validation-errors-sortcode'];
+    res.redirect('teacher-contact-method');
+  }
+
+  /*
   if (!req.session.data['teacher-loan-amount']) {
 
     req.session.data['teacher-error-no-loan-amount'] = true;
@@ -625,6 +882,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-payment-method)/, function (req, res) {
     res.redirect('teacher-payment-method');
 
   }
+  */
 
 })
 

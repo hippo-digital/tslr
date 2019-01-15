@@ -41,7 +41,7 @@
 
       {% if (data['admin-error-no-location'] or data['admin-error-no-location-period']) %}
       <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There's a problem</h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
             {% if (data['admin-error-no-location']) %}
@@ -67,7 +67,7 @@
                 Check school information
               </h1>
             </legend>
-            <p class="govuk-body">Was <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> employed to teach at {{ data['admin-claims-data']['school_name'] }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
+            <p class="govuk-body">Was <strong>{{ data['admin-claims-data']['claims'][array_ref]['full_name'] | title }}</strong> employed at {{ data['admin-claims-data']['school_name'] }} for any time between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} (the last tax year)?</p>
 
             {% if (data['admin-error-no-location']) %}
             <span id="admin-location-error" class="govuk-error-message">{{ data['error-message'] }}</span>

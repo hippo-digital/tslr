@@ -48,7 +48,10 @@
           <li>your National Insurance number</li>
         </ul>
   <h3 class="govuk-heading-m">You've worked at more than one school</h3>
-      <p class="govuk-body">If you've worked at more than one school between {{globals.tax_year.start_date}} and {{globals.tax_year.end_date}}, use this online service to claim for each school separately. Or, claim by post.</p>
+      <p class="govuk-body">If you've worked at more than one school between {{globals.tax_year.start_date}} and {{globals.tax_year.end_date}}, you can claim for:
+        <ul class="govuk-list govuk-list--bullet">
+          <li>each school separately use this online service</li>
+          <li>all schools using one form, if you <a href="#">claim by post</a></p>
 
       <form action="teacher-consent" method="POST" role="form">
         <div class="govuk-form-group">
@@ -58,7 +61,7 @@
         </div>
       </form>
       <h3 class="govuk-heading-m">Other ways to claim</h3>
-      <p class="govuk-body">If you cannot claim online, you can <a href="#">claim by post</a>. The address to send your application to is at the end of the form.</p>
+      <p class="govuk-body">If you cannot claim online, or you want to claim for multiple schools, you can <a href="#">claim by post</a>. The address to send your claim to is at the end of the form.</p>
       <nav class="tslr-pagination" role="navigation">
         <ul>
           <li class="prev">
