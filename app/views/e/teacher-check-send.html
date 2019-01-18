@@ -13,29 +13,10 @@
   {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
 
   {% set details_complete = true %}
-  {% set teacher_email = true %}
-  {% set teacher_mobile = true %}
 
   {% if not data['teacher-loan-amount'] %}
   {{ "data.teacher-loan-amount is incomplete" | log }}
   {% set details_complete = false %}
-  {% endif %}
-
-  {% if not data['teacher-contact-method'] %}
-  {{ "data.teacher-contact-method is incomplete" | log }}
-  {% set details_complete = false %}
-  {% endif %}
-
-  {% if data['teacher-contact-method'] == "email" and not data['teacher-email-address'] %}
-  {{ "data.teacher-email-address is incomplete" | log }}
-  {% set details_complete = false %}
-  {% set teacher_email = false %}
-  {% endif %}
-
-  {% if data['teacher-contact-method'] == "mobile" and not data['teacher-mobile-number'] %}
-  {{ "data.teacher-mobile-number is incomplete" | log }}
-  {% set details_complete = false %}
-  {% set teacher_mobile = false %}
   {% endif %}
 
   <div class="govuk-grid-row">
@@ -60,7 +41,23 @@
                 {{ data['teacher-school']['name'] }}
               </dd>
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" value="location" name="teacher-check-send-edit" formaction="teacher-enter-location">Change<span class="govuk-visually-hidden"> school eligibility</span></button>
+                <button type="submit" class="button-as-link" value="location" name="teacher-check-send-edit" formaction="teacher-enter-location">Change<span class="govuk-visually-hidden"> school</span></button>
+              </dd>
+            </div>
+
+            <div class="app-check-your-answers__contents">
+              <dt class="app-check-your-answers__question">Still employed to teach in the UK</dt>
+              <dd class="app-check-your-answers__answer">
+                {% if data['teacher-still-teaching'] == "elsewhere" and data['teacher-still-teaching-school-name'] %}
+                Yes, but now at {{ data['teacher-still-teaching-school-name'] }}
+                {% elif data['teacher-still-teaching'] == "yes" %}
+                Yes, still at {{ data['teacher-school']['name'] }}
+                {% else %}
+                No
+                {% endif %}
+              </dd>
+              <dd class="app-check-your-answers__change">
+                <button type="submit" class="button-as-link" value="still-teaching" name="teacher-check-send-edit" formaction="teacher-still-teaching">Change<span class="govuk-visually-hidden"> whether still teaching</span></button>
               </dd>
             </div>
 
@@ -70,7 +67,7 @@
                 {{ data['teacher-subject-employed-nice'] | title }}{% if data['teacher-subject-employed-other'] %}:<br/>{{ data['teacher-subject-employed-other'] }}{% endif %}
               </dd>
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject eligibility</span></button>
+                <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject employed to teach</span></button>
               </dd>
             </div>
 
@@ -81,7 +78,7 @@
                 {{ data['teacher-subject-actual-nice'] | title }}{% if data['teacher-subject-actual-other'] %}:<br/>{{ data['teacher-subject-actual-other'] }}{% endif %}
               </dd>
               <dd class="app-check-your-answers__change">
-                <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject eligibility</span></button>
+                <button type="submit" class="button-as-link" value="subject" name="teacher-check-send-edit" formaction="teacher-enter-subject">Change<span class="govuk-visually-hidden"> subject actually taught</span></button>
               </dd>
             </div>
             {% endif %}

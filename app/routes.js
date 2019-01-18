@@ -529,6 +529,11 @@ router.post(/([e])\/([0-9]*\/?)(teacher-still-teaching)/, function (req, res) {
 
     var eligibility = false;
     req.session.data['teacher-ineligible-reason'] = "still-teaching";
+    if (check_send) {
+      req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
+    } else {
+      req.session.data['teacher-ineligible-continue-url'] = "teacher-enter-subject";
+    }
 
   } else {
 
@@ -538,7 +543,12 @@ router.post(/([e])\/([0-9]*\/?)(teacher-still-teaching)/, function (req, res) {
   }
   req.session.data['teacher-eligible'] = eligibility;
 
-  if (!eligibility) {
+  if (req.session.data['teacher-check-send-edit']) {
+
+    delete req.session.data['teacher-check-send-edit'];
+    res.redirect('teacher-still-teaching');
+
+  } else if (!eligibility) {
 
     res.redirect('teacher-claim-ineligible');
 

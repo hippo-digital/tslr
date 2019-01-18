@@ -31,7 +31,7 @@
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
-                Are you still employed to teach at {{ data['teacher-school']['name'] }}?
+                Are you still employed to teach at a school in the UK?
               </h1>
             </legend>
 
@@ -44,13 +44,13 @@
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="teacher-still-teaching-yes" name="teacher-still-teaching" type="radio" value="yes"
                 {% if data['teacher-still-teaching'] == "yes" %} checked {% endif %}>
-                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-yes">Yes</label>
+                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-yes">Yes, at {{ data['teacher-school']['name'] }}</label>
               </div>
 
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="teacher-still-teaching-elsewhere" name="teacher-still-teaching" type="radio" value="elsewhere" data-aria-controls="conditional-elsewhere"
                 {% if data['teacher-still-teaching'] == "elsewhere" %} checked {% endif %}>
-                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-elsewhere">No, I'm teaching somewhere else in the UK</label>
+                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-elsewhere">Yes, at another school</label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-elsewhere">
                 <div class="govuk-form-group">
@@ -64,7 +64,7 @@
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="teacher-still-teaching-no" name="teacher-still-teaching" type="radio" value="no"
                 {% if data['teacher-still-teaching'] == "no" %} checked {% endif %}>
-                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-no">No, I'm no longer employed to teach in the UK</label>
+                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-no">No</label>
               </div>
 
             </div>
