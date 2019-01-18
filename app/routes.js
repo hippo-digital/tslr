@@ -286,13 +286,13 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-enter-location-confirm)/, function (
     res.redirect('teacher-enter-trn');
   } else if (!check_send && (option == 'y' || option == 'school-confirm-y' || option == 'school-confirm-n' || option == 'single-school-claim')) {
     if (req.params[0] == "d" && req.params[1] == "181121/") {
-      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
+      res.redirect('https://govuk-verify.herokuapp.com/intro?requestId=dfe-tslr-option-d&userLOA=0');
       next
     } else if (req.params[0] == "d") {
-      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-d-alt&userLOA=0');
+      res.redirect('https://govuk-verify.herokuapp.com/intro?requestId=dfe-tslr-option-d-alt&userLOA=0');
       next
     } else if (req.params[0] == "e") {
-      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
+      res.redirect('https://govuk-verify.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
       next
     } else {
       res.redirect('teacher-consent');
@@ -561,7 +561,7 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-subject)/, function (req, res) {
     } else if (req.session.data['skip-verify'] == "yes") {
       res.redirect('teacher-enter-trn');
     } else {
-      res.redirect('http://govuk-verify-loa1.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
+      res.redirect('https://govuk-verify.herokuapp.com/intro?requestId=dfe-tslr-option-e&userLOA=0');
     }
 
   }
