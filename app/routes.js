@@ -466,7 +466,6 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
     if (!school.eligible) {
       var eligibility = false;
-      req.session.data['teacher-eligible'] = eligibility;
       req.session.data['teacher-ineligible-reason'] = "school-location";
       if (check_send) {
         req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
@@ -476,8 +475,8 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
     } else {
       var eligibility = true;
       delete req.session.data['teacher-ineligible-reason'];
-      req.session.data['teacher-eligible'] = eligibility;
     }
+    req.session.data['teacher-eligible'] = eligibility;
 
   }
 
@@ -498,9 +497,67 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
       if (check_send) {
         res.redirect('teacher-check-send');
       } else {
-        res.redirect('teacher-enter-subject');
+        res.redirect('teacher-still-teaching');
       }
 
+    }
+
+  }
+
+})
+
+router.post(/([e])\/([0-9]*\/?)(teacher-still-teaching)/, function (req, res) {
+
+  // Error: No still teaching provided
+  if (!req.session.data['teacher-still-teaching']) {
+    req.session.data['teacher-error-no-still-teaching'] = true;
+    req.session.data['error-message'] = "Select whether you are still employed to teach";
+    res.redirect('teacher-still-teaching');
+    next
+  } else {
+    delete req.session.data['teacher-error-no-still-teaching'];
+    delete req.session.data['error-message'];
+  }
+
+  if (req.session.data['teacher-check-send'] == "true" || req.session.data['teacher-check-send'] === true) {
+    var check_send = true;
+  } else {
+    var check_send = false;
+  }
+
+  if (req.session.data['teacher-still-teaching'] == "no") {
+
+    var eligibility = false;
+    req.session.data['teacher-ineligible-reason'] = "still-teaching";
+    if (check_send) {
+      req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
+    } else {
+      req.session.data['teacher-ineligible-continue-url'] = "teacher-enter-subject";
+    }
+
+  } else {
+
+    var eligibility = true;
+    delete req.session.data['teacher-ineligible-reason'];
+
+  }
+  req.session.data['teacher-eligible'] = eligibility;
+
+  if (req.session.data['teacher-check-send-edit']) {
+
+    delete req.session.data['teacher-check-send-edit'];
+    res.redirect('teacher-still-teaching');
+
+  } else if (!eligibility) {
+
+    res.redirect('teacher-claim-ineligible');
+
+  } else {
+
+    if (check_send) {
+      res.redirect('teacher-check-send');
+    } else {
+      res.redirect('teacher-enter-subject');
     }
 
   }

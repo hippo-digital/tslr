@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Bank details :: Teachers' Student Loan Reimbursement
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if data['teacher-error-no-still-teaching'] %}
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li><a href="#teacher-still-teaching-error">{{ data['error-message'] }}</a></li>
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <form action="teacher-still-teaching" method="POST" role="form">
+        <div class="govuk-form-group {% if data['teacher-error-no-still-teaching'] %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="bank-hint">
+
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Are you still employed to teach at a school in the UK?
+              </h1>
+            </legend>
+
+            {% if data['teacher-error-no-still-teaching'] %}
+            <span id="teacher-still-teaching-error" class="govuk-error-message">{{ data['error-message'] }}</span>
+            {% endif %}
+
+            <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="teacher-still-teaching-yes" name="teacher-still-teaching" type="radio" value="yes"
+                {% if data['teacher-still-teaching'] == "yes" %} checked {% endif %}>
+                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-yes">Yes, at {{ data['teacher-school']['name'] }}</label>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="teacher-still-teaching-elsewhere" name="teacher-still-teaching" type="radio" value="elsewhere" data-aria-controls="conditional-elsewhere"
+                {% if data['teacher-still-teaching'] == "elsewhere" %} checked {% endif %}>
+                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-elsewhere">Yes, at another school</label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-elsewhere">
+                <div class="govuk-form-group">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="teacher-email-address">School name</label>
+                    <input class="govuk-input" id="teacher-still-teaching-school-name" name="teacher-still-teaching-school-name" type="text">
+                  </div>
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="teacher-still-teaching-no" name="teacher-still-teaching" type="radio" value="no"
+                {% if data['teacher-still-teaching'] == "no" %} checked {% endif %}>
+                <label class="govuk-label govuk-radios__label" for="teacher-still-teaching-no">No</label>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </div>
+
+        {% if data['teacher-check-send'] %}
+        <button type="submit" class="govuk-button" formaction="teacher-check-send">Update</button>
+        {% else %}
+        <button type="submit" class="govuk-button">Continue</button>
+        {% endif %}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
