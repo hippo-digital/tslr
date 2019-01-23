@@ -726,7 +726,7 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
-    // Error: No NI Number provided
+    // Error: No loan amount provided
     if (!req.session.data['teacher-loan-amount']) {
       req.session.data['teacher-error-no-loan-amount'] = true;
       req.session.data['error-message'] = "Enter the amount of loan you repaid";
@@ -734,6 +734,19 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
       next
     } else {
       req.session.data['teacher-error-no-loan-amount'] = false;
+      res.redirect('teacher-consent');
+    }
+
+  } else {
+
+    // Error: No NINO provided
+    if (!req.session.data['teacher-nino']) {
+      req.session.data['teacher-error-no-nino'] = true;
+      req.session.data['error-message'] = "Enter your National Insurance number";
+      res.redirect('teacher-enter-ni-number');
+      next
+    } else {
+      delete req.session.data['teacher-error-no-nino'];
       res.redirect('teacher-consent');
     }
 
