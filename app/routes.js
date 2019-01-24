@@ -466,7 +466,13 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
     if (!school.eligible) {
       var eligibility = false;
-      req.session.data['teacher-ineligible-reason'] = "school-location";
+      if (!school.location) {
+        req.session.data['teacher-ineligible-reason'] = "school-location";
+      } else if (!school.phase) {
+        req.session.data['teacher-ineligible-reason'] = "school-phase";
+      } else if (!school.type) {
+        req.session.data['teacher-ineligible-reason'] = "school-type";
+      }
       if (check_send) {
         req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
       } else {
@@ -726,7 +732,7 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
 
   if (req.params[0] == "d") {
 
-    // Error: No NI Number provided
+    // Error: No loan amount provided
     if (!req.session.data['teacher-loan-amount']) {
       req.session.data['teacher-error-no-loan-amount'] = true;
       req.session.data['error-message'] = "Enter the amount of loan you repaid";
@@ -734,6 +740,32 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
       next
     } else {
       req.session.data['teacher-error-no-loan-amount'] = false;
+      res.redirect('teacher-consent');
+    }
+
+  } else if (req.params[0] == "a") {
+
+    // Error: No teaching provided
+    if (!req.session.data['teaching']) {
+      req.session.data['teacher-error-no-teaching'] = true;
+      req.session.data['error-message'] = "Select what proprtion of time you taught a priority subject";
+      res.redirect('teacher-proportion');
+      next
+    } else {
+      delete req.session.data['teacher-error-no-teaching'];
+      res.redirect('teacher-consent');
+    }
+
+  } else {
+
+    // Error: No NINO provided
+    if (!req.session.data['teacher-nino']) {
+      req.session.data['teacher-error-no-nino'] = true;
+      req.session.data['error-message'] = "Enter your National Insurance number";
+      res.redirect('teacher-enter-ni-number');
+      next
+    } else {
+      delete req.session.data['teacher-error-no-nino'];
       res.redirect('teacher-consent');
     }
 
@@ -993,6 +1025,10 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res
       res.redirect('teacher-contact-method');
     }
 
+  } else {
+
+    res.redirect('teacher-contact-method');
+
   }
 
 })
@@ -1117,16 +1153,25 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req
     req.session.data['admin-check-send'] = true;
   }
 
-  // Error: No teaching eligibility
-  if (!req.session.data['admin-eligibility-teaching']) {
-    req.session.data['admin-error-no-eligibility-teaching'] = true;
-    req.session.data['error-message'] = "Select one of the options";
-    res.redirect('admin-confirm-teaching-eligibility');
-    next
-  } else {
-    delete req.session.data['admin-error-no-eligibility-teaching'];
+  if (req.params[0] == "c") {
+
     res.redirect('admin-enter-repayment-amount');
+
+  } else {
+
+    // Error: No teaching eligibility
+    if (!req.session.data['admin-eligibility-teaching']) {
+      req.session.data['admin-error-no-eligibility-teaching'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
+    } else {
+      delete req.session.data['admin-error-no-eligibility-teaching'];
+      res.redirect('admin-enter-repayment-amount');
+    }
+
   }
+
 
 })
 

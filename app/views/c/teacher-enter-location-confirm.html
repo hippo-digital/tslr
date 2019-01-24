@@ -29,7 +29,7 @@
             {# https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/140660#school-dashboard #}
             {% for school in data['teacher-schools'] %}
               <div class="govuk-form-group">
-                <h3 class="govuk-heading-m">{{ school or "{School name}" }}</h3>
+                <h3 class="govuk-heading-m">{{ school.name or data['teacher-school-name'] or "{School name}" }}</h3>
                 <ul class="govuk-list govuk-list--bullet">
                   <li><strong>Local authority</strong>: Kirklees</li>
                   <li><strong>Education phase</strong>: Secondary</li>
