@@ -3,6 +3,7 @@
 {% block content %}
 
 {% set full_name = data.applicant.full_name or globals.smd.teacher.full_name %}
+{% set school_name = globals.smd.teacher.school_name %}
 
   <div class="govuk-grid-row">
 
@@ -18,7 +19,7 @@
       <p class="govuk-body">{{ full_name | title }}: claim for repayment of student loan</p>
       <h2 class="govuk-heading-s">Body</h2>
       <p class="govuk-body">Dear [name]</p>
-      <p class="govuk-body">{{ full_name | title }} has made a claim to get their student loan payments back. The claim is for payments that were made through their wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} at {{ data['admin-claims-data']['school_name'] }}.</p>
+      <p class="govuk-body">{{ full_name | title }} has made a claim to get their student loan payments back. The claim is for payments that were made through their wages between {{ globals.tax_year.start_date }} and {{ globals.tax_year.end_date }} at {{ school_name }}.</p>
       <p class="govuk-body">To process the claim, we need you to check what they've told us about:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>the subject they taught</li>
