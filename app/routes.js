@@ -466,7 +466,13 @@ router.post(/([e])\/([0-9]*\/?)(teacher-enter-location)/, function (req, res) {
 
     if (!school.eligible) {
       var eligibility = false;
-      req.session.data['teacher-ineligible-reason'] = "school-location";
+      if (!school.location) {
+        req.session.data['teacher-ineligible-reason'] = "school-location";
+      } else if (!school.phase) {
+        req.session.data['teacher-ineligible-reason'] = "school-phase";
+      } else if (!school.type) {
+        req.session.data['teacher-ineligible-reason'] = "school-type";
+      }
       if (check_send) {
         req.session.data['teacher-ineligible-continue-url'] = "teacher-check-send";
       } else {
