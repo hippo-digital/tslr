@@ -1147,16 +1147,25 @@ router.post(/([abcd])\/([0-9]*\/?)(admin-enter-repayment-amount)/, function (req
     req.session.data['admin-check-send'] = true;
   }
 
-  // Error: No teaching eligibility
-  if (!req.session.data['admin-eligibility-teaching']) {
-    req.session.data['admin-error-no-eligibility-teaching'] = true;
-    req.session.data['error-message'] = "Select one of the options";
-    res.redirect('admin-confirm-teaching-eligibility');
-    next
-  } else {
-    delete req.session.data['admin-error-no-eligibility-teaching'];
+  if (req.params[0] == "c") {
+
     res.redirect('admin-enter-repayment-amount');
+
+  } else {
+
+    // Error: No teaching eligibility
+    if (!req.session.data['admin-eligibility-teaching']) {
+      req.session.data['admin-error-no-eligibility-teaching'] = true;
+      req.session.data['error-message'] = "Select one of the options";
+      res.redirect('admin-confirm-teaching-eligibility');
+      next
+    } else {
+      delete req.session.data['admin-error-no-eligibility-teaching'];
+      res.redirect('admin-enter-repayment-amount');
+    }
+
   }
+
 
 })
 
