@@ -737,6 +737,19 @@ router.post(/([abcd])\/([0-9]*\/?)(teacher-consent)/, function (req, res) {
       res.redirect('teacher-consent');
     }
 
+  } else if (req.params[0] == "a") {
+
+    // Error: No teaching provided
+    if (!req.session.data['teaching']) {
+      req.session.data['teacher-error-no-teaching'] = true;
+      req.session.data['error-message'] = "Select what proprtion of time you taught a priority subject";
+      res.redirect('teacher-proportion');
+      next
+    } else {
+      delete req.session.data['teacher-error-no-teaching'];
+      res.redirect('teacher-consent');
+    }
+
   } else {
 
     // Error: No NINO provided
@@ -1005,6 +1018,10 @@ router.post(/([abcde])\/([0-9]*\/?)(teacher-contact-method)/, function (req, res
       delete req.session.data['teacher-error-payment-details-sort3'];
       res.redirect('teacher-contact-method');
     }
+
+  } else {
+
+    res.redirect('teacher-contact-method');
 
   }
 
